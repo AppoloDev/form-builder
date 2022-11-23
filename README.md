@@ -2,6 +2,15 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## TODO
+- [] Drag & Drop opérationnel (https://github.com/clauderic/dnd-kit)
+- Type
+    - [] Block
+    - [] Input[type=text]
+- [] Modal d'édition ou accordéon d'édition
+- [] Import + Export
+
+
 ## Available Scripts
 
 In the project directory, you can run:
