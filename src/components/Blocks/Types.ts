@@ -76,6 +76,14 @@ export type TextInputProps = {
     editItem: (key: string, value: string | boolean) => void
 }
 
+export type EmailInputProps = TextInputProps
+
+export type HourMinuteInputProps = TextInputProps
+
+export type TelInputProps = TextInputProps
+
+export type UrlInputProps = TextInputProps
+
 export type NumberInputProps = {
     label: string
     helpText: string

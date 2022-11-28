@@ -9,6 +9,10 @@ import Signature from "./Signature";
 import Title from "./Title";
 import Address from "./Address";
 import NumberInput from "./NumberInput";
+import EmailInput from "./EmailInput";
+import TelInput from "./TelInput";
+import UrlInput from "./UrlInput";
+import HourMinuteInput from "./HourMinuteInput";
 
 interface IDictionary<TValue> {
     [id: string]: TValue;
@@ -31,6 +35,22 @@ export const blocks: IDictionary<Block> = {
     NumberInput: {
         title: "Champ numérique",
         component: NumberInput,
+    },
+    EmailInput: {
+        title: "Champ email",
+        component: EmailInput,
+    },
+    TelInput: {
+        title: "Champ téléphone",
+        component: TelInput,
+    },
+    UrlInput: {
+        title: "Champ URL",
+        component: UrlInput,
+    },
+    HourMinuteInput: {
+        title: "Champ heure : minute",
+        component: HourMinuteInput,
     },
     FieldSet: {
         title: "FieldSet",

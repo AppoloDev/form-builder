@@ -64,7 +64,7 @@
     }
 
     input {
-        &[type="text"], &[type="file"], &[type="number"] {
+        &[type="text"], &[type="file"], &[type="number"], &[type="tel"], &[type="email"], &[type="url"] {
             @extend .form-control;
         }
     }
