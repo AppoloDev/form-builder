@@ -17,7 +17,9 @@ const Signature: FC<SignatureProps> = ({label, tooltip, required, editItem}) => 
                              key={5}/>
         ]}>
             <label htmlFor={id}>{label}</label>
-            <div>Signature</div>
+            <div className={"sign-area"}>
+                Zone de signature
+            </div>
         </EditableBlock>
     )
 }

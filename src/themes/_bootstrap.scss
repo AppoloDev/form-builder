@@ -89,6 +89,22 @@
 
         animation: showModal 500ms both;
     }
+
+    .sign-area {
+        @extend .h4;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        margin-bottom: 0;
+
+        height: 200px;
+
+        border-radius: 0.375rem;
+
+        background-color: #F1F1F1;
+    }
 }
 
 @keyframes showModal {
