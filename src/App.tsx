@@ -39,6 +39,7 @@ function FormBuilder() {
                 {
                     type: "TextAreaInput",
                     label: "champ 2",
+                    defaultValue: 'Plop coin',
                     placeHolder: "inside !",
                     helpText: "",
                     required: true,

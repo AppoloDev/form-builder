@@ -1,3 +1,5 @@
+import * as cluster from "cluster";
+
 export type OptionProps = {
     label: string
     isSelected: boolean
@@ -51,6 +53,9 @@ export type TextAreaProps = {
     placeHolder: string
     helpText: string
     required: boolean
+    defaultValue: string
+    readOnly: boolean
+    rows: number
     editItem: (key: string, value: string | boolean) => void
 }
 

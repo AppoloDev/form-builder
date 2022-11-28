@@ -22,6 +22,7 @@ export type NumberEditionProps = {
 export type TextAreaEditionProps = {
     label: string
     value: string
+    rows?: number
     editItem: (value: string) => void
 }
 

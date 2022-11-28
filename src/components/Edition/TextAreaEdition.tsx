@@ -1,7 +1,8 @@
 import { IdGenerator } from "../../utilities/String";
 import { TextAreaEditionProps } from "./Types";
+import { FC } from "react";
 
-export const TextAreaEdition = ({label, value, editItem}: TextAreaEditionProps) => {
+export const TextAreaEdition: FC<TextAreaEditionProps> = ({label, value, rows = 5, editItem}) => {
     const id = IdGenerator();
 
     return (
@@ -11,7 +12,7 @@ export const TextAreaEdition = ({label, value, editItem}: TextAreaEditionProps) 
                 id={id}
                 value={value}
                 onChange={e => editItem(e.target.value)}
-                rows={10}
+                rows={rows}
             />
         </div>
     );
