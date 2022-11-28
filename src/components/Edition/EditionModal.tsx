@@ -1,7 +1,7 @@
+import { EditionModalProps } from "./Types";
 import { FC } from "react";
 
-export const EditionModal: FC<{ visible: boolean, children: JSX.Element | JSX.Element[], closeModal: () => void }> =
-    ({visible, closeModal, children}) => {
+export const EditionModal: FC<EditionModalProps> = ({visible, closeModal, children}) => {
         return visible ?
             (<div className="modal show" role="dialog">
                 <div className="modal-dialog">

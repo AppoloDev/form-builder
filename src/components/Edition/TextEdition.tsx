@@ -1,7 +1,7 @@
-import { FC } from "react";
 import { IdGenerator } from "../../utilities/String";
+import { TextEditionProps } from "./Types";
 
-export const TextEdition: FC<{ label: string, value: string, editItem: any }> = ({ label, value, editItem }) => {
+export const TextEdition = ({ label, value, editItem }: TextEditionProps) => {
     const id = IdGenerator();
 
     return (

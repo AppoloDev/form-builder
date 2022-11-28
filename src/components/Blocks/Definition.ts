@@ -1,4 +1,4 @@
-import { Block } from "../../models/Block";
+import { FC } from "react";
 import TextInput from "./TextInput";
 import FieldSet from "./FieldSet";
 import Paragraph from "./Paragaph";
@@ -10,6 +10,11 @@ import Title from "./Title";
 
 interface IDictionary<TValue> {
     [id: string]: TValue;
+}
+
+export interface Block {
+    title: string;
+    component: FC<any>;
 }
 
 export const blocks: IDictionary<Block> = {

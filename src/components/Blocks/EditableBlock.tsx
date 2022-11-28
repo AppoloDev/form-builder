@@ -1,11 +1,8 @@
 import React, { FC, useRef, useState } from "react";
 import { EditionModal } from "../Edition/EditionModal";
+import { EditableBlockProps } from "./Types";
 
-export const EditableBlock: FC<{ editionItems: JSX.Element | JSX.Element[], children: JSX.Element | JSX.Element[] }> = (
-    {
-        editionItems,
-        children
-    }: any) => {
+export const EditableBlock: FC<EditableBlockProps> = ({editionItems, children}) => {
     const [visible, setVisible] = useState(false);
     const modalRef = useRef<HTMLDivElement>(null);
 

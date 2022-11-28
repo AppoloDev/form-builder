@@ -1,8 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 import { blocks } from "./Definition";
+import { FieldSetProps } from "./Types";
 
-function FieldSet({children, editItem}: any) {
-    const editChildrenItem = (item: any, key: string, value: any) => {
+
+const FieldSet: FC<FieldSetProps> = ({children, editItem}) => {
+    const editChildrenItem = (item: JSX.Element, key: keyof JSX.Element, value: JSX.Element[]) => {
         item[key] = value;
         const childrenClone = [...children];
         editItem('children', childrenClone);
@@ -10,10 +12,12 @@ function FieldSet({children, editItem}: any) {
 
     return (
         <fieldset>
-            {children.map((item: any, i: number) => React.createElement(blocks[item.type].component, {
-                key: i, ...item,
-                editItem: (key: string, value: any) => editChildrenItem(item, key, value)
-            }))}
+            {children.map((item: JSX.Element, i: number) => React.createElement(blocks[item.type].component, {
+                    ...item,
+                    key: i,
+                    editItem: (key: keyof JSX.Element, value: JSX.Element[]) => editChildrenItem(item, key, value)
+                })
+            )}
         </fieldset>
     )
 }

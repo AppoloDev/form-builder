@@ -1,19 +1,16 @@
 import { FC } from "react";
 import { TextEdition } from "./TextEdition";
 import { CancelIcon } from "../Icons/CancelIcon";
+import { SelectOptionEditionProps } from "./Types";
+import { OptionProps } from "../Blocks/Types";
 
-export const SelectOptionEdition: FC<{ label: string, options: any[], editItem: any }> = (
-    {
-        label,
-        options,
-        editItem
-    }) => {
-    const editChildrenItem = (item: any, key: string, value: string) => {
+export const SelectOptionEdition: FC<SelectOptionEditionProps> = ({label, options, editItem}) => {
+    const editChildrenItem = (item: OptionProps, key: keyof OptionProps, value: string) => {
         item[key] = value;
         editItem([...options]);
     };
 
-    const removeChildrenItem = (item: any) => {
+    const removeChildrenItem = (item: OptionProps) => {
         const clone = [...options];
         clone.splice(options.indexOf(item), 1)
         editItem(clone);
@@ -35,9 +32,9 @@ export const SelectOptionEdition: FC<{ label: string, options: any[], editItem: 
                 {options.map((item, i) => (
                     <div className="stack stack-horizontal" key={i}>
                         <TextEdition label={'Label'} value={item.label}
-                                     editItem={(val: string) => editChildrenItem(item, 'label', val)}/>
+                                     editItem={(val) => editChildrenItem(item, 'label', val)}/>
                         <TextEdition label={'Valeur'} value={item.value}
-                                     editItem={(val: string) => editChildrenItem(item, 'value', val)}/>
+                                     editItem={(val) => editChildrenItem(item, 'value', val)}/>
 
                         <div className="delete">
                             <button onClick={() => removeChildrenItem(item)}>
@@ -46,7 +43,6 @@ export const SelectOptionEdition: FC<{ label: string, options: any[], editItem: 
                         </div>
                     </div>
                 ))}
-
             </div>
         </div>
     );

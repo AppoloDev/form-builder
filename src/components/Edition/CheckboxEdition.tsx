@@ -1,7 +1,8 @@
-import { FC } from "react";
 import { IdGenerator } from "../../utilities/String";
+import { CheckboxEditionProps } from "./Types";
+import { FC } from "react";
 
-export const CheckboxEdition: FC<{ label: string, checked: boolean, editItem: any }> = ({label, checked, editItem}) => {
+export const CheckboxEdition: FC<CheckboxEditionProps> = ({label, checked, editItem}) => {
     const id = IdGenerator();
 
     return (
