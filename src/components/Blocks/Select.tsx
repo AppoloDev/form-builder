@@ -26,7 +26,10 @@ const Select: FC<SelectProps> = ({label, placeHolder, helpText, multiple, checkC
             <SelectOptionEdition label={"Options"} options={options}
                                  editItem={(val) => editItem('options', val)} key={7}/>
         ]}>
-            <label htmlFor={id}>{label}</label>
+            <label htmlFor={id}>
+                {label}
+                {required && <span className="required">Requis</span>}
+            </label>
             <>
                 {checkCases ?
                     (options.map((o, i) => {

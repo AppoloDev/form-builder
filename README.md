@@ -3,7 +3,6 @@
 ## TODO
 - Suppression des blocks
 - Ajoute icône édition block + rendre bloquant les inputs
-- Gérer le required
 - Gérer les groupes répétable
 - Créer des blocks pour chaque input text
 - Input gérer la valeur par défaut

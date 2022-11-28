@@ -17,7 +17,10 @@ const Signature: FC<SignatureProps> = ({label, helpText, required, editItem}) =>
             <CheckboxEdition label={"Requis"} checked={required} editItem={(val) => editItem('required', val)}
                              key={5}/>
         ]}>
-            <label htmlFor={id}>{label}</label>
+            <label htmlFor={id}>
+                {label}
+                {required && <span className="required">Requis</span>}
+            </label>
             <div className={"sign-area"}>
                 Zone de signature
             </div>

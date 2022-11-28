@@ -47,6 +47,16 @@
 
     label {
         @extend .form-label;
+
+        display: flex;
+        align-items: center;
+
+        .required {
+            @extend .badge;
+            @extend .text-bg-danger;
+
+            margin-left: 4px;
+        }
     }
 
     input {

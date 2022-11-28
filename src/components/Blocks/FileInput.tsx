@@ -20,7 +20,10 @@ const FileInput: FC<FileInputProps> = ({label, helpText, maxItems, required, edi
             <NumberEdition label={"Nombre maximal de fichiers"} value={maxItems}
                            editItem={(val) => editItem('maxItems', val)} key={4}/>
         ]}>
-            <label htmlFor={id}>{label}</label>
+            <label htmlFor={id}>
+                {label}
+                {required && <span className="required">Requis</span>}
+            </label>
             <input type="file"
                    multiple={maxItems > 1}
                    disabled={true}

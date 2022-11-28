@@ -19,7 +19,10 @@ const TextInput: FC<TextAreaProps> = ({label, placeHolder, helpText, required, e
             <CheckboxEdition label={"Requis"} checked={required} editItem={(val) => editItem('required', val)}
                              key={5}/>
         ]}>
-            <label htmlFor={id}>{label}</label>
+            <label htmlFor={id}>
+                {label}
+                {required && <span className="required">Requis</span>}
+            </label>
             <textarea
                 id={id}
                 placeholder={placeHolder}
