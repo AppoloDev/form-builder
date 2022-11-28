@@ -7,6 +7,7 @@ import FileInput from "./FileInput";
 import Select from "./Select";
 import Signature from "./Signature";
 import Title from "./Title";
+import Address from "./Address";
 
 interface IDictionary<TValue> {
     [id: string]: TValue;
@@ -18,6 +19,10 @@ export interface Block {
 }
 
 export const blocks: IDictionary<Block> = {
+    Address: {
+        title: "Adresse",
+        component: Address,
+    },
     TextInput: {
         title: "Champ texte",
         component: TextInput,

@@ -68,6 +68,10 @@ function FormBuilder() {
                     text: "Deuxieme fieldset"
                 },
                 {
+                    type: "Address",
+                    label: 'Adresse'
+                },
+                {
                     type: "Signature",
                     label: "Sign",
                     tooltip: "",

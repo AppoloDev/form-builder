@@ -53,6 +53,13 @@ export type TextAreaProps = {
     editItem: (key: string, value: string | boolean) => void
 }
 
+export type AddressProps = {
+    label: string
+    tooltip: string
+    required: boolean
+    editItem: (key: string, value: string | boolean) => void
+}
+
 export type TextInputProps = {
     label: string
     placeHolder: string

@@ -3,7 +3,6 @@
 ## TODO
 - Suppression des blocks
 - Ajoute icône édition block + rendre bloquant les inputs
-- Gérer tooltip
 - Gérer text d'aide
 - Gérer le required
 - Gérer les groupes répétable
@@ -23,7 +22,6 @@
   - Afficher date oui/non
   - Afficher heure oui/non
   - Si non c'est oui
-- Adresse
 - Fichier
   - Gérer les collections
   - Type de fichier accepté (images/pdf/ les deux)
