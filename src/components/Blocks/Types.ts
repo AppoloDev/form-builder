@@ -76,6 +76,16 @@ export type TextInputProps = {
     editItem: (key: string, value: string | boolean) => void
 }
 
+export type NumberInputProps = {
+    label: string
+    helpText: string
+    defaultValue: number
+    readOnly: boolean
+    required: boolean
+    allowDecimal: boolean
+    editItem: (key: string, value: string | boolean) => void
+}
+
 export type TitleProps = {
     text: string
     editItem: (key: string, value: string) => void
