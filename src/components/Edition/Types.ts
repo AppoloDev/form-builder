@@ -3,6 +3,7 @@ import { OptionProps } from "../Blocks/Types";
 export type CheckboxEditionProps = {
     label: string
     checked: boolean
+    disabled?: boolean
     editItem: (value: boolean) => void
 }
 

@@ -3,9 +3,11 @@ import { TextEdition } from "./TextEdition";
 import { CancelIcon } from "../Icons/CancelIcon";
 import { SelectOptionEditionProps } from "./Types";
 import { OptionProps } from "../Blocks/Types";
+import { CheckboxEdition } from "./CheckboxEdition";
 
 export const SelectOptionEdition: FC<SelectOptionEditionProps> = ({label, options, editItem}) => {
-    const editChildrenItem = (item: OptionProps, key: keyof OptionProps, value: string) => {
+    const editChildrenItem = (item: OptionProps, key: keyof OptionProps, value: string | boolean) => {
+        // @ts-ignore
         item[key] = value;
         editItem([...options]);
     };
@@ -17,7 +19,7 @@ export const SelectOptionEdition: FC<SelectOptionEditionProps> = ({label, option
     };
 
     const addChildrenItem = () => {
-        const clone = [...options, {label: "", value: ""}];
+        const clone = [...options, {label: "", isSelected: false}];
         editItem(clone);
     };
 
@@ -31,10 +33,17 @@ export const SelectOptionEdition: FC<SelectOptionEditionProps> = ({label, option
             <div className="stack-content">
                 {options.map((item, i) => (
                     <div className="stack stack-horizontal" key={i}>
-                        <TextEdition label={'Label'} value={item.label}
-                                     editItem={(val) => editChildrenItem(item, 'label', val)}/>
-                        <TextEdition label={'Valeur'} value={item.value}
-                                     editItem={(val) => editChildrenItem(item, 'value', val)}/>
+                        <TextEdition
+                            label={'Label'}
+                            value={item.label}
+                            editItem={(val) => editChildrenItem(item, 'label', val)}
+                        />
+
+                        <CheckboxEdition
+                            label={'Sélectionné par défaut ?'}
+                            checked={item.isSelected}
+                            editItem={(val) => editChildrenItem(item, 'isSelected', val)}
+                        />
 
                         <div className="delete">
                             <button onClick={() => removeChildrenItem(item)}>

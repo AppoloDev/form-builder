@@ -30,6 +30,10 @@
             .stack {
                 flex: 1;
 
+                &:first-child {
+                    margin-right: 4px;
+                }
+
                 &:not(:last-child) {
                     @extend .mb-0;
                 }

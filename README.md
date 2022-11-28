@@ -12,10 +12,6 @@
   - Valeur par défaut
   - Lecture seule
   - Nbr de rows
-- Liste à choix
-  - Enlever value des options
-  - Ajouter "Sélectionner par défaut" dans l'option
-  - Ajouter la saisie libre uniquement "case à cocher" sur non
 - DateTime à gérer
   - Afficher date oui/non
   - Afficher heure oui/non
@@ -23,3 +19,7 @@
 - Fichier
   - Gérer les collections
   - Type de fichier accepté (images/pdf/ les deux)
+
+## BEUG
+- Select
+  - Switch non-multiple to multiple -> Les défaut selected ne sont aps pris en compte

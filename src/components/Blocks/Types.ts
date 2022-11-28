@@ -1,6 +1,6 @@
 export type OptionProps = {
-    value: string
     label: string
+    isSelected: boolean
 }
 
 export type SelectProps = {
@@ -10,6 +10,7 @@ export type SelectProps = {
     maxItems: number
     multiple: boolean
     checkCases: boolean
+    customOption: boolean
     required: boolean
     options: OptionProps[]
     editItem: (key: string, value: string | boolean | OptionProps[]) => void
