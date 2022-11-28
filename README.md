@@ -5,8 +5,6 @@
 - Ajoute icône édition block + rendre bloquant les inputs
 - Gérer les groupes répétable
 - Créer des blocks pour chaque input text
-- Input gérer la valeur par défaut
-- Input gérer la lecture seule
 - Faire input type numérique (cf doc)
 - DateTime à gérer
   - Afficher date oui/non

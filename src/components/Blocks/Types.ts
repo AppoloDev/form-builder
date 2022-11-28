@@ -70,6 +70,8 @@ export type TextInputProps = {
     label: string
     placeHolder: string
     helpText: string
+    defaultValue: string
+    readOnly: boolean
     required: boolean
     editItem: (key: string, value: string | boolean) => void
 }
