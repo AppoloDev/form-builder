@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { TextEdition } from "../Edition/TextEdition";
 import { EditableBlock } from "./EditableBlock";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
@@ -10,6 +10,11 @@ import { TextAreaEdition } from "../Edition/TextAreaEdition";
 
 const TextInput: FC<TextAreaProps> = ({label, placeHolder, helpText, required, defaultValue, readOnly, rows = 5, editItem}) => {
     const id = IdGenerator();
+    const [value, setValue] = useState(defaultValue);
+
+    useEffect(() => {
+        setValue(defaultValue);
+    }, [defaultValue]);
 
     return (
         <EditableBlock editionItems={[
@@ -71,7 +76,8 @@ const TextInput: FC<TextAreaProps> = ({label, placeHolder, helpText, required, d
                 id={id}
                 placeholder={placeHolder}
                 rows={rows}
-                value={defaultValue}
+                value={value}
+                onChange={({target}) => setValue(target.value)}
                 required={required}
                 disabled={readOnly}
             />

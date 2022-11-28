@@ -1,14 +1,18 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { TextEdition } from "../Edition/TextEdition";
 import { EditableBlock } from "./EditableBlock";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
 import { IdGenerator } from "../../utilities/String";
-import { EmailInputProps, TextInputProps } from "./Types";
+import { EmailInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
 const EmailInput: FC<EmailInputProps> = ({label, placeHolder, helpText, defaultValue, readOnly, required, editItem}) => {
     const id = IdGenerator();
+    const [value, setValue] = useState(defaultValue);
 
+    useEffect(() => {
+        setValue(defaultValue);
+    }, [defaultValue]);
     return (
         <EditableBlock editionItems={[
             <TextEdition
@@ -62,7 +66,8 @@ const EmailInput: FC<EmailInputProps> = ({label, placeHolder, helpText, defaultV
                    id={id}
                    placeholder={placeHolder}
                    disabled={readOnly}
-                   value={defaultValue}
+                   value={value}
+                   onChange={({target}) => setValue(target.value)}
                    required={required}
             />
 

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { TextEdition } from "../Edition/TextEdition";
 import { EditableBlock } from "./EditableBlock";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
@@ -9,6 +9,11 @@ import { NumberEdition } from "../Edition/NumberEdition";
 
 const NumberInput: FC<NumberInputProps> = ({label, helpText, defaultValue, readOnly, required, allowDecimal = true, editItem}) => {
     const id = IdGenerator();
+    const [value, setValue] = useState(defaultValue);
+
+    useEffect(() => {
+        setValue(defaultValue);
+    }, [defaultValue]);
 
     return (
         <EditableBlock editionItems={[
@@ -62,7 +67,8 @@ const NumberInput: FC<NumberInputProps> = ({label, helpText, defaultValue, readO
             <input type="number"
                    id={id}
                    disabled={readOnly}
-                   value={defaultValue}
+                   value={value}
+                   onChange={({target}) => setValue(parseFloat(target.value))}
                    required={required}
             />
 
