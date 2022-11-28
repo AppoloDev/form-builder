@@ -1,0 +1,99 @@
+@import 'bootstrap/scss/bootstrap'; //@TODO remove
+
+.form-builder {
+    .stack {
+        &:not(:last-child) {
+            @extend .mb-3
+        }
+
+        .stack-heading {
+            @extend .d-flex;
+            @extend .justify-content-between;
+            @extend .align-items-center;
+        }
+
+        .delete {
+            @extend .d-flex;
+            @extend .justify-content-end;
+
+            button {
+                @extend .btn;
+                @extend .btn-danger
+            }
+        }
+
+        &-horizontal {
+            @extend .d-flex;
+            @extend .align-items-end;
+            gap: 4px;
+
+            .stack {
+                flex: 1;
+
+                &:not(:last-child) {
+                    @extend .mb-0;
+                }
+            }
+        }
+    }
+
+    fieldset {
+        @extend .row;
+
+        & + fieldset {
+            @extend .mt-5;
+        }
+    }
+
+    label {
+        @extend .form-label;
+    }
+
+    input {
+        &[type="text"], &[type="file"], &[type="number"] {
+            @extend .form-control;
+        }
+    }
+
+    textarea {
+        @extend .form-control;
+    }
+
+    select {
+        @extend .form-select;
+    }
+
+    .checkbox, .radio {
+        @extend .form-check;
+
+        input {
+            @extend .form-check-input;
+        }
+
+        label {
+            @extend .form-check-label;
+        }
+    }
+
+    button {
+        @extend .btn;
+        @extend .btn-primary;
+    }
+
+    .modal {
+        display: block;
+        opacity: 0;
+        visibility: hidden;
+
+        background-color: rgba(0, 0, 0, .5);
+
+        animation: showModal 500ms both;
+    }
+}
+
+@keyframes showModal {
+    to {
+        opacity: 1;
+        visibility: visible;
+    }
+}

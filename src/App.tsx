@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import './App.scss';
-import { blocks } from './components/blocks/definition';
-import { BlockType } from "./components/BlockType";
+import { blocks } from './components/Blocks/Definition';
 
-function App() {
-    const [items2, setItems2] = useState([
+function FormBuilder() {
+    const [items, setItems] = useState([
         {
             type: "TextInput",
-            label: "a",
+            label: "Label",
             placeHolder: "Lets go",
             value: "",
             required: true,
@@ -16,8 +15,12 @@ function App() {
             type: "FieldSet",
             children: [
                 {
-                    type: "Text",
+                    type: "Title",
                     text: "Au petit matin, les oiseaux se réveillent"
+                },
+                {
+                    type: "Paragraph",
+                    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
                 },
                 {
                     type: "TextInput",
@@ -61,7 +64,7 @@ function App() {
             type: "FieldSet",
             children: [
                 {
-                    type: "Text",
+                    type: "Title",
                     text: "Deuxieme fieldset"
                 },
                 {
@@ -76,22 +79,21 @@ function App() {
 
     const editItem = (item: any, key: string, value: any) => {
         item[key] = value;
-        setItems2([...items2]);
+        setItems([...items]);
     }
 
     return (
-        <>
-            {items2.map((item, i) =>
+        <div className="form-builder">
+            {items.map((item, i) =>
                 React.createElement(blocks[item.type].component, {
                     key: i, ...item,
                     editItem: (key: string, value: any) => editItem(item, key, value)
                 }))
             }
-            {Object.entries(blocks).map(([key, block], i) => <BlockType block={block} key={i}/>)}
 
-            <p>{JSON.stringify(items2)}</p>
-        </>
+            <p>{JSON.stringify(items)}</p>
+        </div>
     )
 }
 
-export default App;
+export default FormBuilder;

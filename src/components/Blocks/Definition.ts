@@ -1,11 +1,12 @@
 import { Block } from "../../models/Block";
 import TextInput from "./TextInput";
 import FieldSet from "./FieldSet";
-import Text from "./Text";
+import Paragraph from "./Paragaph";
 import TextAreaInput from "./TextAreaInput";
 import FileInput from "./FileInput";
 import Select from "./Select";
 import Signature from "./Signature";
+import Title from "./Title";
 
 interface IDictionary<TValue> {
     [id: string]: TValue;
@@ -20,9 +21,13 @@ export const blocks: IDictionary<Block> = {
         title: "FieldSet",
         component: FieldSet,
     },
-    Text: {
-        title: "Texte",
-        component: Text,
+    Paragraph: {
+        title: "Paragraphe",
+        component: Paragraph,
+    },
+    Title: {
+        title: "Titre",
+        component: Title,
     },
     TextAreaInput: {
         title: "Zone de texte",

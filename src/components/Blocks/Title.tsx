@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import { TextEdition } from "../edition/TextEdition";
+import { TextEdition } from "../Edition/TextEdition";
 import { EditableBlock } from "./EditableBlock";
 
-function Text({ text, editItem }: any) {
+function Title({ text, editItem }: any) {
 
     const [visible, setVisible] = useState<boolean>(false);
 
     return (
         <EditableBlock editionItems={<TextEdition label={"Texte"} value={text} editItem={(val: string) => editItem('text', val)} />}>
-            <h3 onClick={() => setVisible(!visible)}>{text}</h3>
+            <h2 onClick={() => setVisible(!visible)}>{text}</h2>
         </EditableBlock>
     )
 }
 
-export default Text;
+export default Title;
