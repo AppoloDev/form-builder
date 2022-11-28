@@ -5,8 +5,9 @@ import { CheckboxEdition } from "../Edition/CheckboxEdition";
 import { SelectOptionEdition } from "../Edition/SelectOptionEdition";
 import { IdGenerator } from "../../utilities/String";
 import { SelectProps } from "./Types";
+import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const Select: FC<SelectProps> = ({label, placeHolder, tooltip, multiple, checkCases, required, editItem, options}) => {
+const Select: FC<SelectProps> = ({label, placeHolder, helpText, multiple, checkCases, required, editItem, options}) => {
     const id = IdGenerator();
 
     return (
@@ -14,7 +15,7 @@ const Select: FC<SelectProps> = ({label, placeHolder, tooltip, multiple, checkCa
             <TextEdition label={"Label"} value={label} editItem={(val) => editItem('label', val)} key={1}/>,
             <TextEdition label={"PlaceHolder"} value={placeHolder}
                          editItem={(val) => editItem('placeHolder', val)} key={2}/>,
-            <TextEdition label={"Info bulle"} value={tooltip} editItem={(val) => editItem('tooltip', val)}
+            <TextEdition label={"Texte d'aide"} value={helpText} editItem={(val) => editItem('helpText', val)}
                          key={3}/>,
             <CheckboxEdition label={"Requis"} checked={required} editItem={(val) => editItem('required', val)}
                              key={4}/>,
@@ -48,6 +49,13 @@ const Select: FC<SelectProps> = ({label, placeHolder, tooltip, multiple, checkCa
                             <option value={o.value} key={i}>{o.label}</option> : null)}
                     </select>)
                 }
+            </>
+
+            <>
+                {helpText && <div className="help-text">
+                    <WarningCircledIcon />
+                    {helpText}
+                </div>}
             </>
         </EditableBlock>
     )

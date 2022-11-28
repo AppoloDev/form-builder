@@ -6,7 +6,7 @@ export type OptionProps = {
 export type SelectProps = {
     label: string
     placeHolder: string
-    tooltip: string
+    helpText: string
     maxItems: number
     multiple: boolean
     checkCases: boolean
@@ -27,7 +27,7 @@ export type FieldSetProps = {
 
 export type FileInputProps = {
     label: string
-    tooltip: string
+    helpText: string
     maxItems: number
     required: boolean
     editItem: (key: string, value: string | boolean) => void
@@ -40,7 +40,7 @@ export type ParagraphProps = {
 
 export type SignatureProps = {
     label: string
-    tooltip: string
+    helpText: string
     required: boolean
     editItem: (key: string, value: string | boolean) => void
 }
@@ -48,14 +48,14 @@ export type SignatureProps = {
 export type TextAreaProps = {
     label: string
     placeHolder: string
-    tooltip: string
+    helpText: string
     required: boolean
     editItem: (key: string, value: string | boolean) => void
 }
 
 export type AddressProps = {
     label: string
-    tooltip: string
+    helpText: string
     required: boolean
     editItem: (key: string, value: string | boolean) => void
 }
@@ -63,7 +63,7 @@ export type AddressProps = {
 export type TextInputProps = {
     label: string
     placeHolder: string
-    tooltip: string
+    helpText: string
     required: boolean
     editItem: (key: string, value: string | boolean) => void
 }

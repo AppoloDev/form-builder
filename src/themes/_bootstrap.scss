@@ -80,6 +80,22 @@
         @extend .btn-primary;
     }
 
+    .help-text {
+        display: flex;
+        align-items: center;
+        @extend .form-text;
+
+        svg {
+            align-self: start;
+            flex: 0 0 20px;
+
+            height: 20px;
+            width: 20px;
+
+            margin-right: 4px;
+        }
+    }
+
     .modal {
         display: block;
         opacity: 0;

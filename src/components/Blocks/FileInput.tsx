@@ -5,14 +5,15 @@ import { CheckboxEdition } from "../Edition/CheckboxEdition";
 import { NumberEdition } from "../Edition/NumberEdition";
 import { IdGenerator } from "../../utilities/String";
 import { FileInputProps } from "./Types";
+import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const FileInput: FC<FileInputProps> = ({label, tooltip, maxItems, required, editItem}: FileInputProps) => {
+const FileInput: FC<FileInputProps> = ({label, helpText, maxItems, required, editItem}: FileInputProps) => {
     const id = IdGenerator();
 
     return (
         <EditableBlock editionItems={[
             <TextEdition label={"Label"} value={label} editItem={(val) => editItem('label', val)} key={1}/>,
-            <TextEdition label={"Info bulle"} value={tooltip} editItem={(val) => editItem('tooltip', val)}
+            <TextEdition label={"Texte d'aide"} value={helpText} editItem={(val) => editItem('helpText', val)}
                          key={2}/>,
             <CheckboxEdition label={"Requis"} checked={required} editItem={(val) => editItem('required', val)}
                              key={3}/>,
@@ -25,6 +26,13 @@ const FileInput: FC<FileInputProps> = ({label, tooltip, maxItems, required, edit
                    disabled={true}
                    id={id}
                    required={required}/>
+
+            <>
+                {helpText && <div className="help-text">
+                    <WarningCircledIcon />
+                    {helpText}
+                </div>}
+            </>
         </EditableBlock>
     )
 }
