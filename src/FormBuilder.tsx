@@ -100,8 +100,6 @@ function FormBuilder() {
     }
 
     const removeItem = (item: any) => {
-        console.log('delete', item);
-
         const index = items.indexOf(item)
 
         if (index > -1) {

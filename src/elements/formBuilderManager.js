@@ -13,7 +13,6 @@ class FormBuilderManager extends HTMLElement {
     }
 
     openBuilder() {
-        console.log(this.formBuilderEl);
         this.formBuilderEl.removeAttribute('hidden');
         // TODO gérer l'event onClose (ou onSave ou les 2) afin de mettre le json dans le this.targetEl.value
     }
