@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './App.scss';
 import { blocks } from './components/Blocks/Definition';
 
 function FormBuilder() {
