@@ -20,11 +20,19 @@ export type SelectProps = {
 export type EditableBlockProps = {
     editionItems: JSX.Element | JSX.Element[]
     children: JSX.Element | JSX.Element[]
+    className?: string
     removeItem: () => void
 }
 
 export type FieldSetProps = {
     children: JSX.Element[]
+    editItem: (key: string, children: JSX.Element[]) => void
+    removeItem: () => void
+}
+
+export type RepeatableProps = {
+    children: JSX.Element[]
+    maxItems: number
     editItem: (key: string, children: JSX.Element[]) => void
     removeItem: () => void
 }

@@ -1,15 +1,14 @@
 @import 'bootstrap/scss/bootstrap'; //@TODO remove
 
 .form-builder {
-    > .stack, fieldset > .stack {
-
+    > .stack, fieldset > .stack, .repeatable .form-content > .stack {
         @extend .p-3;
 
         border: 1px dashed red;
         border-radius: 4px;
     }
 
-    .stack, fieldset {
+    .stack, fieldset, .repeatable {
         &:hover {
             > .actions-control {
                 opacity: 1;
@@ -105,7 +104,7 @@
         }
     }
 
-    fieldset {
+    fieldset, .repeatable {
         @extend .px-5;
         @extend .py-4;
 
@@ -114,8 +113,8 @@
         border: 1px dashed blue;
         border-radius: 4px;
 
-        & + fieldset {
-            @extend .mt-5;
+        & + fieldset, + .repeatable {
+            @extend .mt-3;
         }
     }
 

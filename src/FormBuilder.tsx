@@ -26,6 +26,22 @@ function FormBuilder() {
             required: true,
         },
         {
+            type: "Repeatable",
+            maxItems: 5,
+            children: [
+                {
+                    type: "TextInput",
+                    label: "Nom",
+                    required: true,
+                },
+                {
+                    type: "TextInput",
+                    label: "Prénom",
+                    required: true,
+                },
+            ]
+        },
+        {
             type: "FieldSet",
             children: [
                 {

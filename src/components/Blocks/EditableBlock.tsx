@@ -5,14 +5,14 @@ import { EditIcon } from "../Icons/EditIcon";
 import { TrashIcon } from "../Icons/TrashIcon";
 import { DragIcon } from "../Icons/DragIcon";
 
-export const EditableBlock: FC<EditableBlockProps> = ({editionItems, children, removeItem}) => {
+export const EditableBlock: FC<EditableBlockProps> = ({editionItems, children, className = 'stack', removeItem}) => {
     const [visible, setVisible] = useState(false);
     const modalRef = useRef<HTMLDivElement>(null);
 
     const closeModal = () => setVisible(false);
 
     return (
-        <div className="stack">
+        <div className={`${className}`}>
             <div className="actions-control">
                 <div
                     className="actions-control__item drag">

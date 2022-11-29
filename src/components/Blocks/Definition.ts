@@ -14,6 +14,7 @@ import TelInput from "./TelInput";
 import UrlInput from "./UrlInput";
 import HourMinuteInput from "./HourMinuteInput";
 import DateTimeInput from "./DateTimeInput";
+import Repeatable from "./Repeatable";
 
 interface IDictionary<TValue> {
     [id: string]: TValue;
@@ -84,5 +85,9 @@ export const blocks: IDictionary<Block> = {
     Signature: {
         title: "Signature",
         component: Signature,
-    }
+    },
+    Repeatable: {
+        title: "Répétable",
+        component: Repeatable,
+    },
 };

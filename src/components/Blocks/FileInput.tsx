@@ -70,7 +70,7 @@ const FileInput: FC<FileInputProps> = ({label, helpText, maxItems, required, val
             />
 
             <>
-                {maxItems > 1 && (<div className="add-file">Ajouter un fichier</div>)}
+                {maxItems > 1 && (<div className="add-file">Ajouter un fichier…</div>)}
             </>
 
             <>
