@@ -9,16 +9,7 @@ import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 import { SelectOptionEdition } from "../Edition/SelectOptionEdition";
 import { SelectEdition } from "../Edition/SelectEdition";
 
-const FileInput: FC<FileInputProps> = ({
-                                           label,
-                                           helpText,
-                                           maxItems,
-                                           required,
-                                           value,
-                                           acceptedFile = [],
-                                           editItem,
-                                           removeItem
-                                       }: FileInputProps) => {
+const FileInput: FC<FileInputProps> = ({label, helpText, maxItems, required, value, acceptedFile = [], editItem, removeItem}: FileInputProps) => {
     const id = IdGenerator();
 
     return (
@@ -71,12 +62,16 @@ const FileInput: FC<FileInputProps> = ({
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
+
             <input type="file"
-                   multiple={maxItems > 1}
                    id={id}
                    accept={"image/*,application/pdf"}
                    required={required}
             />
+
+            <>
+                {maxItems > 1 && (<div className="add-file">Ajouter un fichier</div>)}
+            </>
 
             <>
                 {helpText && <div className="help-text">
@@ -84,6 +79,8 @@ const FileInput: FC<FileInputProps> = ({
                     {helpText}
                 </div>}
             </>
+
+
         </EditableBlock>
     )
 }

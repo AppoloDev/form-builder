@@ -2,8 +2,6 @@
 
 ## TODO
 - Gérer les groupes répétable
-- Fichier
-  - Gérer les collections
 
 - Input number -> Gérer la valeur par défaut dans le cas ou l'on'autorise pas les décimales
 
