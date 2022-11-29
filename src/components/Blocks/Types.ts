@@ -26,7 +26,7 @@ export type EditableBlockProps = {
 export type FieldSetProps = {
     children: JSX.Element[]
     editItem: (key: string, children: JSX.Element[]) => void
-    removeItem: (item: JSX.Element) => void
+    removeItem: () => void
 }
 
 export type FileInputProps = {

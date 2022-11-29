@@ -1,16 +1,18 @@
 import React, { FC } from "react";
 import { blocks } from "./Definition";
 import { FieldSetProps } from "./Types";
+import { DragIcon } from "../Icons/DragIcon";
+import { TrashIcon } from "../Icons/TrashIcon";
 
 
-const FieldSet: FC<FieldSetProps> = ({children, editItem}) => {
+const FieldSet: FC<FieldSetProps> = ({children, editItem, removeItem}) => {
     const editChildrenItem = (item: JSX.Element, key: keyof JSX.Element, value: JSX.Element[]) => {
         item[key] = value;
         const childrenClone = [...children];
         editItem('children', childrenClone);
     };
 
-    const removeItem = (item: JSX.Element) => {
+    const removeChildrenItem = (item: JSX.Element) => {
         const index = children.indexOf(item);
 
         if (index > -1) {
@@ -21,11 +23,23 @@ const FieldSet: FC<FieldSetProps> = ({children, editItem}) => {
 
     return (
         <fieldset>
+            <div className="actions-control">
+                <div className="actions-control__item drag">
+                    <DragIcon/>
+                </div>
+
+                <div
+                    onClick={() => removeItem()}
+                    className="actions-control__item">
+                    <TrashIcon/>
+                </div>
+            </div>
+
             {children.map((item: JSX.Element, i: number) => React.createElement(blocks[item.type].component, {
                     ...item,
                     key: i,
                     editItem: (key: keyof JSX.Element, value: JSX.Element[]) => editChildrenItem(item, key, value),
-                    removeItem: () => removeItem(item)
+                    removeItem: () => removeChildrenItem(item)
                 })
             )}
         </fieldset>

@@ -9,6 +9,45 @@
         border-radius: 4px;
     }
 
+    .stack, fieldset {
+        &:hover {
+            > .actions-control {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+
+        > .actions-control {
+            @extend .px-2;
+
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+
+            position: absolute;
+            top: 0;
+            right: 100%;
+
+            opacity: 0;
+            visibility: hidden;
+
+            transition: opacity .3s ease-in-out, visibility .3s ease-in-out;
+
+            .actions-control__item {
+                cursor: pointer;
+
+                &.drag {
+                    cursor: grab;
+                }
+
+                svg {
+                    height: 20px;
+                    width: 20px;
+                }
+            }
+        }
+    }
+
     .stack {
         position: relative;
 
@@ -53,48 +92,13 @@
                 }
             }
         }
-
-        &:hover {
-            .actions-control {
-                opacity: 1;
-                visibility: visible;
-            }
-        }
-
-        .actions-control {
-            @extend .px-2;
-
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-
-            position: absolute;
-            top: 0;
-            right: 100%;
-
-            opacity: 0;
-            visibility: hidden;
-
-            transition: opacity .3s ease-in-out, visibility .3s ease-in-out;
-
-            &__item {
-                cursor: pointer;
-
-                &.drag {
-                    cursor: grab;
-                }
-
-                svg {
-                    height: 20px;
-                    width: 20px;
-                }
-            }
-        }
     }
 
     fieldset {
         @extend .px-5;
         @extend .py-4;
+
+        position: relative;
 
         border: 1px dashed blue;
         border-radius: 4px;
