@@ -2,7 +2,6 @@
 
 ## TODO
 - Suppression des blocks
-- Ajoute icône édition block + rendre bloquant les inputs
 - Gérer les groupes répétable
 - DateTime à gérer
   - Afficher date oui/non
