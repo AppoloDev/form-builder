@@ -11,6 +11,21 @@ function FormBuilder() {
             required: true,
         },
         {
+            type: "DateTimeInput",
+            label: "Datetime input",
+            placeHolder: "Lets go",
+            value: "",
+            required: true,
+        },
+
+        {
+            type: "HourMinuteInput",
+            label: "HourMinute input",
+            placeHolder: "Lets go",
+            value: "",
+            required: true,
+        },
+        {
             type: "FieldSet",
             children: [
                 {

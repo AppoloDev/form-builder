@@ -84,6 +84,10 @@ export type TelInputProps = TextInputProps
 
 export type UrlInputProps = TextInputProps
 
+export type DateTimeInputProps = TextInputProps & {
+    showHour: boolean
+}
+
 export type NumberInputProps = {
     label: string
     helpText: string

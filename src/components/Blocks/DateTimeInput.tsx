@@ -3,18 +3,10 @@ import { TextEdition } from "../Edition/TextEdition";
 import { EditableBlock } from "./EditableBlock";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
 import { IdGenerator } from "../../utilities/String";
-import { HourMinuteInputProps, TextInputProps } from "./Types";
+import { DateTimeInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const HourMinuteInput: FC<HourMinuteInputProps> = ({
-                                                       label,
-                                                       placeHolder,
-                                                       helpText,
-                                                       defaultValue,
-                                                       readOnly,
-                                                       required,
-                                                       editItem
-                                                   }) => {
+const DateTimeInput: FC<DateTimeInputProps> = ({label, placeHolder, helpText, defaultValue, readOnly, required, showHour, editItem}) => {
     const id = IdGenerator();
     const [value, setValue] = useState(defaultValue);
 
@@ -53,17 +45,24 @@ const HourMinuteInput: FC<HourMinuteInputProps> = ({
             />,
 
             <CheckboxEdition
+                label={"Afficher l'heure ?"}
+                checked={showHour}
+                editItem={(val) => editItem('showHour', val)}
+                key={5}
+            />,
+
+            <CheckboxEdition
                 label={"Requis"}
                 checked={required}
                 editItem={(val) => editItem('required', val)}
-                key={5}
+                key={6}
             />,
 
             <CheckboxEdition
                 label={"Lecture seule"}
                 checked={readOnly}
                 editItem={(val) => editItem('readOnly', val)}
-                key={6}
+                key={7}
             />,
         ]}>
             <label htmlFor={id}>
@@ -71,7 +70,7 @@ const HourMinuteInput: FC<HourMinuteInputProps> = ({
                 {required && <span className="required">Requis</span>}
             </label>
 
-            <input type="time"
+            <input type={showHour ? 'datetime-local' : 'date'}
                    id={id}
                    placeholder={placeHolder}
                    disabled={readOnly}
@@ -90,4 +89,4 @@ const HourMinuteInput: FC<HourMinuteInputProps> = ({
     )
 }
 
-export default HourMinuteInput;
+export default DateTimeInput;

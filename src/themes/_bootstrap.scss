@@ -119,7 +119,7 @@
     }
 
     input {
-        &[type="text"], &[type="file"], &[type="number"], &[type="tel"], &[type="email"], &[type="url"] {
+        &[type="text"], &[type="file"], &[type="number"], &[type="tel"], &[type="email"], &[type="url"], &[type="date"], &[type="datetime-local"], &[type="time"] {
             @extend .form-control;
         }
     }

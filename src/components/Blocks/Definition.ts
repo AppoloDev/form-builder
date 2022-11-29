@@ -13,6 +13,7 @@ import EmailInput from "./EmailInput";
 import TelInput from "./TelInput";
 import UrlInput from "./UrlInput";
 import HourMinuteInput from "./HourMinuteInput";
+import DateTimeInput from "./DateTimeInput";
 
 interface IDictionary<TValue> {
     [id: string]: TValue;
@@ -71,6 +72,10 @@ export const blocks: IDictionary<Block> = {
     FileInput: {
         title: "Fichier",
         component: FileInput,
+    },
+    DateTimeInput: {
+        title: "Date",
+        component: DateTimeInput,
     },
     Select: {
         title: "Liste à choix",

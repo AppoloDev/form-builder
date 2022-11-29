@@ -3,10 +3,6 @@
 ## TODO
 - Suppression des blocks
 - Gérer les groupes répétable
-- DateTime à gérer
-  - Afficher date oui/non
-  - Afficher heure oui/non
-  - Si non c'est oui
 - Fichier
   - Gérer les collections
   - Type de fichier accepté (images/pdf/ les deux)
