@@ -5,7 +5,7 @@ import { EditIcon } from "../Icons/EditIcon";
 import { TrashIcon } from "../Icons/TrashIcon";
 import { DragIcon } from "../Icons/DragIcon";
 
-export const EditableBlock: FC<EditableBlockProps> = ({editionItems, children}) => {
+export const EditableBlock: FC<EditableBlockProps> = ({editionItems, children, removeItem}) => {
     const [visible, setVisible] = useState(false);
     const modalRef = useRef<HTMLDivElement>(null);
 
@@ -26,6 +26,7 @@ export const EditableBlock: FC<EditableBlockProps> = ({editionItems, children}) 
                 </div>
 
                 <div
+                    onClick={() => removeItem()}
                     className="actions-control__item">
                     <TrashIcon/>
                 </div>

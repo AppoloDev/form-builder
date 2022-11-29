@@ -8,7 +8,7 @@ import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 import { NumberEdition } from "../Edition/NumberEdition";
 import { TextAreaEdition } from "../Edition/TextAreaEdition";
 
-const TextInput: FC<TextAreaProps> = ({label, placeHolder, helpText, required, defaultValue, readOnly, rows = 5, editItem}) => {
+const TextInput: FC<TextAreaProps> = ({label, placeHolder, helpText, required, defaultValue, readOnly, rows = 5, editItem, removeItem}) => {
     const id = IdGenerator();
     const [value, setValue] = useState(defaultValue);
 
@@ -17,7 +17,9 @@ const TextInput: FC<TextAreaProps> = ({label, placeHolder, helpText, required, d
     }, [defaultValue]);
 
     return (
-        <EditableBlock editionItems={[
+        <EditableBlock
+            removeItem={removeItem}
+            editionItems={[
             <TextEdition
                 label={"Label"}
                 value={label}

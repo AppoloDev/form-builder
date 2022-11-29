@@ -99,12 +99,28 @@ function FormBuilder() {
         setItems([...items]);
     }
 
+    const removeItem = (item: any) => {
+        console.log('delete', item);
+
+        const index = items.indexOf(item)
+
+        if (index > -1) {
+            setItems((current) => {
+                current.splice(index, 1);
+
+                return [...current];
+            })
+        }
+    }
+
     return (
         <div className="form-builder">
             {items.map((item, i) =>
                 React.createElement(blocks[item.type].component, {
-                    key: i, ...item,
-                    editItem: (key: string, value: any) => editItem(item, key, value)
+                    key: i,
+                    ...item,
+                    editItem: (key: string, value: any) => editItem(item, key, value),
+                    removeItem: () => removeItem(item)
                 }))
             }
 

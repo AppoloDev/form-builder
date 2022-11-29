@@ -6,7 +6,7 @@ import { IdGenerator } from "../../utilities/String";
 import { DateTimeInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const DateTimeInput: FC<DateTimeInputProps> = ({label, placeHolder, helpText, defaultValue, readOnly, required, showHour, editItem}) => {
+const DateTimeInput: FC<DateTimeInputProps> = ({label, placeHolder, helpText, defaultValue, readOnly, required, showHour, editItem, removeItem}) => {
     const id = IdGenerator();
     const [value, setValue] = useState(defaultValue);
 
@@ -15,7 +15,9 @@ const DateTimeInput: FC<DateTimeInputProps> = ({label, placeHolder, helpText, de
     }, [defaultValue]);
 
     return (
-        <EditableBlock editionItems={[
+        <EditableBlock
+            removeItem={removeItem}
+            editionItems={[
             <TextEdition
                 label={"Label"}
                 value={label}

@@ -6,7 +6,7 @@ import { IdGenerator } from "../../utilities/String";
 import { TelInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const TelInput: FC<TelInputProps> = ({label, placeHolder, helpText, defaultValue, readOnly, required, editItem}) => {
+const TelInput: FC<TelInputProps> = ({label, placeHolder, helpText, defaultValue, readOnly, required, editItem, removeItem}) => {
     const id = IdGenerator();
     const [value, setValue] = useState(defaultValue);
 
@@ -15,7 +15,9 @@ const TelInput: FC<TelInputProps> = ({label, placeHolder, helpText, defaultValue
     }, [defaultValue]);
 
     return (
-        <EditableBlock editionItems={[
+        <EditableBlock
+            removeItem={removeItem}
+            editionItems={[
             <TextEdition
                 label={"Label"}
                 value={label}

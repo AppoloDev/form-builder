@@ -7,11 +7,13 @@ import { IdGenerator } from "../../utilities/String";
 import { FileInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const FileInput: FC<FileInputProps> = ({label, helpText, maxItems, required, editItem}: FileInputProps) => {
+const FileInput: FC<FileInputProps> = ({label, helpText, maxItems, required, editItem, removeItem}: FileInputProps) => {
     const id = IdGenerator();
 
     return (
-        <EditableBlock editionItems={[
+        <EditableBlock
+            removeItem={removeItem}
+            editionItems={[
             <TextEdition label={"Label"} value={label} editItem={(val) => editItem('label', val)} key={1}/>,
             <TextEdition label={"Texte d'aide"} value={helpText} editItem={(val) => editItem('helpText', val)}
                          key={2}/>,

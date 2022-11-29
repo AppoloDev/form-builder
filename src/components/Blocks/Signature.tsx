@@ -6,11 +6,13 @@ import { IdGenerator } from "../../utilities/String";
 import { SignatureProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const Signature: FC<SignatureProps> = ({label, helpText, required, editItem}) => {
+const Signature: FC<SignatureProps> = ({label, helpText, required, editItem, removeItem}) => {
     const id = IdGenerator();
 
     return (
-        <EditableBlock editionItems={[
+        <EditableBlock
+            removeItem={removeItem}
+            editionItems={[
             <TextEdition label={"Label"} value={label} editItem={(val) => editItem('label', val)} key={1}/>,
             <TextEdition label={"Texte d'aide"} value={helpText} editItem={(val) => editItem('helpText', val)}
                          key={3}/>,

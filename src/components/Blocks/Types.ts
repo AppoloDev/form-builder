@@ -1,5 +1,3 @@
-import * as cluster from "cluster";
-
 export type OptionProps = {
     label: string
     isSelected: boolean
@@ -16,16 +14,19 @@ export type SelectProps = {
     required: boolean
     options: OptionProps[]
     editItem: (key: string, value: string | boolean | OptionProps[]) => void
+    removeItem: () => void
 }
 
 export type EditableBlockProps = {
     editionItems: JSX.Element | JSX.Element[]
     children: JSX.Element | JSX.Element[]
+    removeItem: () => void
 }
 
 export type FieldSetProps = {
     children: JSX.Element[]
     editItem: (key: string, children: JSX.Element[]) => void
+    removeItem: (item: JSX.Element) => void
 }
 
 export type FileInputProps = {
@@ -34,11 +35,13 @@ export type FileInputProps = {
     maxItems: number
     required: boolean
     editItem: (key: string, value: string | boolean) => void
+    removeItem: () => void
 }
 
 export type ParagraphProps = {
     text: string
     editItem: (key: string, value: string) => void
+    removeItem: () => void
 }
 
 export type SignatureProps = {
@@ -46,6 +49,7 @@ export type SignatureProps = {
     helpText: string
     required: boolean
     editItem: (key: string, value: string | boolean) => void
+    removeItem: () => void
 }
 
 export type TextAreaProps = {
@@ -57,6 +61,7 @@ export type TextAreaProps = {
     readOnly: boolean
     rows: number
     editItem: (key: string, value: string | boolean) => void
+    removeItem: () => void
 }
 
 export type AddressProps = {
@@ -64,6 +69,7 @@ export type AddressProps = {
     helpText: string
     required: boolean
     editItem: (key: string, value: string | boolean) => void
+    removeItem: () => void
 }
 
 export type TextInputProps = {
@@ -74,6 +80,7 @@ export type TextInputProps = {
     readOnly: boolean
     required: boolean
     editItem: (key: string, value: string | boolean) => void
+    removeItem: () => void
 }
 
 export type EmailInputProps = TextInputProps
@@ -96,9 +103,11 @@ export type NumberInputProps = {
     required: boolean
     allowDecimal: boolean
     editItem: (key: string, value: string | boolean) => void
+    removeItem: () => void
 }
 
 export type TitleProps = {
     text: string
     editItem: (key: string, value: string) => void
+    removeItem: () => void
 }

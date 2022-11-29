@@ -7,7 +7,7 @@ import { NumberInputProps, TextInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 import { NumberEdition } from "../Edition/NumberEdition";
 
-const NumberInput: FC<NumberInputProps> = ({label, helpText, defaultValue, readOnly, required, allowDecimal = true, editItem}) => {
+const NumberInput: FC<NumberInputProps> = ({label, helpText, defaultValue, readOnly, required, allowDecimal = true, editItem, removeItem}) => {
     const id = IdGenerator();
     const [value, setValue] = useState(defaultValue);
 
@@ -16,7 +16,9 @@ const NumberInput: FC<NumberInputProps> = ({label, helpText, defaultValue, readO
     }, [defaultValue]);
 
     return (
-        <EditableBlock editionItems={[
+        <EditableBlock
+            removeItem={removeItem}
+            editionItems={[
             <TextEdition
                 label={"Label"}
                 value={label}
