@@ -32,6 +32,13 @@ export type TextEditionProps = {
     editItem: (value: string) => void
 }
 
+export type SelectEditionProps = {
+    label: string
+    value: string[]
+    options: Array<{ label: string, value: string }>
+    editItem: (value: any) => void
+}
+
 export type SelectOptionEditionProps = {
     label: string
     options: OptionProps[]

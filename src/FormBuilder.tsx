@@ -7,7 +7,7 @@ function FormBuilder() {
             type: "TextInput",
             label: "Label",
             placeHolder: "Lets go",
-            value: "",
+            value: "je suis une value",
             required: true,
         },
         {
@@ -61,35 +61,10 @@ function FormBuilder() {
                     label: "Fichier",
                     maxItems: 5,
                     helpText: "Fichier PDF",
+                    acceptedFile: [],
+                    value: ['application/pdf'],
                     required: true,
-                },
-                {
-                    type: "Select",
-                    label: "Select",
-                    helpText: "",
-                    multiple: false,
-                    options: [{label: "test", value: "testt"}],
-                    required: true,
-                },
-            ]
-        },
-        {
-            type: "FieldSet",
-            children: [
-                {
-                    type: "Title",
-                    text: "Deuxieme fieldset"
-                },
-                {
-                    type: "Address",
-                    label: 'Adresse'
-                },
-                {
-                    type: "Signature",
-                    label: "Sign",
-                    helpText: "",
-                    required: true,
-                },
+                }
             ]
         }
     ]);

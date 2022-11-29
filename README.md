@@ -4,7 +4,6 @@
 - Gérer les groupes répétable
 - Fichier
   - Gérer les collections
-  - Type de fichier accepté (images/pdf/ les deux)
 
 - Input number -> Gérer la valeur par défaut dans le cas ou l'on'autorise pas les décimales
 
