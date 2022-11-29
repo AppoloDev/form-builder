@@ -1,7 +1,6 @@
 # Form builder
 
 ## TODO
-- Suppression des blocks
 - Gérer les groupes répétable
 - Fichier
   - Gérer les collections
