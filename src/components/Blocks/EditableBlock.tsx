@@ -1,6 +1,9 @@
 import React, { FC, useRef, useState } from "react";
 import { EditionModal } from "../Edition/EditionModal";
 import { EditableBlockProps } from "./Types";
+import { EditIcon } from "../Icons/EditIcon";
+import { TrashIcon } from "../Icons/TrashIcon";
+import { DragIcon } from "../Icons/DragIcon";
 
 export const EditableBlock: FC<EditableBlockProps> = ({editionItems, children}) => {
     const [visible, setVisible] = useState(false);
@@ -9,24 +12,34 @@ export const EditableBlock: FC<EditableBlockProps> = ({editionItems, children}) 
     const closeModal = () => setVisible(false);
 
     return (
-        <div
-            className="stack"
-            onClick={e => {
-                const target = e.target as HTMLElement;
-                if (!modalRef.current?.contains(target) && !isFormField(target.tagName)) setVisible(!visible)
-            }}
-        >
+        <div className="stack">
+            <div className="actions-control">
+                <div
+                    className="actions-control__item drag">
+                    <DragIcon/>
+                </div>
+
+                <div
+                    className="actions-control__item"
+                    onClick={() => setVisible(!visible)}>
+                    <EditIcon/>
+                </div>
+
+                <div
+                    className="actions-control__item">
+                    <TrashIcon/>
+                </div>
+            </div>
+
             <div className="modal-container" ref={modalRef}>
                 <EditionModal visible={visible} closeModal={closeModal}>
                     {editionItems}
                 </EditionModal>
             </div>
 
-            {children}
+            <div className="form-content">
+                {children}
+            </div>
         </div>
     )
-}
-
-const isFormField = (tagName: string) => {
-    return ['INPUT', 'SELECT', 'OPTION', 'TEXTAREA'].includes(tagName);
 }
