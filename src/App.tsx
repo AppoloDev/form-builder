@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import './App.scss';
-import { blocks } from './components/Blocks/Definition';
+import { Block, blocks } from "./components/Blocks/Definition";
+import DndContext from "./components/Sortable/DndContext";
+import { SortableList } from "./components/Sortable/ListSortable";
+import { DroppableList } from "./components/Sortable/ListDroppable";
 
 function FormBuilder() {
     const [items, setItems] = useState([
@@ -87,14 +90,26 @@ function FormBuilder() {
 
     return (
         <div className="form-builder">
-            {items.map((item, i) =>
-                React.createElement(blocks[item.type].component, {
-                    key: i, ...item,
-                    editItem: (key: string, value: any) => editItem(item, key, value)
-                }))
-            }
+            <DndContext items={items}
+                        setReorder={(items: any[]) => setItems(items)}>
+                <DroppableList items={Object.values(blocks)}
+                               dropItem={(block: Block) => {
+                                   return {
+                                       type: block.component.name,
+                                       ...block.base
+                                   }
+                               }}
+                               renderItem={(block: Block) => <div draggable={true}>{block.title}</div>} />
+                <SortableList
+                    renderItem={(item: any, key: number) => React.createElement(blocks[item.type].component, {
+                       key, ...item,
+                       editItem: (key: string, value: any) => editItem(item, key, value)
+                   })}
+                    items={items}>
+                </SortableList>
+            </DndContext>
 
-            <p>{JSON.stringify(items)}</p>
+            <p style={{ fontSize: 12, marginTop: 20 }}>{JSON.stringify(items)}</p>
         </div>
     )
 }

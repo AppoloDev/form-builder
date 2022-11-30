@@ -98,3 +98,9 @@ export type TitleProps = {
     text: string
     editItem: (key: string, value: string) => void
 }
+
+export type DndContextProps<T> = {
+    children: [],
+    setReorder: (items: T[]) => void,
+    items: T[],
+}
