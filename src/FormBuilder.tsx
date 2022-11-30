@@ -80,7 +80,23 @@ function FormBuilder() {
                     acceptedFile: [],
                     value: ['application/pdf'],
                     required: true,
-                }
+                },
+                {
+                    type: "Repeatable",
+                    maxItems: 5,
+                    children: [
+                        {
+                            type: "TextInput",
+                            label: "Nom",
+                            required: true,
+                        },
+                        {
+                            type: "TextInput",
+                            label: "Prénom",
+                            required: true,
+                        },
+                    ]
+                },
             ]
         }
     ]);
