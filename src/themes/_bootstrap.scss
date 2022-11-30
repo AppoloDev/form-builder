@@ -91,17 +91,19 @@
                 }
             }
         }
+    }
 
-        .add-file {
-            font-size: 14px;
-            text-align: center;
+    .add-more {
+        font-size: 14px;
+        text-align: center;
 
-            padding: 0.375rem 0.75rem;
-            border: 1px dashed #ced4da;
-            border-radius: 0.375rem;
+        padding: 0.375rem 0.75rem;
+        border: 1px dashed #ced4da;
+        border-radius: 0.375rem;
 
-            margin-top: 8px;
-        }
+        margin-top: 8px;
+
+        cursor: pointer;
     }
 
     fieldset, .repeatable {

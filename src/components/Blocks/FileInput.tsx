@@ -6,7 +6,6 @@ import { NumberEdition } from "../Edition/NumberEdition";
 import { IdGenerator } from "../../utilities/String";
 import { FileInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
-import { SelectOptionEdition } from "../Edition/SelectOptionEdition";
 import { SelectEdition } from "../Edition/SelectEdition";
 
 const FileInput: FC<FileInputProps> = ({label, helpText, maxItems, required, value, acceptedFile = [], editItem, removeItem}: FileInputProps) => {
@@ -70,7 +69,7 @@ const FileInput: FC<FileInputProps> = ({label, helpText, maxItems, required, val
             />
 
             <>
-                {maxItems > 1 && (<div className="add-file">Ajouter un fichier…</div>)}
+                {maxItems > 1 && (<div className="add-more">Ajouter un fichier…</div>)}
             </>
 
             <>

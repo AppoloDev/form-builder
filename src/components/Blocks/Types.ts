@@ -33,7 +33,7 @@ export type FieldSetProps = {
 export type RepeatableProps = {
     children: JSX.Element[]
     maxItems: number
-    editItem: (key: string, children: JSX.Element[]) => void
+    editItem: (key: string, children: JSX.Element[] | string | boolean) => void
     removeItem: () => void
 }
 

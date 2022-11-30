@@ -21,8 +21,6 @@ const Repeatable: FC<RepeatableProps> = ({children, maxItems, editItem, removeIt
         }
     }
 
-    console.log('maxItems', maxItems);
-
     return (
         <EditableBlock
             removeItem={removeItem}
@@ -31,18 +29,24 @@ const Repeatable: FC<RepeatableProps> = ({children, maxItems, editItem, removeIt
                 <NumberEdition
                     label={'Nombre maximum de répétition'}
                     value={maxItems}
-                    editItem={(val) => console.log(val)}
+                    editItem={(val) => editItem('maxItems', val)}
                     key={1}
                 />
             ]}
         >
-            {children.map((item: JSX.Element, i: number) => React.createElement(blocks[item.type].component, {
-                    ...item,
-                    key: i,
-                    editItem: (key: keyof JSX.Element, value: JSX.Element[]) => editChildrenItem(item, key, value),
-                    removeItem: () => removeChildrenItem(item)
-                })
-            )}
+            <>
+                {children.map((item: JSX.Element, i: number) => React.createElement(blocks[item.type].component, {
+                        ...item,
+                        key: i,
+                        editItem: (key: keyof JSX.Element, value: JSX.Element[]) => editChildrenItem(item, key, value),
+                        removeItem: () => removeChildrenItem(item)
+                    })
+                )}
+            </>
+
+            <>
+                {maxItems > 1 && (<div className="add-more">Ajouter une nouvelle entrée…</div>)}
+            </>
         </EditableBlock>
     )
 }
