@@ -1,6 +1,37 @@
 @import 'bootstrap/scss/bootstrap'; //@TODO remove
 
 .form-builder {
+    position: relative;
+    padding-left: 248px;
+
+    .droppable-list {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+
+        z-index: 99;
+
+        max-width: 248px;
+        width: 100%;
+
+        padding: 56px 32px;
+        border-right: 1px solid #ced4da;
+
+        .droppable-item {
+            padding: 8px 16px;
+
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+
+            cursor: grab;
+
+            &:not(:last-child) {
+                margin-bottom: 8px;
+            }
+        }
+    }
+
     .draggable {
         cursor: grab;
 
@@ -30,7 +61,6 @@
             }
         }
     }
-
 
     .stack, fieldset, .repeatable {
         &:hover {

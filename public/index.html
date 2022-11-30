@@ -1,33 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+<head>
+    <meta charset="utf-8"/>
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#000000"/>
     <meta
-      name="description"
-      content="Web site created using create-react-app"
+            name="description"
+            content="Web site created using create-react-app"
     />
 
     <title>Form Builder</title>
-  </head>
-  <body>
-
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <form-builder-manager target="#json" open="#displayBuilder">
-          <form>
-            <form-builder hidden></form-builder>
+</head>
+<body>
+    <form-builder-manager target="#json" open="#displayBuilder">
+        <form>
+            <form-builder></form-builder>
             <textarea id="json"></textarea>
             <button type="button" id="displayBuilder">Ouvrir le builder</button>
 
-            <input type="submit" value="Enregistrer" />
-          </form>
-        </form-builder-manager>
-      </div>
-    </div>
-  </div>
-  </body>
+            <input type="submit" value="Enregistrer"/>
+        </form>
+    </form-builder-manager>
+</body>
 </html>

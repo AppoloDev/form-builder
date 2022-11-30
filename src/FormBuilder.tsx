@@ -122,29 +122,38 @@ function FormBuilder() {
     }
 
     return (
-        <div className="form-builder">
-            <DndContext items={items}
-                        setReorder={(items: any[]) => setItems(items)}>
-                <DroppableList items={Object.values(blocks)}
-                               dropItem={(block: Block) => {
-                                   return {
-                                       type: block.component.name,
-                                       ...block.base
-                                   }
-                               }}
-                               renderItem={(block: Block) => <div draggable={true}>{block.title}</div>} />
-                <SortableList
-                    renderItem={(item: any, key: number) => React.createElement(blocks[item.type].component, {
-                        key, ...item,
-                        editItem: (key: string, value: any) => editItem(item, key, value),
-                        removeItem: () => removeItem(item)
-                   })}
-                    items={items}>
-                </SortableList>
-            </DndContext>
+        <>
+            <div className="form-builder">
+                <DndContext items={items}
+                            setReorder={(items: any[]) => setItems(items)}
+                >
+                    <DroppableList
+                        items={Object.values(blocks)}
+                        dropItem={(block: Block) => {
+                            return {
+                                type: block.component.name,
+                                ...block.base
+                            }
+                        }}
+                        renderItem={(block: Block) => <div draggable={true}>{block.title}</div>}
+                    />
 
-            <p style={{ fontSize: 12, marginTop: 20 }}>{JSON.stringify(items)}</p>
-        </div>
+                    <div className="container">
+                        <SortableList
+                            renderItem={(item: any, key: number) => React.createElement(blocks[item.type].component, {
+                                key, ...item,
+                                editItem: (key: string, value: any) => editItem(item, key, value),
+                                removeItem: () => removeItem(item)
+                            })}
+                            items={items}
+                        />
+                    </div>
+                </DndContext>
+            </div>
+
+            <p style={{fontSize: 12, marginTop: 20}}>{JSON.stringify(items)}</p>
+        </>
+
     )
 }
 
