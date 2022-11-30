@@ -19,7 +19,6 @@ interface IDictionary<TValue> {
 }
 
 export interface Block {
-    id: number;
     title: string;
     component: FC<any>;
     base: any
@@ -29,9 +28,11 @@ export const blocks: IDictionary<Block> = {
     Address: {
         title: "Adresse",
         component: Address,
+        base: {
+            label: "Adresse",
+        }
     },
     TextInput: {
-        id: 1,
         title: "Champ texte",
         component: TextInput,
         base: {
@@ -44,25 +45,42 @@ export const blocks: IDictionary<Block> = {
     NumberInput: {
         title: "Champ numérique",
         component: NumberInput,
+        base: {
+
+        }
     },
     EmailInput: {
         title: "Champ email",
         component: EmailInput,
+        base: {
+            label: "Number input",
+            helpText: "Text d'aide",
+        }
     },
     TelInput: {
         title: "Champ téléphone",
         component: TelInput,
+        base: {
+            label: "Champ téléphone",
+            helpText: "Text d'aide",
+        }
     },
     UrlInput: {
         title: "Champ URL",
         component: UrlInput,
+        base: {
+            label: "Champ URL",
+            helpText: "Text d'aide",
+        }
     },
     HourMinuteInput: {
         title: "Champ heure : minute",
         component: HourMinuteInput,
+        base: {
+
+        }
     },
     FieldSet: {
-        id: 2,
         title: "FieldSet",
         component: FieldSet,
         base: {
@@ -70,7 +88,6 @@ export const blocks: IDictionary<Block> = {
         }
     },
     Paragraph: {
-        id: 3,
         title: "Paragraphe",
         component: Paragraph,
         base: {
@@ -78,7 +95,6 @@ export const blocks: IDictionary<Block> = {
         }
     },
     Title: {
-        id: 4,
         title: "Titre",
         component: Title,
         base: {
@@ -86,7 +102,6 @@ export const blocks: IDictionary<Block> = {
         }
     },
     TextAreaInput: {
-        id: 5,
         title: "Zone de texte",
         component: TextAreaInput,
         base: {
@@ -97,7 +112,6 @@ export const blocks: IDictionary<Block> = {
         }
     },
     FileInput: {
-        id: 6,
         title: "Fichier",
         component: FileInput,
         base: {
@@ -108,7 +122,6 @@ export const blocks: IDictionary<Block> = {
         }
     },
     Select: {
-        id: 7,
         title: "Liste à choix",
         component: Select,
         base: {
@@ -121,7 +134,6 @@ export const blocks: IDictionary<Block> = {
         }
     },
     Signature: {
-        id: 8,
         title: "Signature",
         component: Signature,
         base: {
