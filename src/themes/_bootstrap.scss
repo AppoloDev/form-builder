@@ -2,7 +2,7 @@
 
 .form-builder {
     position: relative;
-    padding-left: 248px;
+    padding: 56px 0 56px 248px;
 
     .droppable-list {
         position: fixed;
@@ -17,6 +17,8 @@
 
         padding: 56px 32px;
         border-right: 1px solid #ced4da;
+
+        background-color: #FFF;
 
         .droppable-item {
             padding: 8px 16px;
