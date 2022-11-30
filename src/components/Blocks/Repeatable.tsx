@@ -3,7 +3,7 @@ import { blocks } from "./Definition";
 import { RepeatableProps } from "./Types";
 import { EditableBlock } from "./EditableBlock";
 import { NumberEdition } from "../Edition/NumberEdition";
-
+import {SortableList} from "../Sortable/ListSortable";
 
 const Repeatable: FC<RepeatableProps> = ({children, maxItems, editItem, removeItem}) => {
     const editChildrenItem = (item: JSX.Element, key: keyof JSX.Element, value: JSX.Element[]) => {
@@ -34,15 +34,15 @@ const Repeatable: FC<RepeatableProps> = ({children, maxItems, editItem, removeIt
                 />
             ]}
         >
-            <>
-                {children.map((item: JSX.Element, i: number) => React.createElement(blocks[item.type].component, {
-                        ...item,
-                        key: i,
-                        editItem: (key: keyof JSX.Element, value: JSX.Element[]) => editChildrenItem(item, key, value),
-                        removeItem: () => removeChildrenItem(item)
-                    })
-                )}
-            </>
+            <SortableList
+                renderItem={(item: any, key: number) => React.createElement(blocks[item.type].component, {
+                    ...item,
+                    key,
+                    editItem: (key: keyof JSX.Element, value: JSX.Element[]) => editChildrenItem(item, key, value),
+                    removeItem: () => removeChildrenItem(item)
+                })}
+                items={children}>
+            </SortableList>
 
             <>
                 {maxItems > 1 && (<div className="add-more">Ajouter une nouvelle entrée…</div>)}

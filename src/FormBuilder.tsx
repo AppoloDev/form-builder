@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './App.scss';
 import { Block, blocks } from "./components/Blocks/Definition";
 import DndContext from "./components/Sortable/DndContext";
 import { SortableList } from "./components/Sortable/ListSortable";

@@ -126,6 +126,10 @@ export const blocks: IDictionary<Block> = {
     DateTimeInput: {
         title: "Date",
         component: DateTimeInput,
+        base: {
+            label: "Champ Date & Heure",
+            placeHolder: "PlaceHolder",
+        }
     },
     Select: {
         title: "Liste à choix",
