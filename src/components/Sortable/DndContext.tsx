@@ -10,7 +10,7 @@ type DndContextType = {
 
 export const Context = React.createContext<DndContextType>({} as DndContextType);
 
-export default function DndContext({ children, items, setReorder }: any) {
+export default function DndContext({children, items, setReorder}: any) {
     const [movingItem, setMovingItem] = useState(null);
     const [movingItemHeight, setMovingItemHeight] = useState(0);
 
@@ -23,16 +23,16 @@ export default function DndContext({ children, items, setReorder }: any) {
         const clone = [...items];
         const i = clone.indexOf(item);
 
-        if(i !== -1) {
+        if (i !== -1) {
             clone.splice(i, 1);
         }
 
-        if(items === children) {
+        if (items === children) {
             clone.splice(index, 0, item);
         }
 
-        for(const child of clone) {
-            if(child.children) {
+        for (const child of clone) {
+            if (child.children) {
                 child.children = recursiveMoveItem(item, child.children, children, index);
             }
         }
@@ -40,7 +40,7 @@ export default function DndContext({ children, items, setReorder }: any) {
         return clone;
     }
 
-    return <Context.Provider value={{ movingItem, movingItemHeight, setMovingItem, setMovingItemHeight, moveItem }}>
+    return <Context.Provider value={{movingItem, movingItemHeight, setMovingItem, setMovingItemHeight, moveItem}}>
         {children}
     </Context.Provider>
 };

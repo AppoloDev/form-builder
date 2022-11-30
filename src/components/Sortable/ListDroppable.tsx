@@ -1,9 +1,8 @@
-import React, { useContext, useRef, useState } from "react";
-import useDebounce from "../../hooks/Debounce";
+import React, { useContext, useRef } from "react";
 import { Context } from "./DndContext";
 
-export function DroppableList({ items, renderItem, dropItem }: any) {
-    const { setMovingItem, setMovingItemHeight } = useContext(Context);
+export function DroppableList({items, renderItem, dropItem}: any) {
+    const {setMovingItem, setMovingItemHeight} = useContext(Context);
 
     const ref = useRef<any>();
 
@@ -18,8 +17,10 @@ export function DroppableList({ items, renderItem, dropItem }: any) {
     }
 
     return <div onDragEnd={onDragEnd} ref={ref}>
-        {items.map((item: any, i: number) => <div key={i}
-                                                  draggable
-                                                  onDragStart={e => onDragStart(e, item)}>{renderItem(item, i)}</div>)}
+        {items.map((item: any, i: number) => (
+            <div key={i}
+                 draggable
+                 onDragStart={e => onDragStart(e, item)}>{renderItem(item, i)}</div>))
+        }
     </div>;
 }

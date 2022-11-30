@@ -1,12 +1,36 @@
 @import 'bootstrap/scss/bootstrap'; //@TODO remove
 
 .form-builder {
-    > .stack, fieldset > .stack, .repeatable .form-content > .stack {
-        @extend .p-3;
+    .draggable {
+        cursor: grab;
 
-        border: 1px dashed red;
-        border-radius: 4px;
+        &.dragging {
+            cursor: grabbing;
+
+            > .stack, fieldset > .stack, .repeatable .form-content > .stack {
+                background-color: #FAFAFA;
+                border-color: #c0c6cc;
+            }
+        }
+
+        > .stack, fieldset > .stack, .repeatable .form-content > .stack {
+            @extend .p-3;
+
+            background-color: #FFF;
+
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+
+            transition: background-color .3s ease, border-color .3s ease;
+        }
+
+        &:not(:last-child) {
+            .stack, .repeatable, fieldset {
+                @extend .mb-3
+            }
+        }
     }
+
 
     .stack, fieldset, .repeatable {
         &:hover {
@@ -35,10 +59,6 @@
             .actions-control__item {
                 cursor: pointer;
 
-                &.drag {
-                    cursor: grab;
-                }
-
                 svg {
                     height: 20px;
                     width: 20px;
@@ -52,10 +72,6 @@
 
         .form-content {
             pointer-events: none;
-        }
-
-        &:not(:last-child) {
-            @extend .mb-3
         }
 
         .stack-heading {
@@ -112,7 +128,7 @@
 
         position: relative;
 
-        border: 1px dashed blue;
+        border: 1px solid #ced4da;
         border-radius: 4px;
 
         & + fieldset, + .repeatable {

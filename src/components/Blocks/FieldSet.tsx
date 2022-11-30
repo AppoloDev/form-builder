@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import { blocks } from "./Definition";
 import { FieldSetProps } from "./Types";
 import { SortableList } from "../Sortable/ListSortable";
-import { DragIcon } from "../Icons/DragIcon";
 import { TrashIcon } from "../Icons/TrashIcon";
 
 
@@ -25,10 +24,6 @@ const FieldSet: FC<FieldSetProps> = ({ children, editItem, removeItem }) => {
     return (
         <fieldset>
             <div className="actions-control">
-                <div className="actions-control__item drag">
-                    <DragIcon/>
-                </div>
-
                 <div
                     onClick={() => removeItem()}
                     className="actions-control__item">
