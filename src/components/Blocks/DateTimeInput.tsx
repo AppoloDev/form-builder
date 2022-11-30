@@ -3,10 +3,10 @@ import { TextEdition } from "../Edition/TextEdition";
 import { EditableBlock } from "./EditableBlock";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
 import { IdGenerator } from "../../utilities/String";
-import { TelInputProps } from "./Types";
+import { DateTimeInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const TelInput: FC<TelInputProps> = ({label, placeHolder, helpText, defaultValue, readOnly, required, editItem, removeItem}) => {
+const DateTimeInput: FC<DateTimeInputProps> = ({label, placeHolder, helpText, defaultValue, readOnly, required, showHour, editItem, removeItem}) => {
     const id = IdGenerator();
     const [value, setValue] = useState(defaultValue);
 
@@ -47,17 +47,24 @@ const TelInput: FC<TelInputProps> = ({label, placeHolder, helpText, defaultValue
             />,
 
             <CheckboxEdition
+                label={"Afficher l'heure ?"}
+                checked={showHour}
+                editItem={(val) => editItem('showHour', val)}
+                key={5}
+            />,
+
+            <CheckboxEdition
                 label={"Requis"}
                 checked={required}
                 editItem={(val) => editItem('required', val)}
-                key={5}
+                key={6}
             />,
 
             <CheckboxEdition
                 label={"Lecture seule"}
                 checked={readOnly}
                 editItem={(val) => editItem('readOnly', val)}
-                key={6}
+                key={7}
             />,
         ]}>
             <label htmlFor={id}>
@@ -65,8 +72,7 @@ const TelInput: FC<TelInputProps> = ({label, placeHolder, helpText, defaultValue
                 {required && <span className="required">Requis</span>}
             </label>
 
-            {/*<!-- @TODO: Mettre mask --> */}
-            <input type="tel"
+            <input type={showHour ? 'datetime-local' : 'date'}
                    id={id}
                    placeholder={placeHolder}
                    disabled={readOnly}
@@ -85,4 +91,4 @@ const TelInput: FC<TelInputProps> = ({label, placeHolder, helpText, defaultValue
     )
 }
 
-export default TelInput;
+export default DateTimeInput;

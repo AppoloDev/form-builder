@@ -6,7 +6,7 @@ import { IdGenerator } from "../../utilities/String";
 import { EmailInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const EmailInput: FC<EmailInputProps> = ({label, placeHolder, helpText, defaultValue, readOnly, required, editItem}) => {
+const EmailInput: FC<EmailInputProps> = ({label, placeHolder, helpText, defaultValue, readOnly, required, editItem, removeItem}) => {
     const id = IdGenerator();
     const [value, setValue] = useState(defaultValue);
 
@@ -14,7 +14,9 @@ const EmailInput: FC<EmailInputProps> = ({label, placeHolder, helpText, defaultV
         setValue(defaultValue);
     }, [defaultValue]);
     return (
-        <EditableBlock editionItems={[
+        <EditableBlock
+            removeItem={removeItem}
+            editionItems={[
             <TextEdition
                 label={"Label"}
                 value={label}

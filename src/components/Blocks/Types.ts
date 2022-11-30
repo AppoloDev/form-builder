@@ -1,5 +1,3 @@
-import * as cluster from "cluster";
-
 export type OptionProps = {
     label: string
     isSelected: boolean
@@ -16,16 +14,27 @@ export type SelectProps = {
     required: boolean
     options: OptionProps[]
     editItem: (key: string, value: string | boolean | OptionProps[]) => void
+    removeItem: () => void
 }
 
 export type EditableBlockProps = {
     editionItems: JSX.Element | JSX.Element[]
     children: JSX.Element | JSX.Element[]
+    className?: string
+    removeItem: () => void
 }
 
 export type FieldSetProps = {
     children: JSX.Element[]
     editItem: (key: string, children: JSX.Element[]) => void
+    removeItem: () => void
+}
+
+export type RepeatableProps = {
+    children: JSX.Element[]
+    maxItems: number
+    editItem: (key: string, children: JSX.Element[] | string | boolean) => void
+    removeItem: () => void
 }
 
 export type FileInputProps = {
@@ -33,12 +42,16 @@ export type FileInputProps = {
     helpText: string
     maxItems: number
     required: boolean
-    editItem: (key: string, value: string | boolean) => void
+    value: string[]
+    acceptedFile?: Array<{ label: string, value: string }>
+    editItem: (key: string, value: string | boolean | OptionProps[]) => void
+    removeItem: () => void
 }
 
 export type ParagraphProps = {
     text: string
     editItem: (key: string, value: string) => void
+    removeItem: () => void
 }
 
 export type SignatureProps = {
@@ -46,6 +59,7 @@ export type SignatureProps = {
     helpText: string
     required: boolean
     editItem: (key: string, value: string | boolean) => void
+    removeItem: () => void
 }
 
 export type TextAreaProps = {
@@ -57,6 +71,7 @@ export type TextAreaProps = {
     readOnly: boolean
     rows: number
     editItem: (key: string, value: string | boolean) => void
+    removeItem: () => void
 }
 
 export type AddressProps = {
@@ -64,6 +79,7 @@ export type AddressProps = {
     helpText: string
     required: boolean
     editItem: (key: string, value: string | boolean) => void
+    removeItem: () => void
 }
 
 export type TextInputProps = {
@@ -74,6 +90,7 @@ export type TextInputProps = {
     readOnly: boolean
     required: boolean
     editItem: (key: string, value: string | boolean) => void
+    removeItem: () => void
 }
 
 export type EmailInputProps = TextInputProps
@@ -84,6 +101,10 @@ export type TelInputProps = TextInputProps
 
 export type UrlInputProps = TextInputProps
 
+export type DateTimeInputProps = TextInputProps & {
+    showHour: boolean
+}
+
 export type NumberInputProps = {
     label: string
     helpText: string
@@ -92,11 +113,13 @@ export type NumberInputProps = {
     required: boolean
     allowDecimal: boolean
     editItem: (key: string, value: string | boolean) => void
+    removeItem: () => void
 }
 
 export type TitleProps = {
     text: string
     editItem: (key: string, value: string) => void
+    removeItem: () => void
 }
 
 export type DndContextProps<T> = {

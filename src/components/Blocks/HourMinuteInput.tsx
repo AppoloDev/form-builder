@@ -6,15 +6,7 @@ import { IdGenerator } from "../../utilities/String";
 import { HourMinuteInputProps, TextInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const HourMinuteInput: FC<HourMinuteInputProps> = ({
-                                                       label,
-                                                       placeHolder,
-                                                       helpText,
-                                                       defaultValue,
-                                                       readOnly,
-                                                       required,
-                                                       editItem
-                                                   }) => {
+const HourMinuteInput: FC<HourMinuteInputProps> = ({label, placeHolder, helpText, defaultValue, readOnly, required, editItem, removeItem}) => {
     const id = IdGenerator();
     const [value, setValue] = useState(defaultValue);
 
@@ -23,7 +15,9 @@ const HourMinuteInput: FC<HourMinuteInputProps> = ({
     }, [defaultValue]);
 
     return (
-        <EditableBlock editionItems={[
+        <EditableBlock
+            removeItem={removeItem}
+            editionItems={[
             <TextEdition
                 label={"Label"}
                 value={label}
@@ -71,8 +65,7 @@ const HourMinuteInput: FC<HourMinuteInputProps> = ({
                 {required && <span className="required">Requis</span>}
             </label>
 
-            {/*<!-- @TODO: Mettre mask --> */}
-            <input type="text"
+            <input type="time"
                    id={id}
                    placeholder={placeHolder}
                    disabled={readOnly}

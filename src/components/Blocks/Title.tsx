@@ -3,11 +3,13 @@ import { TextEdition } from "../Edition/TextEdition";
 import { EditableBlock } from "./EditableBlock";
 import { TitleProps } from "./Types";
 
-const Title: FC<TitleProps> = ({ text, editItem }) => {
+const Title: FC<TitleProps> = ({ text, editItem, removeItem }) => {
     const [visible, setVisible] = useState<boolean>(false);
 
     return (
-        <EditableBlock editionItems={<TextEdition label={"Texte"} value={text} editItem={(val) => editItem('text', val)} />}>
+        <EditableBlock
+            removeItem={removeItem}
+            editionItems={<TextEdition label={"Texte"} value={text} editItem={(val) => editItem('text', val)} />}>
             <h2 onClick={() => setVisible(!visible)}>{text}</h2>
         </EditableBlock>
     )

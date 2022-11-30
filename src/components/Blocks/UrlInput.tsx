@@ -6,7 +6,7 @@ import { IdGenerator } from "../../utilities/String";
 import { UrlInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const UrlInput: FC<UrlInputProps> = ({label, placeHolder, helpText, defaultValue, readOnly, required, editItem}) => {
+const UrlInput: FC<UrlInputProps> = ({label, placeHolder, helpText, defaultValue, readOnly, required, editItem, removeItem}) => {
     const id = IdGenerator();
     const [value, setValue] = useState(defaultValue);
 
@@ -15,7 +15,9 @@ const UrlInput: FC<UrlInputProps> = ({label, placeHolder, helpText, defaultValue
     }, [defaultValue]);
 
     return (
-        <EditableBlock editionItems={[
+        <EditableBlock
+            removeItem={removeItem}
+            editionItems={[
             <TextEdition
                 label={"Label"}
                 value={label}

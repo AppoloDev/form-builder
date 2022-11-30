@@ -7,7 +7,7 @@ import { IdGenerator } from "../../utilities/String";
 import { SelectProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const Select: FC<SelectProps> = ({label, placeHolder, helpText, multiple, customOption, checkCases, required, editItem, options}) => {
+const Select: FC<SelectProps> = ({label, placeHolder, helpText, multiple, customOption, checkCases, required, editItem, removeItem, options}) => {
     const id = IdGenerator();
     const [enabledCustomOption, enableCustomOption] = useState<boolean>(false)
 
@@ -21,7 +21,9 @@ const Select: FC<SelectProps> = ({label, placeHolder, helpText, multiple, custom
     }, [checkCases])
 
     return (
-        <EditableBlock editionItems={[
+        <EditableBlock
+            removeItem={removeItem}
+            editionItems={[
             <TextEdition
                 label={"Label"}
                 value={label}

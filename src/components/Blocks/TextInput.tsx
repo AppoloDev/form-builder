@@ -6,7 +6,7 @@ import { IdGenerator } from "../../utilities/String";
 import { TextInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const TextInput: FC<TextInputProps> = ({label, placeHolder, helpText, defaultValue, readOnly, required, editItem}) => {
+const TextInput: FC<TextInputProps> = ({label, placeHolder, helpText, defaultValue, readOnly, required, editItem, removeItem}) => {
     const id = IdGenerator();
     const [value, setValue] = useState(defaultValue);
 
@@ -15,49 +15,52 @@ const TextInput: FC<TextInputProps> = ({label, placeHolder, helpText, defaultVal
     }, [defaultValue]);
 
     return (
-        <EditableBlock editionItems={[
-            <TextEdition
-                label={"Label"}
-                value={label}
-                editItem={(val) => editItem('label', val)}
-                key={1}
-            />,
+        <EditableBlock
+            removeItem={removeItem}
+            editionItems={[
+                <TextEdition
+                    label={"Label"}
+                    value={label}
+                    editItem={(val) => editItem('label', val)}
+                    key={1}
+                />,
 
-            <TextEdition
-                label={"PlaceHolder"}
-                value={placeHolder}
-                editItem={(val) => editItem('placeHolder', val)}
-                key={2}
-            />,
+                <TextEdition
+                    label={"PlaceHolder"}
+                    value={placeHolder}
+                    editItem={(val) => editItem('placeHolder', val)}
+                    key={2}
+                />,
 
-            <TextEdition
-                label={"Texte par défaut"}
-                value={defaultValue}
-                editItem={(val) => editItem('defaultValue', val)}
-                key={3}
-            />,
+                <TextEdition
+                    label={"Texte par défaut"}
+                    value={defaultValue}
+                    editItem={(val) => editItem('defaultValue', val)}
+                    key={3}
+                />,
 
-            <TextEdition
-                label={"Texte d'aide"}
-                value={helpText}
-                editItem={(val) => editItem('helpText', val)}
-                key={4}
-            />,
+                <TextEdition
+                    label={"Texte d'aide"}
+                    value={helpText}
+                    editItem={(val) => editItem('helpText', val)}
+                    key={4}
+                />,
 
-            <CheckboxEdition
-                label={"Requis"}
-                checked={required}
-                editItem={(val) => editItem('required', val)}
-                key={5}
-            />,
+                <CheckboxEdition
+                    label={"Requis"}
+                    checked={required}
+                    editItem={(val) => editItem('required', val)}
+                    key={5}
+                />,
 
-            <CheckboxEdition
-                label={"Lecture seule"}
-                checked={readOnly}
-                editItem={(val) => editItem('readOnly', val)}
-                key={6}
-            />,
-        ]}>
+                <CheckboxEdition
+                    label={"Lecture seule"}
+                    checked={readOnly}
+                    editItem={(val) => editItem('readOnly', val)}
+                    key={6}
+                />,
+            ]}
+        >
             <label htmlFor={id}>
                 {label}
                 {required && <span className="required">Requis</span>}

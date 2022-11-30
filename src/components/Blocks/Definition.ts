@@ -13,6 +13,8 @@ import EmailInput from "./EmailInput";
 import TelInput from "./TelInput";
 import UrlInput from "./UrlInput";
 import HourMinuteInput from "./HourMinuteInput";
+import DateTimeInput from "./DateTimeInput";
+import Repeatable from "./Repeatable";
 
 interface IDictionary<TValue> {
     [id: string]: TValue;
@@ -121,6 +123,10 @@ export const blocks: IDictionary<Block> = {
             required: false,
         }
     },
+    DateTimeInput: {
+        title: "Date",
+        component: DateTimeInput,
+    },
     Select: {
         title: "Liste à choix",
         component: Select,
@@ -140,5 +146,12 @@ export const blocks: IDictionary<Block> = {
             label: "Signature",
             required: false
         }
-    }
+    },
+    Repeatable: {
+        title: "Répétable",
+        component: Repeatable,
+        base: {
+            children: []
+        }
+    },
 };

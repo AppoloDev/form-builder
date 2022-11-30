@@ -11,8 +11,39 @@ function FormBuilder() {
             type: "TextInput",
             label: "Label",
             placeHolder: "Lets go",
+            value: "je suis une value",
+            required: true,
+        },
+        {
+            type: "DateTimeInput",
+            label: "Datetime input",
+            placeHolder: "Lets go",
             value: "",
             required: true,
+        },
+
+        {
+            type: "HourMinuteInput",
+            label: "HourMinute input",
+            placeHolder: "Lets go",
+            value: "",
+            required: true,
+        },
+        {
+            type: "Repeatable",
+            maxItems: 5,
+            children: [
+                {
+                    type: "TextInput",
+                    label: "Nom",
+                    required: true,
+                },
+                {
+                    type: "TextInput",
+                    label: "Prénom",
+                    required: true,
+                },
+            ]
         },
         {
             type: "FieldSet",
@@ -50,34 +81,25 @@ function FormBuilder() {
                     label: "Fichier",
                     maxItems: 5,
                     helpText: "Fichier PDF",
+                    acceptedFile: [],
+                    value: ['application/pdf'],
                     required: true,
                 },
                 {
-                    type: "Select",
-                    label: "Select",
-                    helpText: "",
-                    multiple: false,
-                    options: [{label: "test", value: "testt"}],
-                    required: true,
-                },
-            ]
-        },
-        {
-            type: "FieldSet",
-            children: [
-                {
-                    type: "Title",
-                    text: "Deuxieme fieldset"
-                },
-                {
-                    type: "Address",
-                    label: 'Adresse'
-                },
-                {
-                    type: "Signature",
-                    label: "Sign",
-                    helpText: "",
-                    required: true,
+                    type: "Repeatable",
+                    maxItems: 5,
+                    children: [
+                        {
+                            type: "TextInput",
+                            label: "Nom",
+                            required: true,
+                        },
+                        {
+                            type: "TextInput",
+                            label: "Prénom",
+                            required: true,
+                        },
+                    ]
                 },
             ]
         }
@@ -86,6 +108,18 @@ function FormBuilder() {
     const editItem = (item: any, key: string, value: any) => {
         item[key] = value;
         setItems([...items]);
+    }
+
+    const removeItem = (item: any) => {
+        const index = items.indexOf(item)
+
+        if (index > -1) {
+            setItems((current) => {
+                current.splice(index, 1);
+
+                return [...current];
+            })
+        }
     }
 
     return (
@@ -102,8 +136,9 @@ function FormBuilder() {
                                renderItem={(block: Block) => <div draggable={true}>{block.title}</div>} />
                 <SortableList
                     renderItem={(item: any, key: number) => React.createElement(blocks[item.type].component, {
-                       key, ...item,
-                       editItem: (key: string, value: any) => editItem(item, key, value)
+                        key, ...item,
+                        editItem: (key: string, value: any) => editItem(item, key, value),
+                        removeItem: () => removeItem(item)
                    })}
                     items={items}>
                 </SortableList>
