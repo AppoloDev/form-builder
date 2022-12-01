@@ -1,5 +1,4 @@
 import React, {DragEvent, useContext, useEffect, useRef, useState} from "react";
-import useDebounce from "../../hooks/Debounce";
 import { Context } from "./DndContext";
 
 export function SortableList({ items, renderItem, margin = 16, name = "Parent", children }: any) {
@@ -22,7 +21,6 @@ export function SortableList({ items, renderItem, margin = 16, name = "Parent", 
 
     const onDragStart = (e: DragEvent<HTMLDivElement>, item: any) => {
         setMovingItem(item);
-
         if (ref.current) {
             const bounds = ref.current.children[items.indexOf(item)].getBoundingClientRect();
             setMovingItemHeight(bounds.height);
