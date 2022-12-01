@@ -1,7 +1,6 @@
 # Form builder
 
 ## TODO
-- Heure:minutes + mask
 - Problème dnd repeater + blocks
 - Gérer un event onClose / onUpdate / onSave
 - Input number -> Gérer la valeur par défaut dans le cas ou l'on'autorise pas les décimales

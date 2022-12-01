@@ -5,8 +5,18 @@ import { CheckboxEdition } from "../Edition/CheckboxEdition";
 import { IdGenerator } from "../../utilities/String";
 import { HourMinuteInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
+import InputMask from "react-input-mask";
 
-const HourMinuteInput: FC<HourMinuteInputProps> = ({label, placeHolder, helpText, defaultValue, readOnly, required, editItem, removeItem}) => {
+const HourMinuteInput: FC<HourMinuteInputProps> = ({
+                                                       label,
+                                                       placeHolder,
+                                                       helpText,
+                                                       defaultValue,
+                                                       readOnly,
+                                                       required,
+                                                       editItem,
+                                                       removeItem
+                                                   }) => {
     const id = IdGenerator();
     const [value, setValue] = useState(defaultValue);
 
@@ -66,13 +76,21 @@ const HourMinuteInput: FC<HourMinuteInputProps> = ({label, placeHolder, helpText
                 {required && <span className="required">Requis</span>}
             </label>
 
-            <input type="time"
-                   id={id}
-                   placeholder={placeHolder}
-                   disabled={readOnly}
-                   value={value}
-                   onChange={({target}) => setValue(target.value)}
-                   required={required}
+            <InputMask
+                type="text"
+                id={id}
+                placeholder={placeHolder}
+                disabled={readOnly}
+                value={value}
+                onChange={({target}) => {
+                    console.log(target.value);
+                    setValue(target.value)
+                }}
+                required={required}
+                pattern={"[0-9]{2}:[0-9]{2}"}
+                maskPlaceholder={"--:--"}
+                alwaysShowMask
+                mask={"99:99"}
             />
 
             <>
