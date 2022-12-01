@@ -6,7 +6,7 @@ import { IdGenerator } from "../../utilities/String";
 import { DateTimeInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const DateTimeInput: FC<DateTimeInputProps> = ({label, placeHolder, helpText, defaultValue, readOnly, required, showHour, editItem, removeItem}) => {
+const DateTimeInput: FC<DateTimeInputProps> = ({label, helpText, defaultValue, readOnly, required, showHour, editItem, removeItem}) => {
     const id = IdGenerator();
     const [value, setValue] = useState(defaultValue);
 
@@ -26,45 +26,38 @@ const DateTimeInput: FC<DateTimeInputProps> = ({label, placeHolder, helpText, de
             />,
 
             <TextEdition
-                label={"PlaceHolder"}
-                value={placeHolder}
-                editItem={(val) => editItem('placeHolder', val)}
-                key={2}
-            />,
-
-            <TextEdition
                 label={"Texte par défaut"}
                 value={defaultValue}
                 editItem={(val) => editItem('defaultValue', val)}
-                key={3}
+                key={2}
             />,
 
             <TextEdition
                 label={"Texte d'aide"}
                 value={helpText}
                 editItem={(val) => editItem('helpText', val)}
-                key={4}
+                key={3}
             />,
 
             <CheckboxEdition
                 label={"Afficher l'heure ?"}
                 checked={showHour}
                 editItem={(val) => editItem('showHour', val)}
-                key={5}
+                key={4}
             />,
 
             <CheckboxEdition
                 label={"Requis"}
                 checked={required}
                 editItem={(val) => editItem('required', val)}
-                key={6}
+                key={5}
             />,
 
             <CheckboxEdition
                 label={"Lecture seule"}
                 checked={readOnly}
                 editItem={(val) => editItem('readOnly', val)}
-                key={7}
+                key={6}
             />,
         ]}>
             <label htmlFor={id}>
@@ -74,7 +67,6 @@ const DateTimeInput: FC<DateTimeInputProps> = ({label, placeHolder, helpText, de
 
             <input type={showHour ? 'datetime-local' : 'date'}
                    id={id}
-                   placeholder={placeHolder}
                    disabled={readOnly}
                    value={value}
                    onChange={({target}) => setValue(target.value)}

@@ -48,7 +48,7 @@ export const blocks: IDictionary<Block> = {
         title: "Champ numérique",
         component: NumberInput,
         base: {
-
+            label: "Champ numérique",
         }
     },
     EmailInput: {
@@ -79,7 +79,7 @@ export const blocks: IDictionary<Block> = {
         title: "Champ heure : minute",
         component: HourMinuteInput,
         base: {
-
+            label: "Champ heure : minute",
         }
     },
     FieldSet: {
@@ -93,7 +93,7 @@ export const blocks: IDictionary<Block> = {
         title: "Paragraphe",
         component: Paragraph,
         base: {
-            text: "Paragraphe"
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
         }
     },
     Title: {
@@ -108,8 +108,7 @@ export const blocks: IDictionary<Block> = {
         component: TextAreaInput,
         base: {
             label: "Zone de texte",
-            placeHolder: "PlaceHolder",
-            value: "",
+            placeHolder: "Placeholder",
             required: false,
         }
     },
@@ -118,7 +117,7 @@ export const blocks: IDictionary<Block> = {
         component: FileInput,
         base: {
             label: "Fichier",
-            placeHolder: "PlaceHolder",
+            placeHolder: "Placeholder",
             value: "",
             required: false,
         }
@@ -128,7 +127,7 @@ export const blocks: IDictionary<Block> = {
         component: DateTimeInput,
         base: {
             label: "Champ Date & Heure",
-            placeHolder: "PlaceHolder",
+            placeHolder: "Placeholder",
         }
     },
     Select: {
@@ -136,7 +135,7 @@ export const blocks: IDictionary<Block> = {
         component: Select,
         base: {
             label: "Sélecteur",
-            placeHolder: "PlaceHolder",
+            placeHolder: "Placeholder",
             options: [],
             multiple: false,
             checkCases: false,
