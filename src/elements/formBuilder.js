@@ -1,6 +1,5 @@
-import {createRoot} from "react-dom/client";
+import { createRoot } from "react-dom/client";
 import FormBuilder from "../FormBuilder";
-import TextInput from "../components/Blocks/TextInput";
 
 class FormBuilderElement extends HTMLElement {
     connectedCallback() {
@@ -9,18 +8,17 @@ class FormBuilderElement extends HTMLElement {
             attrs[item.name] = item.value;
         });
 
-        console.log(attrs);
-
-        const customBlocks = {
-            TextInput: {
-                base: {
-                    label: 'Je suis un texte de type input'
-                }
-            },
-        }
-
         this.root = createRoot(this);
-        this.root.render(<FormBuilder {...attrs}/>);
+        this.root.render(
+            <FormBuilder
+                onChange={(value) => {
+                    console.log('onChange', value);
+                }}
+                onClose={(value) => {
+                    console.log('onClose', value);
+                }}
+                {...attrs}/>
+        );
     }
 
     disconnectedCallback() {

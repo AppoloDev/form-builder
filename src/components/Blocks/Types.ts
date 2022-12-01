@@ -1,5 +1,7 @@
 export type FormBuilderProps = {
     blocks?: object
+    onChange: (items: object) => object
+    onClose: (items: object) => object
 }
 
 export type OptionProps = {

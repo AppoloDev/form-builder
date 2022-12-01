@@ -5,8 +5,10 @@ import { SortableList } from "./components/Sortable/ListSortable";
 import { DroppableList } from "./components/Sortable/ListDroppable";
 import { FormBuilderProps } from "./components/Blocks/Types";
 import { merge } from "./utilities/Object";
+import useDebounce from "./utilities/Debounce";
+import { CancelIcon } from "./components/Icons/CancelIcon";
 
-function FormBuilder({blocks}: FormBuilderProps) {
+function FormBuilder({blocks, onChange, onClose}: FormBuilderProps) {
     const [items, setItems] = useState([
         {
             type: "TextInput",
@@ -105,6 +107,7 @@ function FormBuilder({blocks}: FormBuilderProps) {
             ]
         }
     ]);
+    const [isLoaded, setIsLoaded] = useState<boolean>(false)
     let mergedBlocks: any = blockDefinition
 
     if (blocks) {
@@ -127,6 +130,14 @@ function FormBuilder({blocks}: FormBuilderProps) {
             })
         }
     }
+
+    useDebounce(() => {
+        if (isLoaded) {
+            onChange(items);
+        } else {
+            setIsLoaded(true);
+        }
+    }, [items], 250);
 
     return (
         <>
@@ -158,6 +169,10 @@ function FormBuilder({blocks}: FormBuilderProps) {
                         />
                     </div>
                 </DndContext>
+
+                <div className="close" onClick={() => onClose(items)}>
+                    <CancelIcon height={32} width={32}/>
+                </div>
             </div>
 
             <p style={{fontSize: 12, marginTop: 20}}>{JSON.stringify(items)}</p>
