@@ -12,9 +12,13 @@ class FormBuilderElement extends HTMLElement {
         this.root.render(
             <FormBuilder
                 onChange={(value) => {
+                    const changeEvent = new CustomEvent('change', {detail: value});
+                    this.dispatchEvent(changeEvent)
                     console.log('onChange', value);
                 }}
                 onClose={(value) => {
+                    const closeEvent = new CustomEvent('close', {detail: value});
+                    this.dispatchEvent(closeEvent)
                     console.log('onClose', value);
                 }}
                 {...attrs}/>
