@@ -11,7 +11,6 @@ class FormBuilderManager extends HTMLElement {
                 this.openBuilderEl.addEventListener('click', this.openBuilder);
                 this.formBuilderEl.addEventListener('close', this.closeBuilder.bind(this));
                 this.formBuilderEl.addEventListener('change', (e) => {
-                    console.log('change', e.detail);
                 });
             }
         }

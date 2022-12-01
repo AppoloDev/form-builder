@@ -33,6 +33,7 @@ const FieldSet: FC<FieldSetProps> = ({ children, editItem, removeItem }) => {
 
             <SortableList
                 name={"FieldSet"}
+                canAddChildren={(item: any) => item.type !== "FieldSet"}
                 renderItem={(item: any, key: number) => React.createElement(blocks[item.type].component, {
                     ...item,
                     key,
@@ -40,6 +41,9 @@ const FieldSet: FC<FieldSetProps> = ({ children, editItem, removeItem }) => {
                     removeItem: () => removeChildrenItem(item)
                 })}
                 items={children}>
+                <>
+                    {children.length === 0 && <div className="add-more">Ajouter un nouveau bloc…</div>}
+                </>
             </SortableList>
         </fieldset>
     )

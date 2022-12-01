@@ -37,6 +37,7 @@ const Repeatable: FC<RepeatableProps> = ({ children, maxItems, editItem, removeI
         >
             <SortableList
                 name={"Repeatable"}
+                canAddChildren={(item: any) => !('children' in item)}
                 renderItem={(item: any, key: number) => React.createElement(blocks[item.type].component, {
                     ...item,
                     key,

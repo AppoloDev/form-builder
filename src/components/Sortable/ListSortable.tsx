@@ -1,7 +1,7 @@
 import React, {DragEvent, useContext, useEffect, useRef, useState} from "react";
 import { Context } from "./DndContext";
 
-export function SortableList({ items, renderItem, margin = 16, name = "Parent", children }: any) {
+export function SortableList({ items, renderItem, margin = 16, name = "Parent", children, canAddChildren = (item: any) => true }: any) {
     const { movingItem, setMovingItem, movingItemHeight, setMovingItemHeight, movingItemWidth, setMovingItemWidth, movingItemContainer, setMovingItemContainer, moveItem } = useContext(Context);
 
     const ref = useRef<any>();
@@ -14,8 +14,10 @@ export function SortableList({ items, renderItem, margin = 16, name = "Parent", 
     const isHoverDragging = movingItem !== null && placeholder !== null;
 
     const onDrop = (e: DragEvent<HTMLDivElement>) => {
-        setMovingItem(null);
-        moveItem(movingItem, items, getIndexOfItem(e.clientY));
+        if(canAddChildren(movingItem)) {
+            setMovingItem(null);
+            moveItem(movingItem, items, getIndexOfItem(e.clientY));
+        }
         e.stopPropagation();
     }
 
@@ -31,8 +33,10 @@ export function SortableList({ items, renderItem, margin = 16, name = "Parent", 
     }
 
     const onDragOver = (e: DragEvent<HTMLDivElement>) => {
-        setMovingItemContainer(items);
-        setPlaceholderIndex(getIndexOfItem(e.clientY));
+        if(canAddChildren(movingItem)) {
+            setMovingItemContainer(items);
+            setPlaceholderIndex(getIndexOfItem(e.clientY));
+        }
         e.preventDefault();
         e.stopPropagation();
     }
