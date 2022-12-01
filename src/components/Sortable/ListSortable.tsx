@@ -68,7 +68,7 @@ export function SortableList({ items, renderItem, margin = 16, name = "Parent", 
         }
 
         const startIndex = items.indexOf(movingItem);
-        if (startIndex === -1) height += movingItemHeight;
+        if (startIndex === -1) height += (movingItemHeight+margin); // TODO : (Improving some weird spaces ?)
 
         return {
             height,
@@ -103,7 +103,9 @@ export function SortableList({ items, renderItem, margin = 16, name = "Parent", 
                 }
             } else {
                 for (let i = 0; i < items.length; i++) {
-                    if (i === placeholder) top += movingItemHeight + margin;
+                    if (i === placeholder) { // TODO : (Improving some weird spaces ?)
+                        top += movingItemHeight + margin;
+                    }
                     if (i === key) break;
                     top += el.children[i].getBoundingClientRect().height + margin;
                 }

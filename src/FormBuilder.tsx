@@ -107,6 +107,7 @@ function FormBuilder({blocks, onChange, onClose}: FormBuilderProps) {
             ]
         }
     ]);
+
     const [isLoaded, setIsLoaded] = useState<boolean>(false)
     let mergedBlocks: any = blockDefinition
 

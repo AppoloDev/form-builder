@@ -55,7 +55,7 @@ export const blocks: IDictionary<Block> = {
         title: "Champ email",
         component: EmailInput,
         base: {
-            label: "Number input",
+            label: "Champ email",
             helpText: "Text d'aide",
         }
     },
