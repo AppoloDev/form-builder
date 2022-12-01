@@ -1,3 +1,7 @@
+export type FormBuilderProps = {
+    blocks?: object
+}
+
 export type OptionProps = {
     label: string
     isSelected: boolean

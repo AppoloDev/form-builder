@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Block, blocks } from "./components/Blocks/Definition";
+import { Block, blocks as blockDefinition } from "./components/Blocks/Definition";
 import DndContext from "./components/Sortable/DndContext";
 import { SortableList } from "./components/Sortable/ListSortable";
 import { DroppableList } from "./components/Sortable/ListDroppable";
+import { FormBuilderProps } from "./components/Blocks/Types";
+import { merge } from "./utilities/Object";
 
-function FormBuilder() {
+function FormBuilder({blocks}: FormBuilderProps) {
     const [items, setItems] = useState([
         {
             type: "TextInput",
@@ -103,6 +105,11 @@ function FormBuilder() {
             ]
         }
     ]);
+    let mergedBlocks: any = blockDefinition
+
+    if (blocks) {
+        mergedBlocks = merge(blockDefinition, blocks);
+    }
 
     const editItem = (item: any, key: string, value: any) => {
         item[key] = value;
@@ -124,11 +131,12 @@ function FormBuilder() {
     return (
         <>
             <div className="form-builder">
-                <DndContext items={items}
-                            setReorder={(items: any[]) => setItems(items)}
+                <DndContext
+                    items={items}
+                    setReorder={(items: any[]) => setItems(items)}
                 >
                     <DroppableList
-                        items={Object.values(blocks)}
+                        items={Object.values(mergedBlocks)}
                         dropItem={(block: Block) => {
                             return {
                                 type: block.component.name,
@@ -140,8 +148,9 @@ function FormBuilder() {
 
                     <div className="container">
                         <SortableList
-                            renderItem={(item: any, key: number) => React.createElement(blocks[item.type].component, {
-                                key, ...item,
+                            renderItem={(item: any, key: number) => React.createElement(mergedBlocks[item.type].component, {
+                                key,
+                                ...item,
                                 editItem: (key: string, value: any) => editItem(item, key, value),
                                 removeItem: () => removeItem(item)
                             })}
