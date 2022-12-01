@@ -42,7 +42,7 @@ export type FileInputProps = {
     helpText: string
     maxItems: number
     required: boolean
-    value: string[]
+    value: string
     acceptedFile?: Array<{ label: string, value: string }>
     editItem: (key: string, value: string | boolean | OptionProps[]) => void
     removeItem: () => void

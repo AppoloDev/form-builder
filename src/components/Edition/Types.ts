@@ -36,7 +36,7 @@ export type TextEditionProps = {
 
 export type SelectEditionProps = {
     label: string
-    value: string[]
+    value: string
     options: Array<{ label: string, value: string }>
     editItem: (value: any) => void
 }
