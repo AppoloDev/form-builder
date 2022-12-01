@@ -102,6 +102,7 @@ export type TelInputProps = TextInputProps
 export type UrlInputProps = TextInputProps
 
 export type DateTimeInputProps = TextInputProps & {
+    showDate: boolean
     showHour: boolean
 }
 

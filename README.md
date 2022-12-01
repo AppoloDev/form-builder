@@ -4,7 +4,6 @@
 - Heure:minutes + mask
 - Problème dnd repeater + blocks
 - Gérer un event onClose / onUpdate / onSave
-- Gérer le time / date / datetime
 - Pouvoir override les blocks
 - Repeat si vide illimité
 - Fichier accepté select simple
