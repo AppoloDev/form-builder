@@ -3,7 +3,7 @@ import { blocks } from "./Definition";
 import { RepeatableProps } from "./Types";
 import { EditableBlock } from "./EditableBlock";
 import { NumberEdition } from "../Edition/NumberEdition";
-import {SortableList} from "../Sortable/ListSortable";
+import { SortableList } from "../Sortable/ListSortable";
 
 const Repeatable: FC<RepeatableProps> = ({ children, maxItems, editItem, removeItem }) => {
     const editChildrenItem = (item: JSX.Element, key: keyof JSX.Element, value: JSX.Element[]) => {
@@ -29,6 +29,7 @@ const Repeatable: FC<RepeatableProps> = ({ children, maxItems, editItem, removeI
                 <NumberEdition
                     label={'Nombre maximum de répétition'}
                     value={maxItems}
+                    min={0}
                     editItem={(val) => editItem('maxItems', val)}
                     key={1}
                 />
@@ -48,7 +49,7 @@ const Repeatable: FC<RepeatableProps> = ({ children, maxItems, editItem, removeI
                 </>
             </SortableList>
             <>
-                {maxItems > 1 && (<div className="add-more">Ajouter une nouvelle entrée…</div>)}
+                {(maxItems > 1 || maxItems === '') && (<div className="add-more">Ajouter une nouvelle entrée…</div>)}
             </>
         </EditableBlock>
     )

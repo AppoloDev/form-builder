@@ -15,7 +15,9 @@ export type EditionModalProps = {
 
 export type NumberEditionProps = {
     label: string
-    value: number
+    value: number | string
+    min?: number
+    max?: number
     editItem: (value: string | boolean) => void
 }
 
@@ -34,7 +36,7 @@ export type TextEditionProps = {
 
 export type SelectEditionProps = {
     label: string
-    value: string[]
+    value: string
     options: Array<{ label: string, value: string }>
     editItem: (value: any) => void
 }

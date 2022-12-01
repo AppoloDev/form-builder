@@ -35,7 +35,8 @@ const FileInput: FC<FileInputProps> = ({label, helpText, maxItems, required, val
                     options={[
                         ...acceptedFile,
                         {value: 'images/*', label: 'Fichiers images'},
-                        {value: 'application/pdf', label: 'Fichier PDF'}
+                        {value: 'application/pdf', label: 'Fichier PDF'},
+                        {value: 'images/*,application/pdf', label: 'Fichier images et PDF'}
                     ]}
                     editItem={(val) => {
                         editItem('value', val)

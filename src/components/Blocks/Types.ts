@@ -1,3 +1,9 @@
+export type FormBuilderProps = {
+    blocks?: object
+    onChange: (items: object) => object
+    onClose: (items: object) => object
+}
+
 export type OptionProps = {
     label: string
     isSelected: boolean
@@ -32,7 +38,7 @@ export type FieldSetProps = {
 
 export type RepeatableProps = {
     children: JSX.Element[]
-    maxItems: number
+    maxItems: number | string
     editItem: (key: string, children: JSX.Element[] | string | boolean) => void
     removeItem: () => void
 }
@@ -42,7 +48,7 @@ export type FileInputProps = {
     helpText: string
     maxItems: number
     required: boolean
-    value: string[]
+    value: string
     acceptedFile?: Array<{ label: string, value: string }>
     editItem: (key: string, value: string | boolean | OptionProps[]) => void
     removeItem: () => void
@@ -102,6 +108,7 @@ export type TelInputProps = TextInputProps
 export type UrlInputProps = TextInputProps
 
 export type DateTimeInputProps = TextInputProps & {
+    showDate: boolean
     showHour: boolean
 }
 

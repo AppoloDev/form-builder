@@ -1,4 +1,4 @@
-import {createRoot} from "react-dom/client";
+import { createRoot } from "react-dom/client";
 import FormBuilder from "../FormBuilder";
 
 class FormBuilderElement extends HTMLElement {
@@ -7,8 +7,22 @@ class FormBuilderElement extends HTMLElement {
         Object.values(this.attributes).forEach((item) => {
             attrs[item.name] = item.value;
         });
+
         this.root = createRoot(this);
-        this.root.render(<FormBuilder {...attrs}/>);
+        this.root.render(
+            <FormBuilder
+                onChange={(value) => {
+                    const changeEvent = new CustomEvent('change', {detail: value});
+                    this.dispatchEvent(changeEvent)
+                    console.log('onChange', value);
+                }}
+                onClose={(value) => {
+                    const closeEvent = new CustomEvent('close', {detail: value});
+                    this.dispatchEvent(closeEvent)
+                    console.log('onClose', value);
+                }}
+                {...attrs}/>
+        );
     }
 
     disconnectedCallback() {
