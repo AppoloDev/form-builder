@@ -39,6 +39,10 @@
     .draggable {
         cursor: grab;
 
+        &:not(:last-child) {
+            @extend .mb-3
+        }
+
         &.dragging {
             cursor: grabbing;
 
@@ -61,7 +65,7 @@
 
         &:not(:last-child) {
             .stack, .repeatable, fieldset {
-                @extend .mb-3
+                //@extend .mb-3
             }
         }
     }

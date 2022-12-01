@@ -3,16 +3,22 @@ import React, { useState } from "react";
 type DndContextType = {
     movingItem: any,
     setMovingItem: React.Dispatch<React.SetStateAction<any>>,
+    movingItemContainer: any,
+    setMovingItemContainer: React.Dispatch<React.SetStateAction<any>>,
     movingItemHeight: number,
     setMovingItemHeight: React.Dispatch<React.SetStateAction<number>>,
+    movingItemWidth: number,
+    setMovingItemWidth: React.Dispatch<React.SetStateAction<number>>,
     moveItem: (item: any, items: any[], index: number) => void
 }
 
 export const Context = React.createContext<DndContextType>({} as DndContextType);
 
-export default function DndContext({children, items, setReorder}: any) {
+export default function DndContext({ children, items, setReorder }: any) {
     const [movingItem, setMovingItem] = useState(null);
     const [movingItemHeight, setMovingItemHeight] = useState(0);
+    const [movingItemWidth, setMovingItemWidth] = useState(0);
+    const [movingItemContainer, setMovingItemContainer] = useState(null);
 
     const moveItem = (item: any, children: any[], index: number) => {
         const clone = recursiveMoveItem(item, items, children, index);
@@ -40,7 +46,7 @@ export default function DndContext({children, items, setReorder}: any) {
         return clone;
     }
 
-    return <Context.Provider value={{movingItem, movingItemHeight, setMovingItem, setMovingItemHeight, moveItem}}>
+    return <Context.Provider value={{movingItem, movingItemHeight, setMovingItem, setMovingItemHeight, movingItemWidth, setMovingItemWidth, movingItemContainer, setMovingItemContainer, moveItem}}>
         {children}
     </Context.Provider>
 };

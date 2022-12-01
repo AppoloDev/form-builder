@@ -5,7 +5,7 @@ import { EditableBlock } from "./EditableBlock";
 import { NumberEdition } from "../Edition/NumberEdition";
 import {SortableList} from "../Sortable/ListSortable";
 
-const Repeatable: FC<RepeatableProps> = ({children, maxItems, editItem, removeItem}) => {
+const Repeatable: FC<RepeatableProps> = ({ children, maxItems, editItem, removeItem }) => {
     const editChildrenItem = (item: JSX.Element, key: keyof JSX.Element, value: JSX.Element[]) => {
         item[key] = value;
         const childrenClone = [...children];
@@ -35,6 +35,7 @@ const Repeatable: FC<RepeatableProps> = ({children, maxItems, editItem, removeIt
             ]}
         >
             <SortableList
+                name={"Repeatable"}
                 renderItem={(item: any, key: number) => React.createElement(blocks[item.type].component, {
                     ...item,
                     key,
@@ -42,8 +43,10 @@ const Repeatable: FC<RepeatableProps> = ({children, maxItems, editItem, removeIt
                     removeItem: () => removeChildrenItem(item)
                 })}
                 items={children}>
+                <>
+                    {children.length === 0 && <div className="add-more">Ajouter un nouveau bloc…</div>}
+                </>
             </SortableList>
-
             <>
                 {maxItems > 1 && (<div className="add-more">Ajouter une nouvelle entrée…</div>)}
             </>

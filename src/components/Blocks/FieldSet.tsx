@@ -32,6 +32,7 @@ const FieldSet: FC<FieldSetProps> = ({ children, editItem, removeItem }) => {
             </div>
 
             <SortableList
+                name={"FieldSet"}
                 renderItem={(item: any, key: number) => React.createElement(blocks[item.type].component, {
                     ...item,
                     key,

@@ -1,11 +1,15 @@
-import React, { DragEvent, useContext, useRef, useState } from "react";
+import React, {DragEvent, useContext, useEffect, useRef, useState} from "react";
 import useDebounce from "../../hooks/Debounce";
 import { Context } from "./DndContext";
 
-export function SortableList({items, renderItem}: any) {
-    const {movingItem, setMovingItem, movingItemHeight, setMovingItemHeight, moveItem} = useContext(Context);
+export function SortableList({ items, renderItem, margin = 16, name = "Parent", children }: any) {
+    const { movingItem, setMovingItem, movingItemHeight, setMovingItemHeight, movingItemWidth, setMovingItemWidth, movingItemContainer, setMovingItemContainer, moveItem } = useContext(Context);
 
     const ref = useRef<any>();
+
+    useEffect(() => {
+        setPlaceholderIndex(null);
+    }, [movingItem]);
 
     const [placeholder, setPlaceholderIndex] = useState<number | null>(null);
     const isHoverDragging = movingItem !== null && placeholder !== null;
@@ -20,18 +24,17 @@ export function SortableList({items, renderItem}: any) {
         setMovingItem(item);
 
         if (ref.current) {
-            setMovingItemHeight(ref.current.children[items.indexOf(item)].getBoundingClientRect().height);
+            const bounds = ref.current.children[items.indexOf(item)].getBoundingClientRect();
+            setMovingItemHeight(bounds.height);
+            setMovingItemWidth(bounds.width);
         }
+
         e.stopPropagation();
     }
 
-    const debounced = useDebounce(() => {
-        setPlaceholderIndex(null);
-    }, 100);
-
     const onDragOver = (e: DragEvent<HTMLDivElement>) => {
+        setMovingItemContainer(items);
         setPlaceholderIndex(getIndexOfItem(e.clientY));
-        debounced();
         e.preventDefault();
         e.stopPropagation();
     }
@@ -62,7 +65,7 @@ export function SortableList({items, renderItem}: any) {
 
         if (el != undefined) {
             for (let i = 0; i < el.children.length; i++) {
-                height += el.children[i].getBoundingClientRect().height;
+                height += el.children[i].getBoundingClientRect().height + (i === (el.children.length-1) ? 0 : margin);
             }
         }
 
@@ -75,8 +78,14 @@ export function SortableList({items, renderItem}: any) {
         };
     }
 
-    const getStyle = (key: number) => {
+    const getStyle = (item: any, key: number) => {
         if (!isHoverDragging) return {};
+
+        if(item === movingItem && movingItemContainer !== items) {
+            return {
+                display: 'none'
+            }
+        }
 
         let top = 0;
 
@@ -92,20 +101,20 @@ export function SortableList({items, renderItem}: any) {
 
                 for (let i = 0; i < items.length; i++) {
                     if (clone[i] === key) break;
-                    top += el.children[clone[i]].getBoundingClientRect().height;
+                    top += el.children[clone[i]].getBoundingClientRect().height + margin;
                 }
             } else {
                 for (let i = 0; i < items.length; i++) {
-                    if (i === placeholder) top += movingItemHeight;
+                    if (i === placeholder) top += movingItemHeight + margin;
                     if (i === key) break;
-                    top += el.children[i].getBoundingClientRect().height;
+                    top += el.children[i].getBoundingClientRect().height + margin;
                 }
             }
         }
 
         return {
             top,
-            width: ref.current?.children[key].getBoundingClientRect().width,
+            width: item === movingItem ? movingItemWidth : ref.current?.children[key].getBoundingClientRect().width,
         };
     }
 
@@ -126,11 +135,12 @@ export function SortableList({items, renderItem}: any) {
                     style={{
                         transition: 'all 0.1s linear',
                         position: (isHoverDragging ? 'absolute' : 'unset'),
-                        ...getStyle(i)
+                        ...getStyle(item, i)
                     }}
                     key={i}
                     draggable
                     onDragStart={e => onDragStart(e, item)}
                 >{renderItem(item, i)}</div>))}
+            {children}
         </div>);
 }
