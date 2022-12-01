@@ -1,1 +1,1 @@
-require('./FormBuilder');
+require('./elements/formBuilder');
