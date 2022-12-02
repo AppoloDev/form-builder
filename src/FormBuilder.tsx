@@ -24,14 +24,6 @@ function FormBuilder({blocks, onChange, onClose}: FormBuilderProps) {
             value: "",
             required: true,
         },
-
-        {
-            type: "HourMinuteInput",
-            label: "HourMinute input",
-            placeHolder: "Lets go",
-            value: "",
-            required: true,
-        },
         {
             type: "Repeatable",
             maxItems: 5,

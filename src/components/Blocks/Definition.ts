@@ -75,13 +75,6 @@ export const blocks: IDictionary<Block> = {
             helpText: "Text d'aide",
         }
     },
-    HourMinuteInput: {
-        title: "Champ heure : minute",
-        component: HourMinuteInput,
-        base: {
-            label: "Champ heure : minute",
-        }
-    },
     FieldSet: {
         title: "FieldSet",
         component: FieldSet,
