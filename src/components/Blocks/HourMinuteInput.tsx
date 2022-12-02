@@ -5,7 +5,7 @@ import { CheckboxEdition } from "../Edition/CheckboxEdition";
 import { IdGenerator } from "../../utilities/String";
 import { HourMinuteInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
-import InputMask from "react-input-mask";
+import ReactInputMask from "react-input-mask";
 
 const HourMinuteInput: FC<HourMinuteInputProps> = ({
                                                        label,
@@ -76,7 +76,7 @@ const HourMinuteInput: FC<HourMinuteInputProps> = ({
                 {required && <span className="required">Requis</span>}
             </label>
 
-            <InputMask
+            <ReactInputMask
                 type="text"
                 id={id}
                 placeholder={placeHolder}
