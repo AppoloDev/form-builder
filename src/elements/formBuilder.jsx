@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
 import FormBuilder from "../FormBuilder";
 
-class FormBuilderElement extends HTMLElement {
+export class FormBuilderElement extends HTMLElement {
     connectedCallback() {
         const attrs = {};
         Object.values(this.attributes).forEach((item) => {
