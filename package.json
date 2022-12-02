@@ -2,6 +2,7 @@
   "name": "form-builder",
   "version": "0.1.0",
   "private": true,
+  "main": "./dist/index.js",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
