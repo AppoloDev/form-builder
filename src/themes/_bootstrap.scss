@@ -86,12 +86,6 @@
 
             transition: background-color .3s ease, border-color .3s ease;
         }
-
-        &:not(:last-child) {
-            .stack, .repeatable, fieldset {
-                //@extend .mb-3
-            }
-        }
     }
 
     .stack, fieldset, .repeatable {
@@ -267,6 +261,10 @@
         background-color: rgba(0, 0, 0, .5);
 
         animation: showModal 500ms both;
+
+        .stack {
+            @extend .mb-3
+        }
     }
 
     .sign-area {
