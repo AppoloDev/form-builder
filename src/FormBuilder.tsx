@@ -150,7 +150,7 @@ function FormBuilder({blocks, onChange, onClose, modalLayout}: FormBuilderProps)
                         renderItem={(block: Block) => <div draggable={true}>{block.title}</div>}
                     />
 
-                    <div className="container">
+                    <div className="wrapper">
                         <SortableList
                             renderItem={(item: any, key: number) => React.createElement(mergedBlocks[item.type].component, {
                                 key,
