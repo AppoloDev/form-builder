@@ -5,7 +5,7 @@ import { SortableList } from "../Sortable/ListSortable";
 import { TrashIcon } from "../Icons/TrashIcon";
 
 
-const FieldSet: FC<FieldSetProps> = ({ children, editItem, removeItem }) => {
+const FieldSet: FC<FieldSetProps> = ({children, editItem, removeItem}) => {
     const editChildrenItem = (item: JSX.Element, key: keyof JSX.Element, value: JSX.Element[]) => {
         item[key] = value;
         const childrenClone = [...children];
@@ -33,7 +33,7 @@ const FieldSet: FC<FieldSetProps> = ({ children, editItem, removeItem }) => {
 
             <SortableList
                 name={"FieldSet"}
-                canAddChildren={(item: any) => item.type !== "FieldSet"}
+                canAddChildren={(item: any) => item !== undefined && item.type !== "FieldSet"}
                 renderItem={(item: any, key: number) => React.createElement(blocks[item.type].component, {
                     ...item,
                     key,

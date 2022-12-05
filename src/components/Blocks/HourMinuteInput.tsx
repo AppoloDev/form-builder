@@ -82,10 +82,7 @@ const HourMinuteInput: FC<HourMinuteInputProps> = ({
                 placeholder={placeHolder}
                 disabled={readOnly}
                 value={value}
-                onChange={({target}) => {
-                    console.log(target.value);
-                    setValue(target.value)
-                }}
+                onChange={({target}) => setValue(target.value)}
                 required={required}
                 pattern={"[0-9]{2}:[0-9]{2}"}
                 maskPlaceholder={"--:--"}
