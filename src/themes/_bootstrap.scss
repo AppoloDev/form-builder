@@ -1,14 +1,11 @@
 .form-builder {
     display: flex;
+    gap: 48px;
 
     padding: 80px 0 56px 0;
 
     &.modal-layout {
         padding: 80px 0 56px 248px;
-
-        .form-builder__wrapper {
-            padding-left: 0;
-        }
 
         .droppable-list {
             position: fixed;
@@ -27,10 +24,6 @@
 
             border-right: 1px solid #ced4da;
         }
-    }
-
-    &__wrapper {
-        padding: 0 32px;
     }
 
     .close {
@@ -58,13 +51,8 @@
     }
 
     .droppable-list {
-        padding: 0 calc(32px + (var(--bs-gutter-x) * 0.5));
-
         background-color: #FFF;
-
-        &__content {
-            width: var(--sidebar-width, 100%);
-        }
+        width: var(--sidebar-width, 100%);
 
         .droppable-item {
             padding: 8px 16px;
@@ -150,6 +138,10 @@
 
         .form-content {
             pointer-events: none;
+
+            h2, p {
+                margin-bottom: 0;
+            }
         }
 
         .stack-heading {
@@ -207,7 +199,6 @@
 
         border: 1px solid #ced4da;
         border-radius: 4px;
-
 
 
         & + fieldset, + .repeatable {

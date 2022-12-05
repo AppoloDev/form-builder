@@ -62,12 +62,14 @@ export function SortableList({ items, renderItem, margin = 16, name = "Parent", 
         if (!isHoverDragging) return {};
 
         let height = 0;
+        let width = 0;
 
         const el: HTMLElement | undefined = ref.current;
 
         if (el != undefined) {
             for (let i = 0; i < el.children.length; i++) {
                 height += el.children[i].getBoundingClientRect().height + (i === (el.children.length - 1) ? 0 : margin);
+                width = el.children[i].getBoundingClientRect().width + (i === (el.children.length - 1) ? 0 : margin);
             }
         }
 
@@ -76,7 +78,7 @@ export function SortableList({ items, renderItem, margin = 16, name = "Parent", 
 
         return {
             height,
-            width: '100%'
+            width
         };
     }
 
