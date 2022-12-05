@@ -32,6 +32,8 @@ export const blocks: IDictionary<Block> = {
         component: Address,
         base: {
             label: "Adresse",
+            helpText: "",
+            required: false,
         }
     },
     TextInput: {
@@ -40,8 +42,11 @@ export const blocks: IDictionary<Block> = {
         base: {
             label: "Champ texte",
             placeHolder: "PlaceHolder",
+            defaultValue: "",
             value: "",
             required: false,
+            readOnly: false,
+            helpText: ""
         }
     },
     NumberInput: {
@@ -49,6 +54,11 @@ export const blocks: IDictionary<Block> = {
         component: NumberInput,
         base: {
             label: "Champ numérique",
+            helpText: "",
+            defaultValue: "",
+            readOnly: false,
+            required: false,
+            allowDecimal: true
         }
     },
     EmailInput: {
@@ -57,6 +67,10 @@ export const blocks: IDictionary<Block> = {
         base: {
             label: "Champ email",
             helpText: "Text d'aide",
+            placeHolder: '',
+            defaultValue: '',
+            readOnly: false,
+            required: false
         }
     },
     TelInput: {
@@ -64,7 +78,11 @@ export const blocks: IDictionary<Block> = {
         component: TelInput,
         base: {
             label: "Champ téléphone",
+            placeHolder: '',
+            defaultValue: '',
             helpText: "Text d'aide",
+            readOnly: false,
+            required: false
         }
     },
     UrlInput: {
@@ -72,7 +90,11 @@ export const blocks: IDictionary<Block> = {
         component: UrlInput,
         base: {
             label: "Champ URL",
+            placeHolder: '',
+            defaultValue: '',
             helpText: "Text d'aide",
+            readOnly: false,
+            required: false
         }
     },
     FieldSet: {
@@ -103,6 +125,10 @@ export const blocks: IDictionary<Block> = {
             label: "Zone de texte",
             placeHolder: "Placeholder",
             required: false,
+            helpText: '',
+            defaultValue: '',
+            readOnly: false,
+            rows: 5
         }
     },
     FileInput: {
@@ -110,9 +136,11 @@ export const blocks: IDictionary<Block> = {
         component: FileInput,
         base: {
             label: "Fichier",
-            placeHolder: "Placeholder",
+            helpText: "",
+            maxItems: 1,
             value: "",
             required: false,
+            acceptedFile: []
         }
     },
     DateTimeInput: {
@@ -133,13 +161,27 @@ export const blocks: IDictionary<Block> = {
             multiple: false,
             checkCases: false,
             required: false,
+            customOption: false,
+            helpText: ""
         }
     },
+    /*HourMinuteInput: {
+        title: "Champ heure : minute",
+        component: HourMinuteInput,
+        base: {
+            label: "Champ heure : minute",
+            helpText: "",
+            defaultValue: "",
+            readOnly: false,
+            required: false
+        }
+    },*/
     Signature: {
         title: "Signature",
         component: Signature,
         base: {
             label: "Signature",
+            helpText: "",
             required: false
         }
     },
@@ -147,7 +189,8 @@ export const blocks: IDictionary<Block> = {
         title: "Répétable",
         component: Repeatable,
         base: {
-            children: []
+            children: [],
+            maxItems: 1
         }
     },
 };

@@ -45,9 +45,6 @@ const Repeatable: FC<RepeatableProps> = ({ children, maxItems, editItem, removeI
                     removeItem: () => removeChildrenItem(item)
                 })}
                 items={children}>
-                <>
-                    {children.length === 0 && <div className="add-more">Ajouter un nouveau bloc…</div>}
-                </>
             </SortableList>
             <>
                 {(maxItems > 1 || maxItems === 0 || maxItems === '') && (<div className="add-more">Ajouter une nouvelle entrée…</div>)}

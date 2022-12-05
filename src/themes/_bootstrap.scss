@@ -1,4 +1,4 @@
-//@import "bootstrap/scss/bootstrap";
+@import "bootstrap/scss/bootstrap";
 
 .form-builder {
     display: flex;
@@ -14,7 +14,7 @@
 
         border: 1px dashed #ced4da;
         border-radius: 4px;
-        padding: 128px 0;
+        padding: 72px 0;
     }
 
     &.modal-layout {

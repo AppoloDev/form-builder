@@ -8,7 +8,7 @@ import { FileInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 import { SelectEdition } from "../Edition/SelectEdition";
 
-const FileInput: FC<FileInputProps> = ({label, helpText, maxItems, required, value, acceptedFile = [], editItem, removeItem}: FileInputProps) => {
+const FileInput: FC<FileInputProps> = ({label = '', helpText = '', maxItems = 1, required = false, value = '', acceptedFile = [], editItem, removeItem}: FileInputProps) => {
     const id = IdGenerator();
 
     return (
@@ -38,9 +38,7 @@ const FileInput: FC<FileInputProps> = ({label, helpText, maxItems, required, val
                         {value: 'application/pdf', label: 'Fichier PDF'},
                         {value: 'images/*,application/pdf', label: 'Fichier images et PDF'}
                     ]}
-                    editItem={(val) => {
-                        editItem('value', val)
-                    }}
+                    editItem={(val) => editItem('value', val)}
                     key={3}
                 />,
 

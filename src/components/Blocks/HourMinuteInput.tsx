@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import { TextEdition } from "../Edition/TextEdition";
 import { EditableBlock } from "./EditableBlock";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
@@ -7,22 +7,8 @@ import { HourMinuteInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 import ReactInputMask from "react-input-mask";
 
-const HourMinuteInput: FC<HourMinuteInputProps> = ({
-                                                       label,
-                                                       placeHolder,
-                                                       helpText,
-                                                       defaultValue,
-                                                       readOnly,
-                                                       required,
-                                                       editItem,
-                                                       removeItem
-                                                   }) => {
+const HourMinuteInput: FC<HourMinuteInputProps> = ({label = '', helpText = '', defaultValue = '', readOnly= false, required = false, editItem, removeItem}) => {
     const id = IdGenerator();
-    const [value, setValue] = useState(defaultValue);
-
-    useEffect(() => {
-        setValue(defaultValue);
-    }, [defaultValue]);
 
     return (
         <EditableBlock
@@ -33,13 +19,6 @@ const HourMinuteInput: FC<HourMinuteInputProps> = ({
                     value={label}
                     editItem={(val) => editItem('label', val)}
                     key={1}
-                />,
-
-                <TextEdition
-                    label={"PlaceHolder"}
-                    value={placeHolder}
-                    editItem={(val) => editItem('placeHolder', val)}
-                    key={2}
                 />,
 
                 <TextEdition
@@ -79,10 +58,8 @@ const HourMinuteInput: FC<HourMinuteInputProps> = ({
             <ReactInputMask
                 type="text"
                 id={id}
-                placeholder={placeHolder}
                 disabled={readOnly}
-                value={value}
-                onChange={({target}) => setValue(target.value)}
+                defaultValue={defaultValue}
                 required={required}
                 pattern={"[0-9]{2}:[0-9]{2}"}
                 maskPlaceholder={"--:--"}

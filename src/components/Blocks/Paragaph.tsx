@@ -3,7 +3,7 @@ import { EditableBlock } from "./EditableBlock";
 import { TextAreaEdition } from "../Edition/TextAreaEdition";
 import { ParagraphProps } from "./Types";
 
-const Paragraph: FC<ParagraphProps> = ({text, editItem, removeItem}) => {
+const Paragraph: FC<ParagraphProps> = ({text = '', editItem, removeItem}) => {
     const [visible, setVisible] = useState<boolean>(false);
 
     return (

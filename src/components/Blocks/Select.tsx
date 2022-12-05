@@ -7,7 +7,7 @@ import { IdGenerator } from "../../utilities/String";
 import { SelectProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const Select: FC<SelectProps> = ({label, placeHolder, helpText, multiple, customOption, checkCases, required, editItem, removeItem, options}) => {
+const Select: FC<SelectProps> = ({label = '', placeHolder = '', helpText = '', multiple = false, customOption = false, checkCases = false, required = false,options , editItem, removeItem}) => {
     const id = IdGenerator();
     const [enabledCustomOption, enableCustomOption] = useState<boolean>(false)
 
@@ -27,44 +27,59 @@ const Select: FC<SelectProps> = ({label, placeHolder, helpText, multiple, custom
             <TextEdition
                 label={"Label"}
                 value={label}
-                editItem={(val) => editItem('label', val)} key={1}/>,
+                editItem={(val) => editItem('label', val)}
+                key={1}
+            />,
+
             <TextEdition
                 label={"PlaceHolder"}
                 value={placeHolder}
-                editItem={(val) => editItem('placeHolder', val)} key={2}/>,
+                editItem={(val) => editItem('placeHolder', val)}
+                key={2}
+            />,
 
             <TextEdition
                 label={"Texte d'aide"}
                 value={helpText}
                 editItem={(val) => editItem('helpText', val)}
-                key={3}/>,
+                key={3}
+            />,
 
             <CheckboxEdition
                 label={"Requis"}
                 checked={required}
                 editItem={(val) => editItem('required', val)}
-                key={4}/>,
+                key={4}
+            />,
 
             <CheckboxEdition
                 label={"Choix multiple"}
                 checked={multiple}
-                editItem={(val) => editItem('multiple', val)} key={5}/>,
+                editItem={(val) => editItem('multiple', val)}
+                key={5}
+            />,
 
             <CheckboxEdition
                 label={"Cases à cocher"}
                 checked={checkCases}
-                editItem={(val) => editItem('checkCases', val)} key={6}/>,
+                editItem={(val) => editItem('checkCases', val)}
+                key={6}
+            />,
 
             <CheckboxEdition
                 label={"Autoriser l'ajout d'une option personnalisée"}
                 disabled={!enabledCustomOption}
                 checked={customOption}
-                editItem={(val) => editItem('customOption', val)} key={7}/>,
+                editItem={(val) => editItem('customOption', val)}
+                key={7}
+            />,
 
             <SelectOptionEdition
                 label={"Options"}
                 options={options}
-                editItem={(val) => editItem('options', val)} key={8}/>
+                editItem={(val) => editItem('options', val)}
+                key={8}
+            />
         ]}>
             <label htmlFor={id}>
                 {label}

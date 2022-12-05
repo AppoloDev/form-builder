@@ -27,7 +27,7 @@ export const SelectOptionEdition: FC<SelectOptionEditionProps> = ({label, option
         <div className="stack">
             <div className="stack-heading">
                 <h3>{label}</h3>
-                <button onClick={addChildrenItem}>Ajouter une option</button>
+                <button type="button" onClick={addChildrenItem}>Ajouter une option</button>
             </div>
 
             <div className="stack-content">

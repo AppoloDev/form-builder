@@ -6,7 +6,7 @@ import { IdGenerator } from "../../utilities/String";
 import { SignatureProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const Signature: FC<SignatureProps> = ({label, helpText, required, editItem, removeItem}) => {
+const Signature: FC<SignatureProps> = ({label = '', helpText = '', required = false, editItem, removeItem}) => {
     const id = IdGenerator();
 
     return (
