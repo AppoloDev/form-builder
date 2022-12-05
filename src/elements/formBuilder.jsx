@@ -8,7 +8,8 @@ export class FormBuilderElement extends HTMLElement {
             attrs[item.name] = item.value;
         });
 
-        const json = [
+        const json = [];
+        /*const json = [
             {
                 type: "TextInput",
                 label: "Label",
@@ -97,7 +98,7 @@ export class FormBuilderElement extends HTMLElement {
                     },
                 ]
             }
-        ]
+        ]*/
 
         this.root = createRoot(this);
         this.root.render(

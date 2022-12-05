@@ -9,6 +9,14 @@
         flex: 1;
     }
 
+    .no-items {
+        text-align: center;
+
+        border: 1px dashed #ced4da;
+        border-radius: 4px;
+        padding: 128px 0;
+    }
+
     &.modal-layout {
         padding: 0 0 0 248px;
 
