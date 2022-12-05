@@ -8,7 +8,7 @@ import { merge } from "./utilities/Object";
 import useDebounce from "./utilities/Debounce";
 import { CancelIcon } from "./components/Icons/CancelIcon";
 
-function FormBuilder({blocks, onChange, onClose}: FormBuilderProps) {
+function FormBuilder({blocks, onChange, onClose, modalLayout}: FormBuilderProps) {
     const [items, setItems] = useState([
         {
             type: "TextInput",
@@ -134,7 +134,7 @@ function FormBuilder({blocks, onChange, onClose}: FormBuilderProps) {
 
     return (
         <>
-            <div className="form-builder">
+            <div className={`form-builder ${modalLayout ? 'modal-layout' : ''}`}>
                 <DndContext
                     items={items}
                     setReorder={(items: any[]) => setItems(items)}
@@ -163,9 +163,9 @@ function FormBuilder({blocks, onChange, onClose}: FormBuilderProps) {
                     </div>
                 </DndContext>
 
-                <div className="close" onClick={() => onClose(items)}>
+                {modalLayout && <div className="close" onClick={() => onClose(items)}>
                     <CancelIcon height={32} width={32}/>
-                </div>
+                </div>}
             </div>
 
             <p style={{fontSize: 12, marginTop: 20}}>{JSON.stringify(items)}</p>

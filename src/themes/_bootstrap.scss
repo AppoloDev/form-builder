@@ -1,8 +1,41 @@
 @import 'bootstrap/scss/bootstrap'; //@TODO remove
 
 .form-builder {
-    position: relative;
-    padding: 80px 0 56px 248px;
+    display: flex;
+
+    padding: 80px 0 56px 0;
+
+    &.modal-layout {
+        padding: 80px 0 56px 248px;
+
+        .container {
+            > div {
+                padding: 0;
+            }
+        }
+
+        .droppable-list {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+
+            z-index: 99;
+
+            width: 100%;
+            max-width: 248px;
+
+            padding: 80px 32px;
+
+            overflow-x: auto;
+        }
+    }
+
+    .container {
+        > div {
+            padding: 0 32px;
+        }
+    }
 
     .close {
         position: absolute;
@@ -29,22 +62,10 @@
     }
 
     .droppable-list {
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-
-        z-index: 99;
-
-        max-width: 248px;
-        width: 100%;
-
-        padding: 56px 32px;
+        padding: 0 calc(32px + (var(--bs-gutter-x) * 0.5));
         border-right: 1px solid #ced4da;
 
         background-color: #FFF;
-
-        overflow-x: auto;
 
         .droppable-item {
             padding: 8px 16px;
@@ -53,6 +74,8 @@
             border-radius: 4px;
 
             cursor: grab;
+
+            white-space: nowrap;
 
             &:not(:last-child) {
                 margin-bottom: 8px;

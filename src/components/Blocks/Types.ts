@@ -1,5 +1,6 @@
 export type FormBuilderProps = {
     blocks?: object
+    modalLayout?: boolean
     onChange: (items: object) => object
     onClose: (items: object) => object
 }

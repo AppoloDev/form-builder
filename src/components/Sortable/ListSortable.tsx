@@ -1,4 +1,4 @@
-import React, {DragEvent, useContext, useEffect, useRef, useState} from "react";
+import React, { DragEvent, useContext, useEffect, useRef, useState } from "react";
 import { Context } from "./DndContext";
 
 export function SortableList({ items, renderItem, margin = 16, name = "Parent", children, canAddChildren = (item: any) => true }: any) {
@@ -14,7 +14,7 @@ export function SortableList({ items, renderItem, margin = 16, name = "Parent", 
     const isHoverDragging = movingItem !== null && placeholder !== null;
 
     const onDrop = (e: DragEvent<HTMLDivElement>) => {
-        if(canAddChildren(movingItem)) {
+        if (canAddChildren(movingItem)) {
             setMovingItem(null);
             moveItem(movingItem, items, getIndexOfItem(e.clientY));
         }
@@ -33,7 +33,7 @@ export function SortableList({ items, renderItem, margin = 16, name = "Parent", 
     }
 
     const onDragOver = (e: DragEvent<HTMLDivElement>) => {
-        if(canAddChildren(movingItem)) {
+        if (canAddChildren(movingItem)) {
             setMovingItemContainer(items);
             setPlaceholderIndex(getIndexOfItem(e.clientY));
         }
@@ -67,12 +67,12 @@ export function SortableList({ items, renderItem, margin = 16, name = "Parent", 
 
         if (el != undefined) {
             for (let i = 0; i < el.children.length; i++) {
-                height += el.children[i].getBoundingClientRect().height + (i === (el.children.length-1) ? 0 : margin);
+                height += el.children[i].getBoundingClientRect().height + (i === (el.children.length - 1) ? 0 : margin);
             }
         }
 
         const startIndex = items.indexOf(movingItem);
-        if (startIndex === -1) height += (movingItemHeight+margin); // TODO : (Improving some weird spaces ?)
+        if (startIndex === -1) height += (movingItemHeight + margin); // TODO : (Improving some weird spaces ?)
 
         return {
             height,
@@ -83,7 +83,7 @@ export function SortableList({ items, renderItem, margin = 16, name = "Parent", 
     const getStyle = (item: any, key: number) => {
         if (!isHoverDragging) return {};
 
-        if(item === movingItem && movingItemContainer !== items) {
+        if (item === movingItem && movingItemContainer !== items) {
             return {
                 display: 'none'
             }
