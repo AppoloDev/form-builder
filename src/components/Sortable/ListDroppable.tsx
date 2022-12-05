@@ -21,13 +21,15 @@ export function DroppableList({items, renderItem, dropItem}: any) {
             className="droppable-list"
             onDragEnd={onDragEnd}
             ref={ref}>
-            {items.map((item: any, i: number) => (
-                <div
-                    className="droppable-item"
-                    key={i}
-                    draggable
-                    onDragStart={e => onDragStart(e, item)}
-                >{renderItem(item, i)}</div>))
-            }
+            <div className="droppable-list__content">
+                {items.map((item: any, i: number) => (
+                    <div
+                        className="droppable-item"
+                        key={i}
+                        draggable
+                        onDragStart={e => onDragStart(e, item)}
+                    >{renderItem(item, i)}</div>))
+                }
+            </div>
         </div>);
 }

@@ -167,8 +167,6 @@ function FormBuilder({blocks, onChange, onClose, modalLayout}: FormBuilderProps)
                     <CancelIcon height={32} width={32}/>
                 </div>}
             </div>
-
-            <p style={{fontSize: 12, marginTop: 20}}>{JSON.stringify(items)}</p>
         </>
 
     )
