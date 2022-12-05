@@ -1,4 +1,4 @@
-@import "bootstrap/scss/bootstrap";
+//@import "bootstrap/scss/bootstrap";
 
 .form-builder {
     display: flex;
@@ -220,6 +220,7 @@
 
     .repeatable {
         background-color: var(--repeatable-bg-color, #F7F7F7);
+        border-style: dashed;
     }
 
     label {

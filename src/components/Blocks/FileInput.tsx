@@ -70,17 +70,15 @@ const FileInput: FC<FileInputProps> = ({label, helpText, maxItems, required, val
             />
 
             <>
-                {maxItems > 1 && (<div className="add-more">Ajouter un fichier…</div>)}
-            </>
-
-            <>
                 {helpText && <div className="help-text">
                     <WarningCircledIcon/>
                     {helpText}
                 </div>}
             </>
 
-
+            <>
+                {maxItems > 1 && (<div className="add-more">Ajouter un fichier…</div>)}
+            </>
         </EditableBlock>
     )
 }
