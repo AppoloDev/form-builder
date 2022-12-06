@@ -14,7 +14,7 @@ type DndContextType = {
 
 export const Context = React.createContext<DndContextType>({} as DndContextType);
 
-export default function DndContext({ children, items, setReorder }: any) {
+export default function DndContext({children, items, setReorder}: any) {
     const [movingItem, setMovingItem] = useState(null);
     const [movingItemHeight, setMovingItemHeight] = useState(0);
     const [movingItemWidth, setMovingItemWidth] = useState(0);
@@ -46,7 +46,20 @@ export default function DndContext({ children, items, setReorder }: any) {
         return clone;
     }
 
-    return <Context.Provider value={{movingItem, movingItemHeight, setMovingItem, setMovingItemHeight, movingItemWidth, setMovingItemWidth, movingItemContainer, setMovingItemContainer, moveItem}}>
-        {children}
-    </Context.Provider>
+    return (
+        <Context.Provider value={{
+            movingItem,
+            movingItemHeight,
+            setMovingItem,
+            setMovingItemHeight,
+            movingItemWidth,
+            setMovingItemWidth,
+            movingItemContainer,
+            setMovingItemContainer,
+            moveItem
+        }}
+        >
+            {children}
+        </Context.Provider>
+    )
 };

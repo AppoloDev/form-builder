@@ -69,7 +69,7 @@ export function SortableList({ items, renderItem, margin = 16, name = "Parent", 
         if (el !== undefined) {
             for (let i = 0; i < el.children.length; i++) {
                 height += el.children[i].getBoundingClientRect().height + (i === (el.children.length - 1) ? 0 : margin);
-                width = el.children[i].getBoundingClientRect().width + (i === (el.children.length - 1) ? 0 : margin);
+                width = el.children[i].getBoundingClientRect().width;
             }
         }
 
