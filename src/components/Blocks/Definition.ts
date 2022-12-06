@@ -27,7 +27,7 @@ export interface Block {
 }
 
 export const blocks: IDictionary<Block> = {
-    Address: {
+    "Address": {
         title: "Adresse",
         component: Address,
         base: {
@@ -36,7 +36,7 @@ export const blocks: IDictionary<Block> = {
             required: false,
         }
     },
-    TextInput: {
+    "TextInput": {
         title: "Champ texte",
         component: TextInput,
         base: {
@@ -48,7 +48,7 @@ export const blocks: IDictionary<Block> = {
             helpText: ""
         }
     },
-    NumberInput: {
+    "NumberInput": {
         title: "Champ numérique",
         component: NumberInput,
         base: {
@@ -60,7 +60,7 @@ export const blocks: IDictionary<Block> = {
             allowDecimal: true
         }
     },
-    EmailInput: {
+    "EmailInput": {
         title: "Champ email",
         component: EmailInput,
         base: {
@@ -72,7 +72,7 @@ export const blocks: IDictionary<Block> = {
             required: false
         }
     },
-    TelInput: {
+    "TelInput": {
         title: "Champ téléphone",
         component: TelInput,
         base: {
@@ -84,7 +84,7 @@ export const blocks: IDictionary<Block> = {
             required: false
         }
     },
-    UrlInput: {
+    "UrlInput": {
         title: "Champ URL",
         component: UrlInput,
         base: {
@@ -96,28 +96,28 @@ export const blocks: IDictionary<Block> = {
             required: false
         }
     },
-    FieldSet: {
+    "FieldSet": {
         title: "FieldSet",
         component: FieldSet,
         base: {
             children: []
         }
     },
-    Paragraph: {
+    "Paragraph": {
         title: "Paragraphe",
         component: Paragraph,
         base: {
             text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
         }
     },
-    Title: {
+    "Title": {
         title: "Titre",
         component: Title,
         base: {
             text: "Titre"
         }
     },
-    TextAreaInput: {
+    "TextAreaInput": {
         title: "Zone de texte",
         component: TextAreaInput,
         base: {
@@ -130,7 +130,7 @@ export const blocks: IDictionary<Block> = {
             rows: 5
         }
     },
-    FileInput: {
+    "FileInput": {
         title: "Fichier",
         component: FileInput,
         base: {
@@ -142,7 +142,7 @@ export const blocks: IDictionary<Block> = {
             acceptedFile: []
         }
     },
-    DateTimeInput: {
+    "DateTimeInput": {
         title: "Date",
         component: DateTimeInput,
         base: {
@@ -150,7 +150,7 @@ export const blocks: IDictionary<Block> = {
             placeHolder: "Placeholder",
         }
     },
-    Select: {
+    "Select": {
         title: "Liste à choix",
         component: Select,
         base: {
@@ -164,7 +164,7 @@ export const blocks: IDictionary<Block> = {
             helpText: ""
         }
     },
-    /*HourMinuteInput: {
+    /*"HourMinuteInput": {
         title: "Champ heure : minute",
         component: HourMinuteInput,
         base: {
@@ -175,7 +175,7 @@ export const blocks: IDictionary<Block> = {
             required: false
         }
     },*/
-    Signature: {
+    "Signature": {
         title: "Signature",
         component: Signature,
         base: {
@@ -184,7 +184,7 @@ export const blocks: IDictionary<Block> = {
             required: false
         }
     },
-    Repeatable: {
+    "Repeatable": {
         title: "Répétable",
         component: Repeatable,
         base: {
