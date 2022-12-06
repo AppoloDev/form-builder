@@ -43,7 +43,6 @@ export const blocks: IDictionary<Block> = {
             label: "Champ texte",
             placeHolder: "PlaceHolder",
             defaultValue: "",
-            value: "",
             required: false,
             readOnly: false,
             helpText: ""

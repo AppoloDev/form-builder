@@ -41,9 +41,6 @@ const FieldSet: FC<FieldSetProps> = ({children, editItem, removeItem}) => {
                     removeItem: () => removeChildrenItem(item)
                 })}
                 items={children}>
-                <>
-                    {children.length === 0 && <div className="add-more">Déplacer un élément dans la zone…</div>}
-                </>
             </SortableList>
         </fieldset>
     )
