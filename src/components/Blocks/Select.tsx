@@ -20,67 +20,69 @@ const Select: FC<SelectProps> = ({label = '', placeHolder = '', helpText = '', m
         }
     }, [checkCases])
 
+    const defaultValue = options.filter((el) => el.isSelected)[0];
+
     return (
         <EditableBlock
             removeItem={removeItem}
             editionItems={[
-            <TextEdition
-                label={"Label"}
-                value={label}
-                editItem={(val) => editItem('label', val)}
-                key={1}
-            />,
+                <TextEdition
+                    label={"Label"}
+                    value={label}
+                    editItem={(val) => editItem('label', val)}
+                    key={1}
+                />,
 
-            <TextEdition
-                label={"PlaceHolder"}
-                value={placeHolder}
-                editItem={(val) => editItem('placeHolder', val)}
-                key={2}
-            />,
+                <TextEdition
+                    label={"PlaceHolder"}
+                    value={placeHolder}
+                    editItem={(val) => editItem('placeHolder', val)}
+                    key={2}
+                />,
 
-            <TextEdition
-                label={"Texte d'aide"}
-                value={helpText}
-                editItem={(val) => editItem('helpText', val)}
-                key={3}
-            />,
+                <TextEdition
+                    label={"Texte d'aide"}
+                    value={helpText}
+                    editItem={(val) => editItem('helpText', val)}
+                    key={3}
+                />,
 
-            <CheckboxEdition
-                label={"Requis"}
-                checked={required}
-                editItem={(val) => editItem('required', val)}
-                key={4}
-            />,
+                <CheckboxEdition
+                    label={"Requis"}
+                    checked={required}
+                    editItem={(val) => editItem('required', val)}
+                    key={4}
+                />,
 
-            <CheckboxEdition
-                label={"Choix multiple"}
-                checked={multiple}
-                editItem={(val) => editItem('multiple', val)}
-                key={5}
-            />,
+                <CheckboxEdition
+                    label={"Choix multiple"}
+                    checked={multiple}
+                    editItem={(val) => editItem('multiple', val)}
+                    key={5}
+                />,
 
-            <CheckboxEdition
-                label={"Cases à cocher"}
-                checked={checkCases}
-                editItem={(val) => editItem('checkCases', val)}
-                key={6}
-            />,
+                <CheckboxEdition
+                    label={"Cases à cocher"}
+                    checked={checkCases}
+                    editItem={(val) => editItem('checkCases', val)}
+                    key={6}
+                />,
 
-            <CheckboxEdition
-                label={"Autoriser l'ajout d'une option personnalisée"}
-                disabled={!enabledCustomOption}
-                checked={customOption}
-                editItem={(val) => editItem('customOption', val)}
-                key={7}
-            />,
+                <CheckboxEdition
+                    label={"Autoriser l'ajout d'une option personnalisée"}
+                    disabled={!enabledCustomOption}
+                    checked={customOption}
+                    editItem={(val) => editItem('customOption', val)}
+                    key={7}
+                />,
 
-            <SelectOptionEdition
-                label={"Options"}
-                options={options}
-                editItem={(val) => editItem('options', val)}
-                key={8}
-            />
-        ]}>
+                <SelectOptionEdition
+                    label={"Options"}
+                    options={options}
+                    editItem={(val) => editItem('options', val)}
+                    key={8}
+                />
+            ]}>
             <label htmlFor={id}>
                 {label}
                 {required && <span className="required">Requis</span>}
@@ -103,13 +105,13 @@ const Select: FC<SelectProps> = ({label = '', placeHolder = '', helpText = '', m
                     (<select
                         id={id}
                         placeholder={placeHolder}
+                        value={defaultValue ? defaultValue?.label : options[0]?.label}
                         multiple={multiple}
                         required={required}>
                         {options.map((option, i) => option.label ?
                             <option
                                 value={option.label}
                                 key={i}
-                                selected={option.isSelected}
                             >
                                 {option.label}
                             </option> : null)

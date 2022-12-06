@@ -7,6 +7,11 @@ import { CheckboxEdition } from "./CheckboxEdition";
 
 export const SelectOptionEdition: FC<SelectOptionEditionProps> = ({label, options, editItem}) => {
     const editChildrenItem = (item: OptionProps, key: keyof OptionProps, value: string | boolean) => {
+        options.forEach((el, index) => {
+            if (el.isSelected && item !== el && key !== 'label') {
+                options[index].isSelected = false;
+            }
+        });
         // @ts-ignore
         item[key] = value;
         editItem([...options]);
