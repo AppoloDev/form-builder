@@ -6,7 +6,7 @@ import { IdGenerator } from "../../utilities/String";
 import { AddressProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const TextInput: FC<AddressProps> = ({label = '', helpText = '', required = false, editItem, removeItem}) => {
+const Address: FC<AddressProps> = ({label = '', helpText = '', required = false, editItem, removeItem}) => {
     const id = IdGenerator();
 
     return (
@@ -54,4 +54,4 @@ const TextInput: FC<AddressProps> = ({label = '', helpText = '', required = fals
     )
 }
 
-export default TextInput;
+export default Address;
