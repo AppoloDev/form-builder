@@ -135,7 +135,6 @@ export function SortableList({ items, renderItem, margin = 16, name = "Parent", 
             onDrop={onDrop}
             style={{position: 'relative', ...getParentStyle()}} ref={ref}
         >
-            {items.length === 0 && <div className="no-items">Déplacer un élément dans la zone…</div>}
             {items.map((item: any, i: number) => (
                 <div
                     className={`draggable ${movingItem === item ? 'dragging' : ''}`}
