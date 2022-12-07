@@ -6,8 +6,7 @@ import { IdGenerator } from "../../utilities/String";
 import { DateTimeInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const DateTimeInput: FC<DateTimeInputProps> = ({id= '', label = '', helpText = '', defaultValue = '', readOnly = false, required = false, showDate = false, showHour = false, editItem, removeItem}) => {
-    const [value, setValue] = useState(defaultValue);
+const DateTimeInput: FC<DateTimeInputProps> = ({id= '', label = '', helpText  = '', readOnly = false, required = false, showDate = false, showHour = false, editItem, removeItem}) => {
     const [inputType, setInputType] = useState('datetime-local');
 
     useEffect(() => {
@@ -15,10 +14,6 @@ const DateTimeInput: FC<DateTimeInputProps> = ({id= '', label = '', helpText = '
             editItem('id', `datetime_${IdGenerator()}`);
         }
     }, []);
-
-    useEffect(() => {
-        setValue(defaultValue);
-    }, [defaultValue]);
 
     useEffect(() => {
         if (showDate && !showHour) {
@@ -39,13 +34,6 @@ const DateTimeInput: FC<DateTimeInputProps> = ({id= '', label = '', helpText = '
                     value={label}
                     editItem={(val) => editItem('label', val)}
                     key={1}
-                />,
-
-                <TextEdition
-                    label={"Texte par défaut"}
-                    value={defaultValue}
-                    editItem={(val) => editItem('defaultValue', val)}
-                    key={2}
                 />,
 
                 <TextEdition
@@ -92,8 +80,6 @@ const DateTimeInput: FC<DateTimeInputProps> = ({id= '', label = '', helpText = '
             <input type={inputType}
                    id={id}
                    disabled={readOnly}
-                   value={value}
-                   onChange={({target}) => setValue(target.value)}
                    required={required}
             />
 

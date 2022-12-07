@@ -160,7 +160,6 @@ export const blocks: IDictionary<Block> = {
             id: "",
             label: "Champ Date & Heure",
             helpText: "",
-            defaultValue: "",
             readOnly: false,
             required: false,
             showDate: false,

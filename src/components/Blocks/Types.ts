@@ -118,9 +118,17 @@ export type TelInputProps = TextInputProps
 
 export type UrlInputProps = TextInputProps
 
-export type DateTimeInputProps = TextInputProps & {
+export type DateTimeInputProps = {
+    id: string
+    label: string
+    placeHolder: string
+    helpText: string
+    readOnly: boolean
+    required: boolean
     showDate: boolean
     showHour: boolean
+    editItem: (key: string, value: string | boolean) => void
+    removeItem: () => void
 }
 
 export type NumberInputProps = {
