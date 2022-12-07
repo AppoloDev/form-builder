@@ -2,7 +2,7 @@ import React, { useContext, useRef } from "react";
 import { Context } from "./DndContext";
 
 export function DroppableList({items, renderItem, dropItem}: any) {
-    const {movingItem, setMovingItem, setMovingItemHeight} = useContext(Context);
+    const {setMovingItem, setMovingItemHeight} = useContext(Context);
 
     const ref = useRef<any>();
 

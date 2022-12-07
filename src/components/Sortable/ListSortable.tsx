@@ -66,10 +66,10 @@ export function SortableList({ items, renderItem, margin = 16, name = "Parent", 
         let height = 0;
         let width = el?.children.length === 0 ? '100%' : 0;
 
-        if (el != undefined) {
+        if (el !== undefined) {
             for (let i = 0; i < el.children.length; i++) {
                 height += el.children[i].getBoundingClientRect().height + (i === (el.children.length - 1) ? 0 : margin);
-                width = el.children[i].getBoundingClientRect().width + (i === (el.children.length - 1) ? 0 : margin);
+                width = el.children[i].getBoundingClientRect().width;
             }
         }
 
@@ -135,7 +135,6 @@ export function SortableList({ items, renderItem, margin = 16, name = "Parent", 
             onDrop={onDrop}
             style={{position: 'relative', ...getParentStyle()}} ref={ref}
         >
-            {items.length === 0 && <div className="no-items">Déplacer un élément dans la zone…</div>}
             {items.map((item: any, i: number) => (
                 <div
                     className={`draggable ${movingItem === item ? 'dragging' : ''}`}

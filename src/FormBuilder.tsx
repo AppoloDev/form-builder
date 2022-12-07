@@ -70,7 +70,9 @@ function FormBuilder({blocks, onChange, onClose, modalLayout, json}: FormBuilder
                                 removeItem: () => removeItem(item)
                             })}
                             items={items}
-                        />
+                        >
+                            {items.length === 0 && <div className="no-items">Déplacer un élément dans la zone…</div>}
+                        </SortableList>
                     </div>
                 </DndContext>
 

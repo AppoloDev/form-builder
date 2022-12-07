@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { TextEdition } from "../Edition/TextEdition";
 import { EditableBlock } from "./EditableBlock";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
@@ -6,8 +6,12 @@ import { IdGenerator } from "../../utilities/String";
 import { AddressProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const TextInput: FC<AddressProps> = ({label = '', helpText = '', required = false, editItem, removeItem}) => {
-    const id = IdGenerator();
+const Address: FC<AddressProps> = ({id, label = '', helpText = '', required = false, editItem, removeItem}) => {
+    const idInput = `address_${IdGenerator()}`;
+
+    useEffect(() => {
+        editItem('id', idInput);
+    }, [])
 
     return (
         <EditableBlock
@@ -33,13 +37,13 @@ const TextInput: FC<AddressProps> = ({label = '', helpText = '', required = fals
                     key={3}
                 />
             ]}>
-            <label htmlFor={id}>
+            <label htmlFor={idInput}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
 
             <input type="text"
-                   id={id}
+                   id={idInput}
                    placeholder={'Indiquez un lieu…'}
                    required={required}
             />
@@ -54,4 +58,4 @@ const TextInput: FC<AddressProps> = ({label = '', helpText = '', required = fals
     )
 }
 
-export default TextInput;
+export default Address;

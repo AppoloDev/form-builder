@@ -1,11 +1,18 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { blocks } from "./Definition";
 import { RepeatableProps } from "./Types";
 import { EditableBlock } from "./EditableBlock";
 import { NumberEdition } from "../Edition/NumberEdition";
 import { SortableList } from "../Sortable/ListSortable";
+import { IdGenerator } from "../../utilities/String";
 
 const Repeatable: FC<RepeatableProps> = ({ children, maxItems, editItem, removeItem }) => {
+    const idInput = `repeatable_${IdGenerator()}`;
+
+    useEffect(() => {
+        editItem('id', idInput);
+    }, [])
+
     const editChildrenItem = (item: JSX.Element, key: keyof JSX.Element, value: JSX.Element[]) => {
         item[key] = value;
         const childrenClone = [...children];
@@ -45,6 +52,9 @@ const Repeatable: FC<RepeatableProps> = ({ children, maxItems, editItem, removeI
                     removeItem: () => removeChildrenItem(item)
                 })}
                 items={children}>
+                <>
+                    {children.length === 0 && <div className="add-more">Déplacer un élément dans la zone…</div>}
+                </>
             </SortableList>
             <>
                 {(maxItems > 1 || maxItems === 0 || maxItems === '') && (<div className="add-more">Ajouter une nouvelle entrée…</div>)}

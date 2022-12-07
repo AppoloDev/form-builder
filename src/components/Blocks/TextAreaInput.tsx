@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { TextEdition } from "../Edition/TextEdition";
 import { EditableBlock } from "./EditableBlock";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
@@ -9,7 +9,11 @@ import { NumberEdition } from "../Edition/NumberEdition";
 import { TextAreaEdition } from "../Edition/TextAreaEdition";
 
 const TextAreaInput: FC<TextAreaProps> = ({label = '', placeHolder = '', helpText = '', required = false, defaultValue = '', readOnly = false, rows = 5, editItem, removeItem}) => {
-    const id = IdGenerator();
+    const idInput = `textarea_${IdGenerator()}`;
+
+    useEffect(() => {
+        editItem('id', idInput);
+    }, [])
 
     return (
         <EditableBlock
@@ -64,13 +68,13 @@ const TextAreaInput: FC<TextAreaProps> = ({label = '', placeHolder = '', helpTex
                     key={7}
                 />
             ]}>
-            <label htmlFor={id}>
+            <label htmlFor={idInput}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
 
             <textarea
-                id={id}
+                id={idInput}
                 placeholder={placeHolder}
                 rows={rows}
                 defaultValue={defaultValue}

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { TextEdition } from "../Edition/TextEdition";
 import { EditableBlock } from "./EditableBlock";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
@@ -7,7 +7,11 @@ import { TelInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
 const TelInput: FC<TelInputProps> = ({label = '', placeHolder = '', helpText = '', defaultValue = '', readOnly = false, required = false, editItem, removeItem}) => {
-    const id = IdGenerator();
+    const idInput = `tel_${IdGenerator()}`;
+
+    useEffect(() => {
+        editItem('id', idInput);
+    }, [])
 
     return (
         <EditableBlock
@@ -55,14 +59,14 @@ const TelInput: FC<TelInputProps> = ({label = '', placeHolder = '', helpText = '
                 key={6}
             />,
         ]}>
-            <label htmlFor={id}>
+            <label htmlFor={idInput}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
 
             {/*<!-- @TODO: Mettre mask --> */}
             <input type="tel"
-                   id={id}
+                   id={idInput}
                    placeholder={placeHolder}
                    disabled={readOnly}
                    defaultValue={defaultValue}

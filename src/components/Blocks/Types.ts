@@ -12,6 +12,7 @@ export type OptionProps = {
 }
 
 export type SelectProps = {
+    id: string
     label: string
     placeHolder: string
     helpText: string
@@ -34,7 +35,7 @@ export type EditableBlockProps = {
 
 export type FieldSetProps = {
     children: JSX.Element[]
-    editItem: (key: string, children: JSX.Element[]) => void
+    editItem: (key: string, children: JSX.Element[] | string) => void
     removeItem: () => void
 }
 
@@ -46,6 +47,7 @@ export type RepeatableProps = {
 }
 
 export type FileInputProps = {
+    id: string
     label: string
     helpText: string
     maxItems: number
@@ -57,12 +59,14 @@ export type FileInputProps = {
 }
 
 export type ParagraphProps = {
+    id: string
     text: string
     editItem: (key: string, value: string) => void
     removeItem: () => void
 }
 
 export type SignatureProps = {
+    id: string
     label: string
     helpText: string
     required: boolean
@@ -71,6 +75,7 @@ export type SignatureProps = {
 }
 
 export type TextAreaProps = {
+    id: string
     label: string
     placeHolder: string
     helpText: string
@@ -83,6 +88,7 @@ export type TextAreaProps = {
 }
 
 export type AddressProps = {
+    id: string
     label: string
     helpText: string
     required: boolean
@@ -91,6 +97,7 @@ export type AddressProps = {
 }
 
 export type TextInputProps = {
+    id: string
     label: string
     placeHolder: string
     helpText: string
@@ -115,6 +122,7 @@ export type DateTimeInputProps = TextInputProps & {
 }
 
 export type NumberInputProps = {
+    id: string
     label: string
     helpText: string
     defaultValue: number
@@ -126,6 +134,7 @@ export type NumberInputProps = {
 }
 
 export type TitleProps = {
+    id: string
     text: string
     editItem: (key: string, value: string) => void
     removeItem: () => void

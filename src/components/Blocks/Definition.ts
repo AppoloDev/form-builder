@@ -27,32 +27,34 @@ export interface Block {
 }
 
 export const blocks: IDictionary<Block> = {
-    Address: {
+    "Address": {
         title: "Adresse",
         component: Address,
         base: {
+            id: "",
             label: "Adresse",
             helpText: "",
             required: false,
         }
     },
-    TextInput: {
+    "TextInput": {
         title: "Champ texte",
         component: TextInput,
         base: {
+            id: "",
             label: "Champ texte",
             placeHolder: "PlaceHolder",
             defaultValue: "",
-            value: "",
             required: false,
             readOnly: false,
             helpText: ""
         }
     },
-    NumberInput: {
+    "NumberInput": {
         title: "Champ numérique",
         component: NumberInput,
         base: {
+            id: "",
             label: "Champ numérique",
             helpText: "",
             defaultValue: "",
@@ -61,10 +63,11 @@ export const blocks: IDictionary<Block> = {
             allowDecimal: true
         }
     },
-    EmailInput: {
+    "EmailInput": {
         title: "Champ email",
         component: EmailInput,
         base: {
+            id: "",
             label: "Champ email",
             helpText: "Text d'aide",
             placeHolder: '',
@@ -73,10 +76,11 @@ export const blocks: IDictionary<Block> = {
             required: false
         }
     },
-    TelInput: {
+    "TelInput": {
         title: "Champ téléphone",
         component: TelInput,
         base: {
+            id: "",
             label: "Champ téléphone",
             placeHolder: '',
             defaultValue: '',
@@ -85,10 +89,11 @@ export const blocks: IDictionary<Block> = {
             required: false
         }
     },
-    UrlInput: {
+    "UrlInput": {
         title: "Champ URL",
         component: UrlInput,
         base: {
+            id: "",
             label: "Champ URL",
             placeHolder: '',
             defaultValue: '',
@@ -97,31 +102,35 @@ export const blocks: IDictionary<Block> = {
             required: false
         }
     },
-    FieldSet: {
+    "FieldSet": {
         title: "FieldSet",
         component: FieldSet,
         base: {
+            id: "",
             children: []
         }
     },
-    Paragraph: {
+    "Paragraph": {
         title: "Paragraphe",
         component: Paragraph,
         base: {
+            id: "",
             text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
         }
     },
-    Title: {
+    "Title": {
         title: "Titre",
         component: Title,
         base: {
+            id: "",
             text: "Titre"
         }
     },
-    TextAreaInput: {
+    "TextAreaInput": {
         title: "Zone de texte",
         component: TextAreaInput,
         base: {
+            id: "",
             label: "Zone de texte",
             placeHolder: "Placeholder",
             required: false,
@@ -131,10 +140,11 @@ export const blocks: IDictionary<Block> = {
             rows: 5
         }
     },
-    FileInput: {
+    "FileInput": {
         title: "Fichier",
         component: FileInput,
         base: {
+            id: "",
             label: "Fichier",
             helpText: "",
             maxItems: 1,
@@ -143,18 +153,20 @@ export const blocks: IDictionary<Block> = {
             acceptedFile: []
         }
     },
-    DateTimeInput: {
+    "DateTimeInput": {
         title: "Date",
         component: DateTimeInput,
         base: {
+            id: "",
             label: "Champ Date & Heure",
             placeHolder: "Placeholder",
         }
     },
-    Select: {
+    "Select": {
         title: "Liste à choix",
         component: Select,
         base: {
+            id: "",
             label: "Sélecteur",
             placeHolder: "Placeholder",
             options: [],
@@ -165,10 +177,11 @@ export const blocks: IDictionary<Block> = {
             helpText: ""
         }
     },
-    /*HourMinuteInput: {
+    /*"HourMinuteInput": {
         title: "Champ heure : minute",
         component: HourMinuteInput,
         base: {
+            id: "",
             label: "Champ heure : minute",
             helpText: "",
             defaultValue: "",
@@ -176,19 +189,21 @@ export const blocks: IDictionary<Block> = {
             required: false
         }
     },*/
-    Signature: {
+    "Signature": {
         title: "Signature",
         component: Signature,
         base: {
+            id: "",
             label: "Signature",
             helpText: "",
             required: false
         }
     },
-    Repeatable: {
+    "Repeatable": {
         title: "Répétable",
         component: Repeatable,
         base: {
+            id: "",
             children: [],
             maxItems: 1
         }

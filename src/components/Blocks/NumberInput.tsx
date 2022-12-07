@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { TextEdition } from "../Edition/TextEdition";
 import { EditableBlock } from "./EditableBlock";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
@@ -8,7 +8,11 @@ import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 import { NumberEdition } from "../Edition/NumberEdition";
 
 const NumberInput: FC<NumberInputProps> = ({label = '', helpText = '', defaultValue = '', readOnly = false, required = false, allowDecimal = true, editItem, removeItem}) => {
-    const id = IdGenerator();
+    const idInput = `number_${IdGenerator()}`;
+
+    useEffect(() => {
+        editItem('id', idInput);
+    }, [])
 
     return (
         <EditableBlock
@@ -56,13 +60,13 @@ const NumberInput: FC<NumberInputProps> = ({label = '', helpText = '', defaultVa
                 key={6}
             />,
         ]}>
-            <label htmlFor={id}>
+            <label htmlFor={idInput}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
 
             <input type="number"
-                   id={id}
+                   id={idInput}
                    disabled={readOnly}
                    defaultValue={defaultValue}
                    required={required}
