@@ -6,11 +6,11 @@ import { IdGenerator } from "../../utilities/String";
 import { TelInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const TelInput: FC<TelInputProps> = ({label = '', placeHolder = '', helpText = '', defaultValue = '', readOnly = false, required = false, editItem, removeItem}) => {
-    const idInput = `tel_${IdGenerator()}`;
-
+const TelInput: FC<TelInputProps> = ({id = '', label = '', placeHolder = '', helpText = '', defaultValue = '', readOnly = false, required = false, editItem, removeItem}) => {
     useEffect(() => {
-        editItem('id', idInput);
+        if (id === '') {
+            editItem('id', `tel_${IdGenerator()}`);
+        }
     }, [])
 
     return (
@@ -59,14 +59,14 @@ const TelInput: FC<TelInputProps> = ({label = '', placeHolder = '', helpText = '
                 key={6}
             />,
         ]}>
-            <label htmlFor={idInput}>
+            <label htmlFor={id}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
 
             {/*<!-- @TODO: Mettre mask --> */}
             <input type="tel"
-                   id={idInput}
+                   id={id}
                    placeholder={placeHolder}
                    disabled={readOnly}
                    defaultValue={defaultValue}

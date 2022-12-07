@@ -4,12 +4,13 @@ import { TextAreaEdition } from "../Edition/TextAreaEdition";
 import { ParagraphProps } from "./Types";
 import { IdGenerator } from "../../utilities/String";
 
-const Paragraph: FC<ParagraphProps> = ({text = '', editItem, removeItem}) => {
+const Paragraph: FC<ParagraphProps> = ({id = '', text = '', editItem, removeItem}) => {
     const [visible, setVisible] = useState<boolean>(false);
-    const idInput = `paragraph_${IdGenerator()}`;
 
     useEffect(() => {
-        editItem('id', idInput);
+        if (id === '') {
+            editItem('id', `paragraph_${IdGenerator()}`);
+        }
     }, [])
 
     return (
@@ -17,7 +18,7 @@ const Paragraph: FC<ParagraphProps> = ({text = '', editItem, removeItem}) => {
             removeItem={removeItem}
             editionItems={<TextAreaEdition label={"Paragraphe"} value={text} rows={10}
                                            editItem={(val) => editItem('text', val)}/>}>
-            <p id={idInput} onClick={() => setVisible(!visible)}>{text}</p>
+            <p id={id} onClick={() => setVisible(!visible)}>{text}</p>
         </EditableBlock>
     )
 }

@@ -6,12 +6,12 @@ import { IdGenerator } from "../../utilities/String";
 import { TextInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const TextInput: FC<TextInputProps> = ({label = '', placeHolder = '', helpText = '', defaultValue = '', readOnly= false, required = false, editItem, removeItem}) => {
-    const idInput = `text_${IdGenerator()}`;
-
+const TextInput: FC<TextInputProps> = ({id = '', label = '', placeHolder = '', helpText = '', defaultValue = '', readOnly= false, required = false, editItem, removeItem}) => {
     useEffect(() => {
-        editItem('id', idInput);
-    }, [])
+        if (id === '') {
+            editItem('id', `text_${IdGenerator()}`);
+        }
+    }, []);
 
     return (
         <EditableBlock
@@ -60,13 +60,13 @@ const TextInput: FC<TextInputProps> = ({label = '', placeHolder = '', helpText =
                 />,
             ]}
         >
-            <label htmlFor={idInput}>
+            <label htmlFor={id}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
 
             <input type="text"
-                   id={idInput}
+                   id={id}
                    placeholder={placeHolder}
                    disabled={readOnly}
                    defaultValue={defaultValue}

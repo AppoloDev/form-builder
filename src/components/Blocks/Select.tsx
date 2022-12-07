@@ -7,12 +7,13 @@ import { IdGenerator } from "../../utilities/String";
 import { SelectProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const Select: FC<SelectProps> = ({label = '', placeHolder = '', helpText = '', multiple = false, customOption = false, checkCases = false, required = false,options , editItem, removeItem}) => {
-    const idInput = `select_${IdGenerator()}`;
+const Select: FC<SelectProps> = ({id = '', label = '', placeHolder = '', helpText = '', multiple = false, customOption = false, checkCases = false, required = false,options , editItem, removeItem}) => {
     const [enabledCustomOption, enableCustomOption] = useState<boolean>(false)
 
     useEffect(() => {
-        editItem('id', idInput);
+        if (id === '') {
+            editItem('id', `select_${IdGenerator()}`);
+        }
     }, [])
 
     useEffect(() => {
@@ -87,7 +88,7 @@ const Select: FC<SelectProps> = ({label = '', placeHolder = '', helpText = '', m
                     key={8}
                 />
             ]}>
-            <label htmlFor={idInput}>
+            <label htmlFor={id}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
@@ -99,7 +100,7 @@ const Select: FC<SelectProps> = ({label = '', placeHolder = '', helpText = '', m
                             <div className="stack checkbox" key={i}>
                                 <input type={multiple ? 'checkbox' : 'radio'}
                                        id={radioID}
-                                       name={idInput}
+                                       name={id}
                                        value={option.label}
                                        checked={option.isSelected}
                                 />
@@ -107,7 +108,7 @@ const Select: FC<SelectProps> = ({label = '', placeHolder = '', helpText = '', m
                             </div>) : null
                     })) :
                     (<select
-                        id={idInput}
+                        id={id}
                         placeholder={placeHolder}
                         value={defaultValue ? defaultValue?.label : options[0]?.label}
                         multiple={multiple}

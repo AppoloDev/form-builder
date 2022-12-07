@@ -8,11 +8,11 @@ import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 import { NumberEdition } from "../Edition/NumberEdition";
 import { TextAreaEdition } from "../Edition/TextAreaEdition";
 
-const TextAreaInput: FC<TextAreaProps> = ({label = '', placeHolder = '', helpText = '', required = false, defaultValue = '', readOnly = false, rows = 5, editItem, removeItem}) => {
-    const idInput = `textarea_${IdGenerator()}`;
-
+const TextAreaInput: FC<TextAreaProps> = ({id = '', label = '', placeHolder = '', helpText = '', required = false, defaultValue = '', readOnly = false, rows = 5, editItem, removeItem}) => {
     useEffect(() => {
-        editItem('id', idInput);
+        if (id === '') {
+            editItem('id', `textarea_${IdGenerator()}`);
+        }
     }, [])
 
     return (
@@ -68,13 +68,13 @@ const TextAreaInput: FC<TextAreaProps> = ({label = '', placeHolder = '', helpTex
                     key={7}
                 />
             ]}>
-            <label htmlFor={idInput}>
+            <label htmlFor={id}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
 
             <textarea
-                id={idInput}
+                id={id}
                 placeholder={placeHolder}
                 rows={rows}
                 defaultValue={defaultValue}

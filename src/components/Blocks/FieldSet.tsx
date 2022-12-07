@@ -6,11 +6,11 @@ import { TrashIcon } from "../Icons/TrashIcon";
 import { IdGenerator } from "../../utilities/String";
 
 
-const FieldSet: FC<FieldSetProps> = ({children, editItem, removeItem}) => {
-    const idInput = `fieldset_${IdGenerator()}`;
-
+const FieldSet: FC<FieldSetProps> = ({id = '', children, editItem, removeItem}) => {
     useEffect(() => {
-        editItem('id', idInput);
+        if (id === '') {
+            editItem('id', `fieldset_${IdGenerator()}`);
+        }
     }, [])
 
     const editChildrenItem = (item: JSX.Element, key: keyof JSX.Element, value: JSX.Element[]) => {
@@ -29,7 +29,7 @@ const FieldSet: FC<FieldSetProps> = ({children, editItem, removeItem}) => {
     }
 
     return (
-        <fieldset>
+        <fieldset id={id}>
             <div className="actions-control">
                 <div
                     onClick={() => removeItem()}

@@ -6,11 +6,11 @@ import { IdGenerator } from "../../utilities/String";
 import { UrlInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const UrlInput: FC<UrlInputProps> = ({label = '', placeHolder = '', helpText = '', defaultValue = '', readOnly = false, required = false, editItem, removeItem}) => {
-    const idInput = `url_${IdGenerator()}`;
-
+const UrlInput: FC<UrlInputProps> = ({id = '', label = '', placeHolder = '', helpText = '', defaultValue = '', readOnly = false, required = false, editItem, removeItem}) => {
     useEffect(() => {
-        editItem('id', idInput);
+        if (id === '') {
+            editItem('id', `url_${IdGenerator()}`);
+        }
     }, [])
 
     return (
@@ -59,13 +59,13 @@ const UrlInput: FC<UrlInputProps> = ({label = '', placeHolder = '', helpText = '
                 key={6}
             />,
         ]}>
-            <label htmlFor={idInput}>
+            <label htmlFor={id}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
 
             <input type="url"
-                   id={idInput}
+                   id={id}
                    placeholder={placeHolder}
                    disabled={readOnly}
                    defaultValue={defaultValue}

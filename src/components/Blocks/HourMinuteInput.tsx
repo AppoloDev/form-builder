@@ -7,11 +7,11 @@ import { HourMinuteInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 import ReactInputMask from "react-input-mask";
 
-const HourMinuteInput: FC<HourMinuteInputProps> = ({label = '', helpText = '', defaultValue = '', readOnly= false, required = false, editItem, removeItem}) => {
-    const idInput = `hourminutes_${IdGenerator()}`;
-
+const HourMinuteInput: FC<HourMinuteInputProps> = ({id = '', label = '', helpText = '', defaultValue = '', readOnly= false, required = false, editItem, removeItem}) => {
     useEffect(() => {
-        editItem('id', idInput);
+        if (id === '') {
+            editItem('id', `hourminutes_${IdGenerator()}`);
+        }
     }, [])
 
     return (
@@ -54,14 +54,14 @@ const HourMinuteInput: FC<HourMinuteInputProps> = ({label = '', helpText = '', d
                 />,
             ]}
         >
-            <label htmlFor={idInput}>
+            <label htmlFor={id}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
 
             <ReactInputMask
                 type="text"
-                id={idInput}
+                id={id}
                 disabled={readOnly}
                 defaultValue={defaultValue}
                 required={required}

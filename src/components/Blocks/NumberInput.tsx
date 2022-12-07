@@ -7,11 +7,11 @@ import { NumberInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 import { NumberEdition } from "../Edition/NumberEdition";
 
-const NumberInput: FC<NumberInputProps> = ({label = '', helpText = '', defaultValue = '', readOnly = false, required = false, allowDecimal = true, editItem, removeItem}) => {
-    const idInput = `number_${IdGenerator()}`;
-
+const NumberInput: FC<NumberInputProps> = ({id= '', label = '', helpText = '', defaultValue = '', readOnly = false, required = false, allowDecimal = true, editItem, removeItem}) => {
     useEffect(() => {
-        editItem('id', idInput);
+        if (id === '') {
+            editItem('id', `number_${IdGenerator()}`);
+        }
     }, [])
 
     return (
@@ -60,13 +60,13 @@ const NumberInput: FC<NumberInputProps> = ({label = '', helpText = '', defaultVa
                 key={6}
             />,
         ]}>
-            <label htmlFor={idInput}>
+            <label htmlFor={id}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
 
             <input type="number"
-                   id={idInput}
+                   id={id}
                    disabled={readOnly}
                    defaultValue={defaultValue}
                    required={required}

@@ -6,12 +6,12 @@ import { IdGenerator } from "../../utilities/String";
 import { AddressProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const Address: FC<AddressProps> = ({id, label = '', helpText = '', required = false, editItem, removeItem}) => {
-    const idInput = `address_${IdGenerator()}`;
-
+const Address: FC<AddressProps> = ({id= '', label = '', helpText = '', required = false, editItem, removeItem}) => {
     useEffect(() => {
-        editItem('id', idInput);
-    }, [])
+        if (id === '') {
+            editItem('id', `address_${IdGenerator()}`);
+        }
+    }, []);
 
     return (
         <EditableBlock
@@ -37,13 +37,13 @@ const Address: FC<AddressProps> = ({id, label = '', helpText = '', required = fa
                     key={3}
                 />
             ]}>
-            <label htmlFor={idInput}>
+            <label htmlFor={id}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
 
             <input type="text"
-                   id={idInput}
+                   id={id}
                    placeholder={'Indiquez un lieu…'}
                    required={required}
             />

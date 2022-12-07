@@ -6,11 +6,11 @@ import { IdGenerator } from "../../utilities/String";
 import { EmailInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const EmailInput: FC<EmailInputProps> = ({label = '', placeHolder= '', helpText = '', defaultValue = '', readOnly = false, required = false, editItem, removeItem}) => {
-    const idInput = `email_${IdGenerator()}`;
-
+const EmailInput: FC<EmailInputProps> = ({id = '', label = '', placeHolder= '', helpText = '', defaultValue = '', readOnly = false, required = false, editItem, removeItem}) => {
     useEffect(() => {
-        editItem('id', idInput);
+        if (id === '') {
+            editItem('id', `email_${IdGenerator()}`);
+        }
     }, [])
 
     return (
@@ -59,13 +59,13 @@ const EmailInput: FC<EmailInputProps> = ({label = '', placeHolder= '', helpText 
                 key={6}
             />,
         ]}>
-            <label htmlFor={idInput}>
+            <label htmlFor={id}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
 
             <input type="email"
-                   id={idInput}
+                   id={id}
                    placeholder={placeHolder}
                    disabled={readOnly}
                    defaultValue={defaultValue}

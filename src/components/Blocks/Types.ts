@@ -34,12 +34,14 @@ export type EditableBlockProps = {
 }
 
 export type FieldSetProps = {
+    id: string
     children: JSX.Element[]
     editItem: (key: string, children: JSX.Element[] | string) => void
     removeItem: () => void
 }
 
 export type RepeatableProps = {
+    id: string
     children: JSX.Element[]
     maxItems: number | string
     editItem: (key: string, children: JSX.Element[] | string | boolean) => void

@@ -6,11 +6,11 @@ import { NumberEdition } from "../Edition/NumberEdition";
 import { SortableList } from "../Sortable/ListSortable";
 import { IdGenerator } from "../../utilities/String";
 
-const Repeatable: FC<RepeatableProps> = ({ children, maxItems, editItem, removeItem }) => {
-    const idInput = `repeatable_${IdGenerator()}`;
-
+const Repeatable: FC<RepeatableProps> = ({id = '', children, maxItems, editItem, removeItem }) => {
     useEffect(() => {
-        editItem('id', idInput);
+        if (id === '') {
+            editItem('id', `repeatable_${IdGenerator()}`);
+        }
     }, [])
 
     const editChildrenItem = (item: JSX.Element, key: keyof JSX.Element, value: JSX.Element[]) => {

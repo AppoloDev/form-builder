@@ -6,11 +6,11 @@ import { IdGenerator } from "../../utilities/String";
 import { SignatureProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const Signature: FC<SignatureProps> = ({label = '', helpText = '', required = false, editItem, removeItem}) => {
-    const idInput = `signature_${IdGenerator()}`;
-
+const Signature: FC<SignatureProps> = ({id = '', label = '', helpText = '', required = false, editItem, removeItem}) => {
     useEffect(() => {
-        editItem('id', idInput);
+        if (id === '') {
+            editItem('id', `signature_${IdGenerator()}`);
+        }
     }, [])
 
     return (
@@ -23,7 +23,7 @@ const Signature: FC<SignatureProps> = ({label = '', helpText = '', required = fa
             <CheckboxEdition label={"Requis"} checked={required} editItem={(val) => editItem('required', val)}
                              key={5}/>
         ]}>
-            <label htmlFor={idInput}>
+            <label htmlFor={id}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
