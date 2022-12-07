@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, Fragment, useEffect, useState } from "react";
 import { EditableBlock } from "./EditableBlock";
 import { TextAreaEdition } from "../Edition/TextAreaEdition";
 import { ParagraphProps } from "./Types";
@@ -18,7 +18,9 @@ const Paragraph: FC<ParagraphProps> = ({id = '', text = '', editItem, removeItem
             removeItem={removeItem}
             editionItems={<TextAreaEdition label={"Paragraphe"} value={text} rows={10}
                                            editItem={(val) => editItem('text', val)}/>}>
-            <p id={id} onClick={() => setVisible(!visible)} dangerouslySetInnerHTML={{__html: text}} />
+            <p id={id} onClick={() => setVisible(!visible)}>
+                {text.split('\n').map((item, key) => <Fragment key={key}>{item}<br/></Fragment>)}
+            </p>
         </EditableBlock>
     )
 }
