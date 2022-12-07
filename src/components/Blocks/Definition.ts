@@ -31,6 +31,7 @@ export const blocks: IDictionary<Block> = {
         title: "Adresse",
         component: Address,
         base: {
+            id: "",
             label: "Adresse",
             helpText: "",
             required: false,
@@ -40,6 +41,7 @@ export const blocks: IDictionary<Block> = {
         title: "Champ texte",
         component: TextInput,
         base: {
+            id: "",
             label: "Champ texte",
             placeHolder: "PlaceHolder",
             defaultValue: "",
@@ -52,6 +54,7 @@ export const blocks: IDictionary<Block> = {
         title: "Champ numérique",
         component: NumberInput,
         base: {
+            id: "",
             label: "Champ numérique",
             helpText: "",
             defaultValue: "",
@@ -64,6 +67,7 @@ export const blocks: IDictionary<Block> = {
         title: "Champ email",
         component: EmailInput,
         base: {
+            id: "",
             label: "Champ email",
             helpText: "Text d'aide",
             placeHolder: '',
@@ -76,6 +80,7 @@ export const blocks: IDictionary<Block> = {
         title: "Champ téléphone",
         component: TelInput,
         base: {
+            id: "",
             label: "Champ téléphone",
             placeHolder: '',
             defaultValue: '',
@@ -88,6 +93,7 @@ export const blocks: IDictionary<Block> = {
         title: "Champ URL",
         component: UrlInput,
         base: {
+            id: "",
             label: "Champ URL",
             placeHolder: '',
             defaultValue: '',
@@ -100,6 +106,7 @@ export const blocks: IDictionary<Block> = {
         title: "FieldSet",
         component: FieldSet,
         base: {
+            id: "",
             children: []
         }
     },
@@ -107,6 +114,7 @@ export const blocks: IDictionary<Block> = {
         title: "Paragraphe",
         component: Paragraph,
         base: {
+            id: "",
             text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
         }
     },
@@ -114,6 +122,7 @@ export const blocks: IDictionary<Block> = {
         title: "Titre",
         component: Title,
         base: {
+            id: "",
             text: "Titre"
         }
     },
@@ -121,6 +130,7 @@ export const blocks: IDictionary<Block> = {
         title: "Zone de texte",
         component: TextAreaInput,
         base: {
+            id: "",
             label: "Zone de texte",
             placeHolder: "Placeholder",
             required: false,
@@ -134,6 +144,7 @@ export const blocks: IDictionary<Block> = {
         title: "Fichier",
         component: FileInput,
         base: {
+            id: "",
             label: "Fichier",
             helpText: "",
             maxItems: 1,
@@ -146,6 +157,7 @@ export const blocks: IDictionary<Block> = {
         title: "Date",
         component: DateTimeInput,
         base: {
+            id: "",
             label: "Champ Date & Heure",
             placeHolder: "Placeholder",
         }
@@ -154,6 +166,7 @@ export const blocks: IDictionary<Block> = {
         title: "Liste à choix",
         component: Select,
         base: {
+            id: "",
             label: "Sélecteur",
             placeHolder: "Placeholder",
             options: [],
@@ -168,6 +181,7 @@ export const blocks: IDictionary<Block> = {
         title: "Champ heure : minute",
         component: HourMinuteInput,
         base: {
+            id: "",
             label: "Champ heure : minute",
             helpText: "",
             defaultValue: "",
@@ -179,6 +193,7 @@ export const blocks: IDictionary<Block> = {
         title: "Signature",
         component: Signature,
         base: {
+            id: "",
             label: "Signature",
             helpText: "",
             required: false
@@ -188,6 +203,7 @@ export const blocks: IDictionary<Block> = {
         title: "Répétable",
         component: Repeatable,
         base: {
+            id: "",
             children: [],
             maxItems: 1
         }

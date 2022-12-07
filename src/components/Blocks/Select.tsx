@@ -8,8 +8,12 @@ import { SelectProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
 const Select: FC<SelectProps> = ({label = '', placeHolder = '', helpText = '', multiple = false, customOption = false, checkCases = false, required = false,options , editItem, removeItem}) => {
-    const id = IdGenerator();
+    const idInput = `select_${IdGenerator()}`;
     const [enabledCustomOption, enableCustomOption] = useState<boolean>(false)
+
+    useEffect(() => {
+        editItem('id', idInput);
+    }, [])
 
     useEffect(() => {
         if (checkCases) {
@@ -83,7 +87,7 @@ const Select: FC<SelectProps> = ({label = '', placeHolder = '', helpText = '', m
                     key={8}
                 />
             ]}>
-            <label htmlFor={id}>
+            <label htmlFor={idInput}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
@@ -95,7 +99,7 @@ const Select: FC<SelectProps> = ({label = '', placeHolder = '', helpText = '', m
                             <div className="stack checkbox" key={i}>
                                 <input type={multiple ? 'checkbox' : 'radio'}
                                        id={radioID}
-                                       name={id}
+                                       name={idInput}
                                        value={option.label}
                                        checked={option.isSelected}
                                 />
@@ -103,7 +107,7 @@ const Select: FC<SelectProps> = ({label = '', placeHolder = '', helpText = '', m
                             </div>) : null
                     })) :
                     (<select
-                        id={id}
+                        id={idInput}
                         placeholder={placeHolder}
                         value={defaultValue ? defaultValue?.label : options[0]?.label}
                         multiple={multiple}

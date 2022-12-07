@@ -6,10 +6,14 @@ import { IdGenerator } from "../../utilities/String";
 import { DateTimeInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const DateTimeInput: FC<DateTimeInputProps> = ({label, helpText, defaultValue, readOnly, required, showDate = true, showHour = true, editItem, removeItem}) => {
-    const id = IdGenerator();
+const DateTimeInput: FC<DateTimeInputProps> = ({label = '', helpText = '', defaultValue = '', readOnly = false, required = false, showDate = true, showHour = true, editItem, removeItem}) => {
+    const idInput = `datetime_${IdGenerator()}`;
     const [value, setValue] = useState(defaultValue);
     const [inputType, setInputType] = useState('datetime-local');
+
+    useEffect(() => {
+        editItem('id', idInput);
+    }, [])
 
     useEffect(() => {
         setValue(defaultValue);
@@ -79,13 +83,13 @@ const DateTimeInput: FC<DateTimeInputProps> = ({label, helpText, defaultValue, r
                 />,
             ]}
         >
-            <label htmlFor={id}>
+            <label htmlFor={idInput}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
 
             <input type={inputType}
-                   id={id}
+                   id={idInput}
                    disabled={readOnly}
                    value={value}
                    onChange={({target}) => setValue(target.value)}

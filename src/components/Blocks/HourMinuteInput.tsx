@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { TextEdition } from "../Edition/TextEdition";
 import { EditableBlock } from "./EditableBlock";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
@@ -8,7 +8,11 @@ import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 import ReactInputMask from "react-input-mask";
 
 const HourMinuteInput: FC<HourMinuteInputProps> = ({label = '', helpText = '', defaultValue = '', readOnly= false, required = false, editItem, removeItem}) => {
-    const id = IdGenerator();
+    const idInput = `hourminutes_${IdGenerator()}`;
+
+    useEffect(() => {
+        editItem('id', idInput);
+    }, [])
 
     return (
         <EditableBlock
@@ -50,14 +54,14 @@ const HourMinuteInput: FC<HourMinuteInputProps> = ({label = '', helpText = '', d
                 />,
             ]}
         >
-            <label htmlFor={id}>
+            <label htmlFor={idInput}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
 
             <ReactInputMask
                 type="text"
-                id={id}
+                id={idInput}
                 disabled={readOnly}
                 defaultValue={defaultValue}
                 required={required}

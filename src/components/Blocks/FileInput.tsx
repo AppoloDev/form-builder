@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { TextEdition } from "../Edition/TextEdition";
 import { EditableBlock } from "./EditableBlock";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
@@ -9,7 +9,11 @@ import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 import { SelectEdition } from "../Edition/SelectEdition";
 
 const FileInput: FC<FileInputProps> = ({label = '', helpText = '', maxItems = 1, required = false, value = '', acceptedFile = [], editItem, removeItem}: FileInputProps) => {
-    const id = IdGenerator();
+    const idInput = `file_${IdGenerator()}`;
+
+    useEffect(() => {
+        editItem('id', idInput);
+    }, []);
 
     return (
         <EditableBlock
@@ -56,13 +60,13 @@ const FileInput: FC<FileInputProps> = ({label = '', helpText = '', maxItems = 1,
                     key={5}
                 />
             ]}>
-            <label htmlFor={id}>
+            <label htmlFor={idInput}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
 
             <input type="file"
-                   id={id}
+                   id={idInput}
                    accept={"image/*,application/pdf"}
                    required={required}
             />

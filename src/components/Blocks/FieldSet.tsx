@@ -1,11 +1,18 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { blocks } from "./Definition";
 import { FieldSetProps } from "./Types";
 import { SortableList } from "../Sortable/ListSortable";
 import { TrashIcon } from "../Icons/TrashIcon";
+import { IdGenerator } from "../../utilities/String";
 
 
 const FieldSet: FC<FieldSetProps> = ({children, editItem, removeItem}) => {
+    const idInput = `fieldset_${IdGenerator()}`;
+
+    useEffect(() => {
+        editItem('id', idInput);
+    }, [])
+
     const editChildrenItem = (item: JSX.Element, key: keyof JSX.Element, value: JSX.Element[]) => {
         item[key] = value;
         const childrenClone = [...children];

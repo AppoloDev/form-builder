@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { TextEdition } from "../Edition/TextEdition";
 import { EditableBlock } from "./EditableBlock";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
@@ -7,7 +7,11 @@ import { SignatureProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
 const Signature: FC<SignatureProps> = ({label = '', helpText = '', required = false, editItem, removeItem}) => {
-    const id = IdGenerator();
+    const idInput = `signature_${IdGenerator()}`;
+
+    useEffect(() => {
+        editItem('id', idInput);
+    }, [])
 
     return (
         <EditableBlock
@@ -19,7 +23,7 @@ const Signature: FC<SignatureProps> = ({label = '', helpText = '', required = fa
             <CheckboxEdition label={"Requis"} checked={required} editItem={(val) => editItem('required', val)}
                              key={5}/>
         ]}>
-            <label htmlFor={id}>
+            <label htmlFor={idInput}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
