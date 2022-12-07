@@ -18,7 +18,7 @@ const Paragraph: FC<ParagraphProps> = ({id = '', text = '', editItem, removeItem
             removeItem={removeItem}
             editionItems={<TextAreaEdition label={"Paragraphe"} value={text} rows={10}
                                            editItem={(val) => editItem('text', val)}/>}>
-            <p id={id} onClick={() => setVisible(!visible)}>{text}</p>
+            <p id={id} onClick={() => setVisible(!visible)} dangerouslySetInnerHTML={{__html: text}} />
         </EditableBlock>
     )
 }
