@@ -7,7 +7,7 @@ import { NumberInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 import { NumberEdition } from "../Edition/NumberEdition";
 
-const NumberInput: FC<NumberInputProps> = ({id= '', label = '', helpText = '', defaultValue = '', readOnly = false, required = false, allowDecimal = true, editItem, removeItem}) => {
+const NumberInput: FC<NumberInputProps> = ({id= '', label = '', helpText = '', defaultValue = '', readOnly = false, required = false, allowDecimal = false, editItem, removeItem}) => {
     useEffect(() => {
         if (id === '') {
             editItem('id', `number_${IdGenerator()}`);

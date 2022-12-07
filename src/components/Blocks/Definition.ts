@@ -43,7 +43,7 @@ export const blocks: IDictionary<Block> = {
         base: {
             id: "",
             label: "Champ texte",
-            placeHolder: "PlaceHolder",
+            placeHolder: "",
             defaultValue: "",
             required: false,
             readOnly: false,
@@ -60,7 +60,7 @@ export const blocks: IDictionary<Block> = {
             defaultValue: "",
             readOnly: false,
             required: false,
-            allowDecimal: true
+            allowDecimal: false
         }
     },
     "EmailInput": {
@@ -69,7 +69,7 @@ export const blocks: IDictionary<Block> = {
         base: {
             id: "",
             label: "Champ email",
-            helpText: "Text d'aide",
+            helpText: "",
             placeHolder: '',
             defaultValue: '',
             readOnly: false,
@@ -84,7 +84,7 @@ export const blocks: IDictionary<Block> = {
             label: "Champ téléphone",
             placeHolder: '',
             defaultValue: '',
-            helpText: "Text d'aide",
+            helpText: "",
             readOnly: false,
             required: false
         }
@@ -97,7 +97,7 @@ export const blocks: IDictionary<Block> = {
             label: "Champ URL",
             placeHolder: '',
             defaultValue: '',
-            helpText: "Text d'aide",
+            helpText: "",
             readOnly: false,
             required: false
         }
@@ -132,7 +132,7 @@ export const blocks: IDictionary<Block> = {
         base: {
             id: "",
             label: "Zone de texte",
-            placeHolder: "Placeholder",
+            placeHolder: "",
             required: false,
             helpText: '',
             defaultValue: '',
@@ -159,7 +159,12 @@ export const blocks: IDictionary<Block> = {
         base: {
             id: "",
             label: "Champ Date & Heure",
-            placeHolder: "Placeholder",
+            helpText: "",
+            defaultValue: "",
+            readOnly: false,
+            required: false,
+            showDate: false,
+            showHour: false,
         }
     },
     "Select": {
@@ -168,7 +173,7 @@ export const blocks: IDictionary<Block> = {
         base: {
             id: "",
             label: "Sélecteur",
-            placeHolder: "Placeholder",
+            placeHolder: "",
             options: [],
             multiple: false,
             checkCases: false,

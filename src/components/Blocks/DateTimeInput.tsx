@@ -6,7 +6,7 @@ import { IdGenerator } from "../../utilities/String";
 import { DateTimeInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const DateTimeInput: FC<DateTimeInputProps> = ({id= '', label = '', helpText = '', defaultValue = '', readOnly = false, required = false, showDate = true, showHour = true, editItem, removeItem}) => {
+const DateTimeInput: FC<DateTimeInputProps> = ({id= '', label = '', helpText = '', defaultValue = '', readOnly = false, required = false, showDate = false, showHour = false, editItem, removeItem}) => {
     const [value, setValue] = useState(defaultValue);
     const [inputType, setInputType] = useState('datetime-local');
 
