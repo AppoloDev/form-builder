@@ -6,7 +6,7 @@ import { IdGenerator } from "../../utilities/String";
 import { DateTimeInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const DateTimeInput: FC<DateTimeInputProps> = ({id= '', label = '', helpText  = '', readOnly = false, required = false, showDate = false, showHour = false, editItem, removeItem}) => {
+const DateTimeInput: FC<DateTimeInputProps> = ({id= '', label = '', helpText  = '', readOnly = false, required = false, showDate = false, showHour = false, hasCurrentDate = false, editItem, removeItem}) => {
     const [inputType, setInputType] = useState('datetime-local');
 
     useEffect(() => {
@@ -40,14 +40,14 @@ const DateTimeInput: FC<DateTimeInputProps> = ({id= '', label = '', helpText  = 
                     label={"Texte d'aide"}
                     value={helpText}
                     editItem={(val) => editItem('helpText', val)}
-                    key={3}
+                    key={2}
                 />,
 
                 <CheckboxEdition
                     label={"Afficher la date ?"}
                     checked={showDate}
                     editItem={(val) => editItem('showDate', val)}
-                    key={5}
+                    key={3}
                 />,
 
                 <CheckboxEdition
@@ -55,6 +55,13 @@ const DateTimeInput: FC<DateTimeInputProps> = ({id= '', label = '', helpText  = 
                     checked={showHour}
                     editItem={(val) => editItem('showHour', val)}
                     key={4}
+                />,
+
+                <CheckboxEdition
+                    label={"Afficher l'heure ou la date courante ?"}
+                    checked={hasCurrentDate}
+                    editItem={(val) => editItem('hasCurrentDate', val)}
+                    key={5}
                 />,
 
                 <CheckboxEdition

@@ -123,6 +123,7 @@ export type DateTimeInputProps = {
     label: string
     placeHolder: string
     helpText: string
+    hasCurrentDate: boolean
     readOnly: boolean
     required: boolean
     showDate: boolean
