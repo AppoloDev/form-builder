@@ -25,7 +25,7 @@ const Select: FC<SelectProps> = ({id = '', label = '', placeHolder = '', helpTex
         }
     }, [checkCases])
 
-    const defaultValue = options.filter((el) => el.isSelected)[0];
+    const defaultValue = options.filter((el) => el.isSelected).map((el) => el.label);
 
     return (
         <EditableBlock
@@ -83,6 +83,7 @@ const Select: FC<SelectProps> = ({id = '', label = '', placeHolder = '', helpTex
 
                 <SelectOptionEdition
                     label={"Options"}
+                    multiple={multiple}
                     options={options}
                     editItem={(val) => editItem('options', val)}
                     key={8}
@@ -101,8 +102,9 @@ const Select: FC<SelectProps> = ({id = '', label = '', placeHolder = '', helpTex
                                 <input type={multiple ? 'checkbox' : 'radio'}
                                        id={radioID}
                                        name={id}
-                                       value={option.label}
+                                       defaultValue={option.label}
                                        checked={option.isSelected}
+                                       onChange={() => {}}
                                 />
                                 <label htmlFor={radioID}>{option.label}</label>
                             </div>) : null
@@ -110,7 +112,8 @@ const Select: FC<SelectProps> = ({id = '', label = '', placeHolder = '', helpTex
                     (<select
                         id={id}
                         placeholder={placeHolder}
-                        value={defaultValue ? defaultValue?.label : options[0]?.label}
+                        value={multiple ? defaultValue : defaultValue[0]}
+                        onChange={() => {}}
                         multiple={multiple}
                         required={required}>
                         {options.map((option, i) => option.label ?

@@ -5,10 +5,10 @@ import { SelectOptionEditionProps } from "./Types";
 import { OptionProps } from "../Blocks/Types";
 import { CheckboxEdition } from "./CheckboxEdition";
 
-export const SelectOptionEdition: FC<SelectOptionEditionProps> = ({label, options, editItem}) => {
+export const SelectOptionEdition: FC<SelectOptionEditionProps> = ({label, options, multiple = false, editItem}) => {
     const editChildrenItem = (item: OptionProps, key: keyof OptionProps, value: string | boolean) => {
         options.forEach((el, index) => {
-            if (el.isSelected && item !== el && key !== 'label') {
+            if (el.isSelected && item !== el && key !== 'label' && !multiple) {
                 options[index].isSelected = false;
             }
         });

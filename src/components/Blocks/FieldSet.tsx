@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect } from "react";
 import { blocks } from "./Definition";
 import { FieldSetProps } from "./Types";
 import { SortableList } from "../Sortable/ListSortable";
@@ -11,7 +11,7 @@ const FieldSet: FC<FieldSetProps> = ({id = '', children, editItem, removeItem}) 
         if (id === '') {
             editItem('id', `fieldset_${IdGenerator()}`);
         }
-    }, [])
+    }, [id])
 
     const editChildrenItem = (item: JSX.Element, key: keyof JSX.Element, value: JSX.Element[]) => {
         item[key] = value;

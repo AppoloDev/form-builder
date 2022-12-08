@@ -43,6 +43,8 @@ function FormBuilder({blocks, onChange, onClose, modalLayout, json}: FormBuilder
         }
     }, [items], 250);
 
+    console.log(items);
+
     return (
         <>
             <div className={`form-builder ${modalLayout ? 'modal-layout' : ''}`}>

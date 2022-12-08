@@ -2,6 +2,7 @@
 
 ## TODO
 - Input number -> Gérer la valeur par défaut dans le cas ou l'on'autorise pas les décimales
+- Fieldset -> ID parfois ne se génère pas
 
 ## BEUG
 - Select

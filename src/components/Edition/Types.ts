@@ -44,5 +44,6 @@ export type SelectEditionProps = {
 export type SelectOptionEditionProps = {
     label: string
     options: OptionProps[]
+    multiple: boolean
     editItem: (value: OptionProps[]) => void
 }
