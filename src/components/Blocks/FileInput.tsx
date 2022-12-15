@@ -8,7 +8,7 @@ import { FileInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 import { SelectEdition } from "../Edition/SelectEdition";
 
-const FileInput: FC<FileInputProps> = ({id = '', label = '', helpText = '', maxItems = 1, required = false, value = '', acceptedFile = [], editItem, removeItem}: FileInputProps) => {
+const FileInput: FC<FileInputProps> = ({id = '', label = '', helpText = '', maxItems = 1, required = false, acceptedFile = 'image', editItem, removeItem}) => {
     useEffect(() => {
         if (id === '') {
             editItem('id', `file_${IdGenerator()}`);
@@ -35,14 +35,13 @@ const FileInput: FC<FileInputProps> = ({id = '', label = '', helpText = '', maxI
 
                 <SelectEdition
                     label={"Fichiers acceptés"}
-                    value={value}
+                    value={acceptedFile}
                     options={[
-                        ...acceptedFile,
-                        {value: 'images/*', label: 'Fichiers images'},
-                        {value: 'application/pdf', label: 'Fichier PDF'},
-                        {value: 'images/*,application/pdf', label: 'Fichier images et PDF'}
+                        {value: 'image', label: 'Fichiers images'},
+                        {value: 'file', label: 'Fichier PDF'},
+                        {value: 'both', label: 'Fichier images et PDF'}
                     ]}
-                    editItem={(val) => editItem('value', val)}
+                    editItem={(val) => editItem('acceptedFile', val)}
                     key={3}
                 />,
 
@@ -67,7 +66,6 @@ const FileInput: FC<FileInputProps> = ({id = '', label = '', helpText = '', maxI
 
             <input type="file"
                    id={id}
-                   accept={"image/*,application/pdf"}
                    required={required}
             />
 

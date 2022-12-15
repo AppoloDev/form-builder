@@ -148,9 +148,8 @@ export const blocks: IDictionary<Block> = {
             label: "Fichier",
             helpText: "",
             maxItems: 1,
-            value: "",
             required: false,
-            acceptedFile: []
+            acceptedFile: "image"
         }
     },
     "DateTimeInput": {
