@@ -17,7 +17,7 @@ export const EditableBlock: FC<EditableBlockProps> = ({editionItems, children, c
                 <div
                     className="actions-control__item"
                     onClick={() => setVisible(!visible)}>
-                    <Tippy content="Éditer les paramètres du champs">
+                    <Tippy content="Paramètres">
                         <EditIcon/>
                     </Tippy>
                 </div>
@@ -25,7 +25,7 @@ export const EditableBlock: FC<EditableBlockProps> = ({editionItems, children, c
                 <div
                     onClick={() => removeItem()}
                     className="actions-control__item">
-                    <Tippy content="Supprimer le champs">
+                    <Tippy content="Supprimer">
                         <TrashIcon/>
                     </Tippy>
                 </div>

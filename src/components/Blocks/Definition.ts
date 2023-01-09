@@ -28,9 +28,36 @@ export interface Block {
 }
 
 export const blocks: IDictionary<Block> = {
+    "FieldSet": {
+        title: "Groupe de champs",
+        tooltip: 'Permet de regrouper visuellement des champs dans une encadré.',
+        component: FieldSet,
+        base: {
+            id: "",
+            children: []
+        }
+    },
+    "Title": {
+        title: "Titre de présentation",
+        tooltip: 'Insertion d\'un titre informatif nécessitant pas de réponse de l\'utilisateur.',
+        component: Title,
+        base: {
+            id: "",
+            text: "Titre"
+        }
+    },
+    "Paragraph": {
+        title: "Texte de présentation",
+        tooltip: 'Insertion d\'un paragraphe informatif nécessitant pas de réponse de l\'utilisateur.',
+        component: Paragraph,
+        base: {
+            id: "",
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        }
+    },
     "Address": {
         title: "Adresse",
-        tooltip: 'Je suis une description',
+        tooltip: 'Permet d\'ajouter une adresse postale.',
         component: Address,
         base: {
             id: "",
@@ -40,8 +67,8 @@ export const blocks: IDictionary<Block> = {
         }
     },
     "TextInput": {
-        title: "Champ texte",
-        tooltip: 'Je suis une description',
+        title: "Texte court",
+        tooltip: 'Permet la saisie d\'un texte court.',
         component: TextInput,
         base: {
             id: "",
@@ -54,8 +81,8 @@ export const blocks: IDictionary<Block> = {
         }
     },
     "NumberInput": {
-        title: "Champ numérique",
-        tooltip: 'Je suis une description',
+        title: "Numérique",
+        tooltip: 'Saisie d\'une valeur numérique.',
         component: NumberInput,
         base: {
             id: "",
@@ -68,8 +95,8 @@ export const blocks: IDictionary<Block> = {
         }
     },
     "EmailInput": {
-        title: "Champ email",
-        tooltip: 'Je suis une description',
+        title: "Email",
+        tooltip: 'Saisie d\'un email qui doit obligatoirement contenir un "@".',
         component: EmailInput,
         base: {
             id: "",
@@ -82,8 +109,8 @@ export const blocks: IDictionary<Block> = {
         }
     },
     "TelInput": {
-        title: "Champ téléphone",
-        tooltip: 'Je suis une description',
+        title: "Téléphone",
+        tooltip: 'Saisie d\'un numéro de téléphone.',
         component: TelInput,
         base: {
             id: "",
@@ -96,8 +123,8 @@ export const blocks: IDictionary<Block> = {
         }
     },
     "UrlInput": {
-        title: "Champ URL",
-        tooltip: 'Je suis une description',
+        title: "Lien",
+        tooltip: 'Saisie d\'un lien url.v',
         component: UrlInput,
         base: {
             id: "",
@@ -109,36 +136,9 @@ export const blocks: IDictionary<Block> = {
             required: false
         }
     },
-    "FieldSet": {
-        title: "FieldSet",
-        tooltip: 'Je suis une description',
-        component: FieldSet,
-        base: {
-            id: "",
-            children: []
-        }
-    },
-    "Paragraph": {
-        title: "Paragraphe",
-        tooltip: 'Je suis une description',
-        component: Paragraph,
-        base: {
-            id: "",
-            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-        }
-    },
-    "Title": {
-        title: "Titre",
-        tooltip: 'Je suis une description',
-        component: Title,
-        base: {
-            id: "",
-            text: "Titre"
-        }
-    },
     "TextAreaInput": {
         title: "Zone de texte",
-        tooltip: 'Je suis une description',
+        tooltip: 'Saisie d\'une grande quantité de texte par l\'utilisateur.',
         component: TextAreaInput,
         base: {
             id: "",
@@ -153,7 +153,7 @@ export const blocks: IDictionary<Block> = {
     },
     "FileInput": {
         title: "Fichier",
-        tooltip: 'Je suis une description',
+        tooltip: 'Permet de joindre un ou des fichiers au formulaire.',
         component: FileInput,
         base: {
             id: "",
@@ -166,7 +166,7 @@ export const blocks: IDictionary<Block> = {
     },
     "DateTimeInput": {
         title: "Date",
-        tooltip: 'Je suis une description',
+        tooltip: 'Saisie d\'une date.',
         component: DateTimeInput,
         base: {
             id: "",
@@ -180,8 +180,8 @@ export const blocks: IDictionary<Block> = {
         }
     },
     "Select": {
-        title: "Liste à choix",
-        tooltip: 'Je suis une description',
+        title: "Liste de choix",
+        tooltip: 'Affichage d\'une liste sélectionnable par l\'utilisateur.',
         component: Select,
         base: {
             id: "",
@@ -210,7 +210,7 @@ export const blocks: IDictionary<Block> = {
     },*/
     "Signature": {
         title: "Signature",
-        tooltip: 'Je suis une description',
+        tooltip: 'Affichage d\'une zone permettant à l\'utilisateur de dessiner sa signature.',
         component: Signature,
         base: {
             id: "",
@@ -220,8 +220,8 @@ export const blocks: IDictionary<Block> = {
         }
     },
     "Repeatable": {
-        title: "Répétable",
-        tooltip: 'Je suis une description',
+        title: "Répétition de champs",
+        tooltip: 'Permet de répéter un ensemble de champs configurable comme le reste du formulaire.',
         component: Repeatable,
         base: {
             id: "",

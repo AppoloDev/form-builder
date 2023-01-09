@@ -35,7 +35,7 @@ const FieldSet: FC<FieldSetProps> = ({id = '', children, editItem, removeItem}) 
                 <div
                     onClick={() => removeItem()}
                     className="actions-control__item">
-                    <Tippy content="Supprimer le champs">
+                    <Tippy content="Supprimer">
                         <TrashIcon/>
                     </Tippy>
                 </div>
