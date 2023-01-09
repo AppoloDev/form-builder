@@ -203,6 +203,12 @@
         cursor: pointer;
     }
 
+    .repeatable {
+        .repeatable-more {
+            width: calc(100% - 32px);
+        }
+    }
+
     fieldset, .repeatable {
         width: calc(100% - 32px);
 

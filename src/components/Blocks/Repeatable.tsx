@@ -57,7 +57,7 @@ const Repeatable: FC<RepeatableProps> = ({id = '', children, maxItems, editItem,
                 </>
             </SortableList>
             <>
-                {(maxItems > 1 || maxItems === 0 || maxItems === '') && (<div className="add-more">Ajouter une nouvelle entrée…</div>)}
+                {(maxItems > 1 || maxItems === 0 || maxItems === '') && (<div className="add-more repeatable-more">Ajouter une nouvelle entrée…</div>)}
             </>
         </EditableBlock>
     )
