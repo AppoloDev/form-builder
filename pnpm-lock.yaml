@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@tippyjs/react': ^4.2.6
   '@types/node': ^18.11.10
   '@types/react': ^18.0.26
   '@types/react-dom': ^18.0.9
@@ -11,12 +12,15 @@ specifiers:
   react-input-mask: 3.0.0-alpha.2
   react-scripts: 5.0.1
   sass: ^1.56.1
+  tippy.js: ^6.3.7
   typescript: ^4.9.3
 
 dependencies:
+  '@tippyjs/react': 4.2.6_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-input-mask: 3.0.0-alpha.2_biqbaboplfbrettd7655fr4n2y
+  tippy.js: 6.3.7
 
 devDependencies:
   '@types/node': 18.11.10
@@ -1973,6 +1977,10 @@ packages:
       webpack-dev-server: 4.11.1_webpack@5.75.0
     dev: true
 
+  /@popperjs/core/2.11.6:
+    resolution: {integrity: sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==}
+    dev: false
+
   /@rollup/plugin-babel/5.3.1_rw3hudt2pmn5afxog7l3b6qtze:
     resolution: {integrity: sha512-WFfdLWU/xVWKeRQnKmIAQULUI7Il0gZnBIH/ZFO069wYIfPu+8zrfp/KMW0atmELoRDq8FbiP3VCss9MhCut7Q==}
     engines: {node: '>= 10.0.0'}
@@ -2164,6 +2172,17 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@tippyjs/react/4.2.6_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-91RicDR+H7oDSyPycI13q3b7o4O60wa2oRbjlz2fyRLmHImc4vyDwuUP8NtZaN0VARJY5hybvDYrFzhY9+Lbyw==}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      tippy.js: 6.3.7
+    dev: false
 
   /@tootallnate/once/1.1.2:
     resolution: {integrity: sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==}
@@ -9011,6 +9030,12 @@ packages:
   /thunky/1.1.0:
     resolution: {integrity: sha512-eHY7nBftgThBqOyHGVN+l8gF0BucP09fMo0oO/Lb0w1OF80dJv+lDVpXG60WMQvkcxAkNybKsrEIE3ZtKGmPrA==}
     dev: true
+
+  /tippy.js/6.3.7:
+    resolution: {integrity: sha512-E1d3oP2emgJ9dRQZdf3Kkn0qJgI6ZLpyS5z6ZkY1DF3kaQaBsGZsndEpHwx+eC+tYM41HaSNvNtLx8tU57FzTQ==}
+    dependencies:
+      '@popperjs/core': 2.11.6
+    dev: false
 
   /tmpl/1.0.5:
     resolution: {integrity: sha512-3f0uOEAQwIqGuWW2MVzYg8fV/QNnc/IpuJNG837rLuczAaLVHslWHZQj4IGiEl5Hs3kkbhwL9Ab7Hrsmuj+Smw==}

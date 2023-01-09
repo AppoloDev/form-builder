@@ -22,6 +22,7 @@ interface IDictionary<TValue> {
 
 export interface Block {
     title: string;
+    tooltip: string;
     component: FC<any>;
     base: any
 }
@@ -29,6 +30,7 @@ export interface Block {
 export const blocks: IDictionary<Block> = {
     "Address": {
         title: "Adresse",
+        tooltip: 'Je suis une description',
         component: Address,
         base: {
             id: "",
@@ -39,6 +41,7 @@ export const blocks: IDictionary<Block> = {
     },
     "TextInput": {
         title: "Champ texte",
+        tooltip: 'Je suis une description',
         component: TextInput,
         base: {
             id: "",
@@ -52,6 +55,7 @@ export const blocks: IDictionary<Block> = {
     },
     "NumberInput": {
         title: "Champ numérique",
+        tooltip: 'Je suis une description',
         component: NumberInput,
         base: {
             id: "",
@@ -65,6 +69,7 @@ export const blocks: IDictionary<Block> = {
     },
     "EmailInput": {
         title: "Champ email",
+        tooltip: 'Je suis une description',
         component: EmailInput,
         base: {
             id: "",
@@ -78,6 +83,7 @@ export const blocks: IDictionary<Block> = {
     },
     "TelInput": {
         title: "Champ téléphone",
+        tooltip: 'Je suis une description',
         component: TelInput,
         base: {
             id: "",
@@ -91,6 +97,7 @@ export const blocks: IDictionary<Block> = {
     },
     "UrlInput": {
         title: "Champ URL",
+        tooltip: 'Je suis une description',
         component: UrlInput,
         base: {
             id: "",
@@ -104,6 +111,7 @@ export const blocks: IDictionary<Block> = {
     },
     "FieldSet": {
         title: "FieldSet",
+        tooltip: 'Je suis une description',
         component: FieldSet,
         base: {
             id: "",
@@ -112,6 +120,7 @@ export const blocks: IDictionary<Block> = {
     },
     "Paragraph": {
         title: "Paragraphe",
+        tooltip: 'Je suis une description',
         component: Paragraph,
         base: {
             id: "",
@@ -120,6 +129,7 @@ export const blocks: IDictionary<Block> = {
     },
     "Title": {
         title: "Titre",
+        tooltip: 'Je suis une description',
         component: Title,
         base: {
             id: "",
@@ -128,6 +138,7 @@ export const blocks: IDictionary<Block> = {
     },
     "TextAreaInput": {
         title: "Zone de texte",
+        tooltip: 'Je suis une description',
         component: TextAreaInput,
         base: {
             id: "",
@@ -142,6 +153,7 @@ export const blocks: IDictionary<Block> = {
     },
     "FileInput": {
         title: "Fichier",
+        tooltip: 'Je suis une description',
         component: FileInput,
         base: {
             id: "",
@@ -154,6 +166,7 @@ export const blocks: IDictionary<Block> = {
     },
     "DateTimeInput": {
         title: "Date",
+        tooltip: 'Je suis une description',
         component: DateTimeInput,
         base: {
             id: "",
@@ -168,6 +181,7 @@ export const blocks: IDictionary<Block> = {
     },
     "Select": {
         title: "Liste à choix",
+        tooltip: 'Je suis une description',
         component: Select,
         base: {
             id: "",
@@ -183,6 +197,7 @@ export const blocks: IDictionary<Block> = {
     },
     /*"HourMinuteInput": {
         title: "Champ heure : minute",
+        tooltip: 'Je suis une description',
         component: HourMinuteInput,
         base: {
             id: "",
@@ -195,6 +210,7 @@ export const blocks: IDictionary<Block> = {
     },*/
     "Signature": {
         title: "Signature",
+        tooltip: 'Je suis une description',
         component: Signature,
         base: {
             id: "",
@@ -205,6 +221,7 @@ export const blocks: IDictionary<Block> = {
     },
     "Repeatable": {
         title: "Répétable",
+        tooltip: 'Je suis une description',
         component: Repeatable,
         base: {
             id: "",

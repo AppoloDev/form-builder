@@ -1,4 +1,5 @@
 //@import "bootstrap/scss/bootstrap";
+@import "tippy.js/dist/tippy.css";
 
 .form-builder {
     display: flex;
@@ -120,13 +121,6 @@
     }
 
     .stack, fieldset, .repeatable {
-        &:hover {
-            > .actions-control {
-                opacity: 1;
-                visibility: visible;
-            }
-        }
-
         > .actions-control {
             @extend .px-2;
             display: flex;
@@ -136,9 +130,6 @@
             position: absolute;
             top: 0;
             right: 100%;
-
-            opacity: 0;
-            visibility: hidden;
 
             transition: opacity .3s ease-in-out, visibility .3s ease-in-out;
 

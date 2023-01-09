@@ -1,9 +1,13 @@
-export const EditIcon = () => (
-    <svg width="24" height="24" strokeWidth="1.5" viewBox="0 0 24 24" fill="none"
-         xmlns="http://www.w3.org/2000/svg">
-        <path
-            d="M13.02 5.828L15.85 3l4.949 4.95-2.829 2.828m-4.95-4.95l-9.606 9.607a1 1 0 00-.293.707v4.536h4.536a1 1 0 00.707-.293l9.606-9.607m-4.95-4.95l4.95 4.95"
-            stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-    </svg>
-)
+import { ForwardedRef, forwardRef } from "react";
+
+export const EditIcon = forwardRef((props, ref: ForwardedRef<any>) => (
+        <svg ref={ref} width="24px" height="24px" strokeWidth="1.5" viewBox="0 0 24 24" fill="none"
+             xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
+            <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+            <path
+                d="M19.622 10.395l-1.097-2.65L20 6l-2-2-1.735 1.483-2.707-1.113L12.935 2h-1.954l-.632 2.401-2.645 1.115L6 4 4 6l1.453 1.789-1.08 2.657L2 11v2l2.401.655L5.516 16.3 4 18l2 2 1.791-1.46 2.606 1.072L11 22h2l.604-2.387 2.651-1.098C16.697 18.831 18 20 18 20l2-2-1.484-1.75 1.098-2.652 2.386-.62V11l-2.378-.605z"
+                strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+        </svg>
+    )
+);
 
