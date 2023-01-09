@@ -4,6 +4,7 @@ import { FieldSetProps } from "./Types";
 import { SortableList } from "../Sortable/ListSortable";
 import { TrashIcon } from "../Icons/TrashIcon";
 import { IdGenerator } from "../../utilities/String";
+import Tippy from "@tippyjs/react";
 
 
 const FieldSet: FC<FieldSetProps> = ({id = '', children, editItem, removeItem}) => {
@@ -34,7 +35,9 @@ const FieldSet: FC<FieldSetProps> = ({id = '', children, editItem, removeItem}) 
                 <div
                     onClick={() => removeItem()}
                     className="actions-control__item">
-                    <TrashIcon/>
+                    <Tippy content="Supprimer le champs">
+                        <TrashIcon/>
+                    </Tippy>
                 </div>
             </div>
 
