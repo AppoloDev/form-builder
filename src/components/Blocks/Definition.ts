@@ -39,7 +39,7 @@ export const blocks: IDictionary<Block> = {
     },
     "Title": {
         title: "Titre de présentation",
-        tooltip: 'Insertion d\'un titre informatif nécessitant pas de réponse de l\'utilisateur.',
+        tooltip: 'Insertion d\'un titre informatif ne nécessitant pas de réponse de l\'utilisateur.',
         component: Title,
         base: {
             id: "",
@@ -48,7 +48,7 @@ export const blocks: IDictionary<Block> = {
     },
     "Paragraph": {
         title: "Texte de présentation",
-        tooltip: 'Insertion d\'un paragraphe informatif nécessitant pas de réponse de l\'utilisateur.',
+        tooltip: 'Insertion d\'un paragraphe informatif ne nécessitant pas de réponse de l\'utilisateur.',
         component: Paragraph,
         base: {
             id: "",
@@ -72,7 +72,7 @@ export const blocks: IDictionary<Block> = {
         component: TextInput,
         base: {
             id: "",
-            label: "Champ texte",
+            label: "Texte court",
             placeHolder: "",
             defaultValue: "",
             required: false,
@@ -86,7 +86,7 @@ export const blocks: IDictionary<Block> = {
         component: NumberInput,
         base: {
             id: "",
-            label: "Champ numérique",
+            label: "Numérique",
             helpText: "",
             defaultValue: "",
             readOnly: false,
@@ -114,7 +114,7 @@ export const blocks: IDictionary<Block> = {
         component: TelInput,
         base: {
             id: "",
-            label: "Champ téléphone",
+            label: "Téléphone",
             placeHolder: '',
             defaultValue: '',
             helpText: "",
@@ -124,11 +124,11 @@ export const blocks: IDictionary<Block> = {
     },
     "UrlInput": {
         title: "Lien",
-        tooltip: 'Saisie d\'un lien url.v',
+        tooltip: 'Saisie d\'un lien url.',
         component: UrlInput,
         base: {
             id: "",
-            label: "Champ URL",
+            label: "Lien",
             placeHolder: '',
             defaultValue: '',
             helpText: "",
@@ -170,7 +170,7 @@ export const blocks: IDictionary<Block> = {
         component: DateTimeInput,
         base: {
             id: "",
-            label: "Champ Date & Heure",
+            label: "Date",
             helpText: "",
             hasCurrentDate: false,
             readOnly: false,
@@ -185,7 +185,7 @@ export const blocks: IDictionary<Block> = {
         component: Select,
         base: {
             id: "",
-            label: "Sélecteur",
+            label: "Liste de choix",
             placeHolder: "",
             options: [],
             multiple: false,
