@@ -38,7 +38,7 @@ export const blocks: IDictionary<Block> = {
         }
     },
     "Title": {
-        title: "Titre de présentation",
+        title: "Titre",
         tooltip: 'Insertion d\'un titre informatif ne nécessitant pas de réponse de l\'utilisateur.',
         component: Title,
         base: {
