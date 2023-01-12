@@ -107,7 +107,7 @@
             }
         }
 
-        > .stack, fieldset > .stack, .repeatable .form-content > .stack {
+        > .stack, fieldset > .stack, .repeatable .form-content > .stack:not(.checkbox):not(.radio) {
             width: calc(100% - 32px);
 
             padding: 16px;
