@@ -271,10 +271,14 @@
 
         input {
             @extend .form-check-input;
+
+            margin-left: 0;
+            margin-right: .5rem;
         }
 
         label {
             @extend .form-check-label;
+            margin-bottom: 0;
         }
     }
 
