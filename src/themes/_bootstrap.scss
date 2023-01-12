@@ -268,6 +268,7 @@
 
     .checkbox, .radio {
         @extend .form-check;
+        margin-bottom: .5rem;
 
         input {
             @extend .form-check-input;
