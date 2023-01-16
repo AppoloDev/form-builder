@@ -14,7 +14,6 @@ export type OptionProps = {
 export type SelectProps = {
     id: string
     label: string
-    placeHolder: string
     helpText: string
     maxItems: number
     multiple: boolean

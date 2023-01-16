@@ -7,7 +7,7 @@ import { IdGenerator } from "../../utilities/String";
 import { SelectProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const Select: FC<SelectProps> = ({id = '', label = '', placeHolder = '', helpText = '', multiple = false, customOption = false, checkCases = false, required = false,options , editItem, removeItem}) => {
+const Select: FC<SelectProps> = ({id = '', label = '', helpText = '', multiple = false, customOption = false, checkCases = false, required = false,options , editItem, removeItem}) => {
     const [enabledCustomOption, enableCustomOption] = useState<boolean>(false)
 
     useEffect(() => {
@@ -36,13 +36,6 @@ const Select: FC<SelectProps> = ({id = '', label = '', placeHolder = '', helpTex
                     value={label}
                     editItem={(val) => editItem('label', val)}
                     key={1}
-                />,
-
-                <TextEdition
-                    label={"PlaceHolder"}
-                    value={placeHolder}
-                    editItem={(val) => editItem('placeHolder', val)}
-                    key={2}
                 />,
 
                 <TextEdition
@@ -111,7 +104,6 @@ const Select: FC<SelectProps> = ({id = '', label = '', placeHolder = '', helpTex
                     })) :
                     (<select
                         id={id}
-                        placeholder={placeHolder}
                         value={multiple ? defaultValue : defaultValue[0]}
                         onChange={() => {}}
                         multiple={multiple}

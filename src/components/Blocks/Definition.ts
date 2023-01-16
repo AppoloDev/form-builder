@@ -186,7 +186,6 @@ export const blocks: IDictionary<Block> = {
         base: {
             id: "",
             label: "Liste de choix",
-            placeHolder: "",
             options: [],
             multiple: false,
             checkCases: false,
