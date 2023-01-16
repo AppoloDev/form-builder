@@ -315,6 +315,10 @@
 
         .stack {
             margin-bottom: 16px;
+
+            &.checkbox {
+                padding-left: 0;
+            }
         }
     }
 
