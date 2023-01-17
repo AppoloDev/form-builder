@@ -20,9 +20,8 @@ const FileInput: FC<FileInputProps> = ({id = '', label = '', helpText = '', maxI
             removeItem={removeItem}
             editionItems={[
                 <TextEdition
-                    label={"Label"}
+                    label={"Libellé"}
                     value={label}
-                    helpText={"Permet de définir le nom du champ."}
                     editItem={(val) => editItem('label', val)}
                     key={1}
                 />,
@@ -47,19 +46,19 @@ const FileInput: FC<FileInputProps> = ({id = '', label = '', helpText = '', maxI
                     key={3}
                 />,
 
+                <NumberEdition
+                    label={"Nombre maximal de fichiers"}
+                    value={maxItems}
+                    editItem={(val) => editItem('maxItems', val)}
+                    key={5}
+                />,
+
                 <CheckboxEdition
                     label={"Requis"}
                     helpText={"Permet de déterminer si ce champ est requis, ainsi rentre la saisie obligatoire."}
                     checked={required}
                     editItem={(val) => editItem('required', val)}
                     key={4}
-                />,
-
-                <NumberEdition
-                    label={"Nombre maximal de fichiers"}
-                    value={maxItems}
-                    editItem={(val) => editItem('maxItems', val)}
-                    key={5}
                 />
             ]}>
             <label htmlFor={id}>

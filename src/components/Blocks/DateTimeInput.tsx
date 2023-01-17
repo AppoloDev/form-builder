@@ -30,9 +30,8 @@ const DateTimeInput: FC<DateTimeInputProps> = ({id= '', label = '', helpText  = 
             removeItem={removeItem}
             editionItems={[
                 <TextEdition
-                    label={"Label"}
+                    label={"Libellé"}
                     value={label}
-                    helpText={"Permet de définir le nom du champ."}
                     editItem={(val) => editItem('label', val)}
                     key={1}
                 />,

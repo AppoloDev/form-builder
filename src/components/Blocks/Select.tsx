@@ -32,9 +32,8 @@ const Select: FC<SelectProps> = ({id = '', label = '', helpText = '', multiple =
             removeItem={removeItem}
             editionItems={[
                 <TextEdition
-                    label={"Label"}
+                    label={"Libellé"}
                     value={label}
-                    helpText={"Permet de définir le nom du champ."}
                     editItem={(val) => editItem('label', val)}
                     key={1}
                 />,

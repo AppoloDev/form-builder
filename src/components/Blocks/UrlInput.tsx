@@ -18,9 +18,8 @@ const UrlInput: FC<UrlInputProps> = ({id = '', label = '', placeHolder = '', hel
             removeItem={removeItem}
             editionItems={[
             <TextEdition
-                label={"Label"}
+                label={"Libellé"}
                 value={label}
-                helpText={"Permet de définir le nom du champ."}
                 editItem={(val) => editItem('label', val)}
                 key={1}
             />,
@@ -34,9 +33,9 @@ const UrlInput: FC<UrlInputProps> = ({id = '', label = '', placeHolder = '', hel
             />,
 
             <TextEdition
-                label={"Texte par défaut"}
+                label={"Valeur par défaut"}
                 value={defaultValue}
-                helpText={"Affiche une valeur par défaut dans le champ."}
+                helpText={"Saisie une valeur par défaut que l'utilisateur pourra remplacer."}
                 editItem={(val) => editItem('defaultValue', val)}
                 key={3}
             />,

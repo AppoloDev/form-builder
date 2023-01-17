@@ -18,9 +18,8 @@ const Address: FC<AddressProps> = ({id= '', label = '', helpText = '', required 
             removeItem={removeItem}
             editionItems={[
                 <TextEdition
-                    label={"Label"}
+                    label={"Libellé"}
                     value={label}
-                    helpText={"Permet de définir le nom du champ."}
                     editItem={(val) => editItem('label', val)}
                     key={1}
                 />,
