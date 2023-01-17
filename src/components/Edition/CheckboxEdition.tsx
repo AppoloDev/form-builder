@@ -2,7 +2,7 @@ import { IdGenerator } from "../../utilities/String";
 import { CheckboxEditionProps } from "./Types";
 import { FC } from "react";
 
-export const CheckboxEdition: FC<CheckboxEditionProps> = ({label, checked, editItem, disabled}) => {
+export const CheckboxEdition: FC<CheckboxEditionProps> = ({label, helpText, checked, editItem, disabled}) => {
     const id = IdGenerator();
 
     return (
@@ -14,6 +14,7 @@ export const CheckboxEdition: FC<CheckboxEditionProps> = ({label, checked, editI
                 disabled={disabled}
                 onChange={e => editItem(e.target.checked)}/>
             <label htmlFor={id}>{label}</label>
+            <small className="form-text text-muted">{helpText}</small>
         </div>
     );
 }

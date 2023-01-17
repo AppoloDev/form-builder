@@ -34,6 +34,7 @@ const Select: FC<SelectProps> = ({id = '', label = '', helpText = '', multiple =
                 <TextEdition
                     label={"Label"}
                     value={label}
+                    helpText={"Permet de définir le nom du champ."}
                     editItem={(val) => editItem('label', val)}
                     key={1}
                 />,
@@ -41,12 +42,14 @@ const Select: FC<SelectProps> = ({id = '', label = '', helpText = '', multiple =
                 <TextEdition
                     label={"Texte d'aide"}
                     value={helpText}
+                    helpText={"Affiche un texte sous le champ, permettant d'aider et d'orienter l'utilisateur."}
                     editItem={(val) => editItem('helpText', val)}
                     key={3}
                 />,
 
                 <CheckboxEdition
                     label={"Requis"}
+                    helpText={"Permet de déterminer si ce champ est requis, ainsi rentre la saisie obligatoire."}
                     checked={required}
                     editItem={(val) => editItem('required', val)}
                     key={4}
@@ -55,6 +58,7 @@ const Select: FC<SelectProps> = ({id = '', label = '', helpText = '', multiple =
                 <CheckboxEdition
                     label={"Choix multiple"}
                     checked={multiple}
+                    helpText={"Permet de déterminer si l'utilisateur peut sélectionner plusieurs options."}
                     editItem={(val) => editItem('multiple', val)}
                     key={5}
                 />,
@@ -62,12 +66,14 @@ const Select: FC<SelectProps> = ({id = '', label = '', helpText = '', multiple =
                 <CheckboxEdition
                     label={"Cases à cocher"}
                     checked={checkCases}
+                    helpText={"Permet d'afficher les options sous forme de cases à cocher."}
                     editItem={(val) => editItem('checkCases', val)}
                     key={6}
                 />,
 
                 <CheckboxEdition
                     label={"Autoriser l'ajout d'une option personnalisée"}
+                    helpText={"Permet à l'utilisateur d'ajouter une option personnalisée."}
                     disabled={!enabledCustomOption}
                     checked={customOption}
                     editItem={(val) => editItem('customOption', val)}

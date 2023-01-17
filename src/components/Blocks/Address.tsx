@@ -20,18 +20,21 @@ const Address: FC<AddressProps> = ({id= '', label = '', helpText = '', required 
                 <TextEdition
                     label={"Label"}
                     value={label}
+                    helpText={"Permet de définir le nom du champ."}
                     editItem={(val) => editItem('label', val)}
                     key={1}
                 />,
 
                 <TextEdition
                     label={"Texte d'aide"}
+                    helpText={"Affiche un texte sous le champ, permettant d'aider et d'orienter l'utilisateur."}
                     value={helpText} editItem={(val) => editItem('helpText', val)}
                     key={2}
                 />,
 
                 <CheckboxEdition
                     label={"Requis"}
+                    helpText={"Permet de déterminer si ce champ est requis, ainsi rentre la saisie obligatoire."}
                     checked={required}
                     editItem={(val) => editItem('required', val)}
                     key={3}

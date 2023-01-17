@@ -21,6 +21,7 @@ const HourMinuteInput: FC<HourMinuteInputProps> = ({id = '', label = '', helpTex
                 <TextEdition
                     label={"Label"}
                     value={label}
+                    helpText={"Permet de définir le nom du champ."}
                     editItem={(val) => editItem('label', val)}
                     key={1}
                 />,
@@ -28,6 +29,7 @@ const HourMinuteInput: FC<HourMinuteInputProps> = ({id = '', label = '', helpTex
                 <TextEdition
                     label={"Texte par défaut"}
                     value={defaultValue}
+                    helpText={"Affiche une valeur par défaut dans le champ."}
                     editItem={(val) => editItem('defaultValue', val)}
                     key={3}
                 />,
@@ -35,12 +37,14 @@ const HourMinuteInput: FC<HourMinuteInputProps> = ({id = '', label = '', helpTex
                 <TextEdition
                     label={"Texte d'aide"}
                     value={helpText}
+                    helpText={"Affiche un texte sous le champ, permettant d'aider et d'orienter l'utilisateur."}
                     editItem={(val) => editItem('helpText', val)}
                     key={4}
                 />,
 
                 <CheckboxEdition
                     label={"Requis"}
+                    helpText={"Permet de déterminer si ce champ est requis, ainsi rentre la saisie obligatoire."}
                     checked={required}
                     editItem={(val) => editItem('required', val)}
                     key={5}
@@ -49,6 +53,7 @@ const HourMinuteInput: FC<HourMinuteInputProps> = ({id = '', label = '', helpTex
                 <CheckboxEdition
                     label={"Lecture seule"}
                     checked={readOnly}
+                    helpText={"Permet de déterminer si ce champ est seulement visible, mais non modifiable."}
                     editItem={(val) => editItem('readOnly', val)}
                     key={6}
                 />,

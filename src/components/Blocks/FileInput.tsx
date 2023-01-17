@@ -22,6 +22,7 @@ const FileInput: FC<FileInputProps> = ({id = '', label = '', helpText = '', maxI
                 <TextEdition
                     label={"Label"}
                     value={label}
+                    helpText={"Permet de définir le nom du champ."}
                     editItem={(val) => editItem('label', val)}
                     key={1}
                 />,
@@ -29,6 +30,7 @@ const FileInput: FC<FileInputProps> = ({id = '', label = '', helpText = '', maxI
                 <TextEdition
                     label={"Texte d'aide"}
                     value={helpText}
+                    helpText={"Affiche un texte sous le champ, permettant d'aider et d'orienter l'utilisateur."}
                     editItem={(val) => editItem('helpText', val)}
                     key={2}
                 />,
@@ -47,6 +49,7 @@ const FileInput: FC<FileInputProps> = ({id = '', label = '', helpText = '', maxI
 
                 <CheckboxEdition
                     label={"Requis"}
+                    helpText={"Permet de déterminer si ce champ est requis, ainsi rentre la saisie obligatoire."}
                     checked={required}
                     editItem={(val) => editItem('required', val)}
                     key={4}

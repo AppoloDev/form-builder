@@ -20,13 +20,15 @@ const TextInput: FC<TextInputProps> = ({id = '', label = '', placeHolder = '', h
                 <TextEdition
                     label={"Label"}
                     value={label}
+                    helpText={"Permet de définir le nom du champ."}
                     editItem={(val) => editItem('label', val)}
                     key={1}
                 />,
 
                 <TextEdition
-                    label={"PlaceHolder"}
+                    label={"Placeholder"}
                     value={placeHolder}
+                    helpText={"Affiche un texte dans le champ lorsqu'aucune valeur n'y est saisie."}
                     editItem={(val) => editItem('placeHolder', val)}
                     key={2}
                 />,
@@ -34,6 +36,7 @@ const TextInput: FC<TextInputProps> = ({id = '', label = '', placeHolder = '', h
                 <TextEdition
                     label={"Texte par défaut"}
                     value={defaultValue}
+                    helpText={"Affiche une valeur par défaut dans le champ."}
                     editItem={(val) => editItem('defaultValue', val)}
                     key={3}
                 />,
@@ -41,6 +44,7 @@ const TextInput: FC<TextInputProps> = ({id = '', label = '', placeHolder = '', h
                 <TextEdition
                     label={"Texte d'aide"}
                     value={helpText}
+                    helpText={"Affiche un texte sous le champ, permettant d'aider et d'orienter l'utilisateur."}
                     editItem={(val) => editItem('helpText', val)}
                     key={4}
                 />,
@@ -48,6 +52,7 @@ const TextInput: FC<TextInputProps> = ({id = '', label = '', placeHolder = '', h
                 <CheckboxEdition
                     label={"Requis"}
                     checked={required}
+                    helpText={"Permet de déterminer si ce champ est requis, ainsi rentre la saisie obligatoire."}
                     editItem={(val) => editItem('required', val)}
                     key={5}
                 />,
@@ -55,6 +60,7 @@ const TextInput: FC<TextInputProps> = ({id = '', label = '', placeHolder = '', h
                 <CheckboxEdition
                     label={"Lecture seule"}
                     checked={readOnly}
+                    helpText={"Permet de déterminer si ce champ est seulement visible, mais non modifiable."}
                     editItem={(val) => editItem('readOnly', val)}
                     key={6}
                 />,

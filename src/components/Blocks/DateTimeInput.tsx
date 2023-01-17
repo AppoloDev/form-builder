@@ -32,6 +32,7 @@ const DateTimeInput: FC<DateTimeInputProps> = ({id= '', label = '', helpText  = 
                 <TextEdition
                     label={"Label"}
                     value={label}
+                    helpText={"Permet de définir le nom du champ."}
                     editItem={(val) => editItem('label', val)}
                     key={1}
                 />,
@@ -39,6 +40,7 @@ const DateTimeInput: FC<DateTimeInputProps> = ({id= '', label = '', helpText  = 
                 <TextEdition
                     label={"Texte d'aide"}
                     value={helpText}
+                    helpText={"Affiche un texte sous le champ, permettant d'aider et d'orienter l'utilisateur."}
                     editItem={(val) => editItem('helpText', val)}
                     key={2}
                 />,
@@ -66,6 +68,7 @@ const DateTimeInput: FC<DateTimeInputProps> = ({id= '', label = '', helpText  = 
 
                 <CheckboxEdition
                     label={"Requis"}
+                    helpText={"Permet de déterminer si ce champ est requis, ainsi rentre la saisie obligatoire."}
                     checked={required}
                     editItem={(val) => editItem('required', val)}
                     key={6}
@@ -74,6 +77,7 @@ const DateTimeInput: FC<DateTimeInputProps> = ({id= '', label = '', helpText  = 
                 <CheckboxEdition
                     label={"Lecture seule"}
                     checked={readOnly}
+                    helpText={"Permet de déterminer si ce champ est seulement visible, mais non modifiable."}
                     editItem={(val) => editItem('readOnly', val)}
                     key={7}
                 />,
