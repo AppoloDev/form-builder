@@ -14,7 +14,7 @@ export const CheckboxEdition: FC<CheckboxEditionProps> = ({label, helpText, chec
                 disabled={disabled}
                 onChange={e => editItem(e.target.checked)}/>
             <label htmlFor={id}>{label}</label>
-            <small className="form-text text-muted">{helpText}</small>
+            <small className="form-text help-text text-muted">{helpText}</small>
         </div>
     );
 }

@@ -14,7 +14,7 @@ export const TextAreaEdition: FC<TextAreaEditionProps> = ({label, value, helpTex
                 onChange={e => editItem(e.target.value)}
                 rows={rows}
             />
-            <small className="form-text text-muted">{helpText}</small>
+            <small className="form-text help-text text-muted">{helpText}</small>
         </div>
     );
 }

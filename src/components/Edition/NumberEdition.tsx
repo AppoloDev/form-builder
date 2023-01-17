@@ -16,7 +16,7 @@ export const NumberEdition: FC<NumberEditionProps> = ({ label, value, helpText, 
                 max={max}
                 onChange={e => editItem(e.target.value) }
             />
-            <small className="form-text text-muted">{helpText}</small>
+            <small className="form-text help-text text-muted">{helpText}</small>
         </div>
     );
 }
