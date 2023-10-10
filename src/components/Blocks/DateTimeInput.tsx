@@ -13,7 +13,7 @@ const DateTimeInput: FC<DateTimeInputProps> = ({id= '', label = '', helpText  = 
         if (id === '') {
             editItem('id', `datetime_${IdGenerator()}`);
         }
-    }, []);
+    }, [id]);
 
     useEffect(() => {
         if (showDate && !showHour) {

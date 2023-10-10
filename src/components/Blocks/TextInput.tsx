@@ -11,7 +11,7 @@ const TextInput: FC<TextInputProps> = ({id = '', label = '', placeHolder = '', h
         if (id === '') {
             editItem('id', `text_${IdGenerator()}`);
         }
-    }, []);
+    }, [id]);
 
     return (
         <EditableBlock

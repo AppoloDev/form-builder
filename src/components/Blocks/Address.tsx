@@ -11,7 +11,7 @@ const Address: FC<AddressProps> = ({id= '', label = '', helpText = '', required 
         if (id === '') {
             editItem('id', `address_${IdGenerator()}`);
         }
-    }, []);
+    }, [id]);
 
     return (
         <EditableBlock

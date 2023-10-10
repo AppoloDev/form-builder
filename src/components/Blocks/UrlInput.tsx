@@ -11,7 +11,7 @@ const UrlInput: FC<UrlInputProps> = ({id = '', label = '', placeHolder = '', hel
         if (id === '') {
             editItem('id', `url_${IdGenerator()}`);
         }
-    }, [])
+    }, [id])
 
     return (
         <EditableBlock

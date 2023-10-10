@@ -11,7 +11,7 @@ const EmailInput: FC<EmailInputProps> = ({id = '', label = '', placeHolder= '', 
         if (id === '') {
             editItem('id', `email_${IdGenerator()}`);
         }
-    }, [])
+    }, [id])
 
     return (
         <EditableBlock

@@ -11,7 +11,7 @@ const TelInput: FC<TelInputProps> = ({id = '', label = '', placeHolder = '', hel
         if (id === '') {
             editItem('id', `tel_${IdGenerator()}`);
         }
-    }, [])
+    }, [id])
 
     return (
         <EditableBlock

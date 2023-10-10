@@ -13,7 +13,7 @@ const TextAreaInput: FC<TextAreaProps> = ({id = '', label = '', placeHolder = ''
         if (id === '') {
             editItem('id', `textarea_${IdGenerator()}`);
         }
-    }, [])
+    }, [id])
 
     return (
         <EditableBlock

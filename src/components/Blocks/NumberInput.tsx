@@ -12,7 +12,7 @@ const NumberInput: FC<NumberInputProps> = ({id= '', label = '', helpText = '', d
         if (id === '') {
             editItem('id', `number_${IdGenerator()}`);
         }
-    }, [])
+    }, [id])
 
     return (
         <EditableBlock

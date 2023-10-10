@@ -11,7 +11,7 @@ const Title: FC<TitleProps> = ({id = '', text, editItem, removeItem }) => {
         if (id === '') {
             editItem('id', `title_${IdGenerator()}`);
         }
-    }, [])
+    }, [id])
 
     return (
         <EditableBlock

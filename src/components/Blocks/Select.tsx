@@ -14,7 +14,7 @@ const Select: FC<SelectProps> = ({id = '', label = '', helpText = '', multiple =
         if (id === '') {
             editItem('id', `select_${IdGenerator()}`);
         }
-    }, [])
+    }, [id])
 
     useEffect(() => {
         if (checkCases) {

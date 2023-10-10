@@ -18,7 +18,7 @@ const Signature: FC<SignatureProps> = ({
         if (id === '') {
             editItem('id', `signature_${IdGenerator()}`);
         }
-    }, [])
+    }, [id])
 
     return (
         <EditableBlock

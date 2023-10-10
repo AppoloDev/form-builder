@@ -11,7 +11,7 @@ const Paragraph: FC<ParagraphProps> = ({id = '', text = '', editItem, removeItem
         if (id === '') {
             editItem('id', `paragraph_${IdGenerator()}`);
         }
-    }, [])
+    }, [id])
 
     return (
         <EditableBlock

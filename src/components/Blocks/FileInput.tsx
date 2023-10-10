@@ -13,7 +13,7 @@ const FileInput: FC<FileInputProps> = ({id = '', label = '', helpText = '', maxI
         if (id === '') {
             editItem('id', `file_${IdGenerator()}`);
         }
-    }, [])
+    }, [id])
 
     return (
         <EditableBlock

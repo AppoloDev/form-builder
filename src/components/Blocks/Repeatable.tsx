@@ -11,7 +11,7 @@ const Repeatable: FC<RepeatableProps> = ({id = '', children, maxItems, editItem,
         if (id === '') {
             editItem('id', `repeatable_${IdGenerator()}`);
         }
-    }, [])
+    }, [id])
 
     const editChildrenItem = (item: JSX.Element, key: keyof JSX.Element, value: JSX.Element[]) => {
         item[key] = value;

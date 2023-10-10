@@ -12,7 +12,7 @@ const HourMinuteInput: FC<HourMinuteInputProps> = ({id = '', label = '', helpTex
         if (id === '') {
             editItem('id', `hourminutes_${IdGenerator()}`);
         }
-    }, [])
+    }, [id])
 
     return (
         <EditableBlock
