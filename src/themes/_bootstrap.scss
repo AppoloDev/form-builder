@@ -9,6 +9,7 @@
     &__wrapper {
         flex: 1;
     }
+
     .dragareaafter::after, .dragarea::before {
         background-color: #f6f1fc;
         content: '';
@@ -17,8 +18,15 @@
         height: 72px;
         border-radius: 4px;
         border: 1px dotted #5710b2;
-        bottom: -88px;
         left: 0;
+    }
+
+    .dragarea::before {
+        top: -88px;
+    }
+
+    .dragareaafter::after {
+        bottom: -88px;
     }
 
     .no-items {
