@@ -11,7 +11,6 @@ export const EditionModal: FC<EditionModalProps> = ({visible, closeModal, childr
                         </div>
 
                         <div className="modal-body">
-                            <div className="alert alert-info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores assumenda at autem debitis eius excepturi expedita facilis.</div>
                             {children}
                         </div>
 

@@ -3,6 +3,7 @@ import { EditionModal } from "../Edition/EditionModal";
 import { EditableBlockProps } from "./Types";
 import { EditIcon } from "../Icons/EditIcon";
 import { TrashIcon } from "../Icons/TrashIcon";
+import Tippy from "@tippyjs/react";
 
 export const EditableBlock: FC<EditableBlockProps> = ({editionItems, children, className = 'stack', removeItem}) => {
     const [visible, setVisible] = useState(false);
@@ -16,13 +17,17 @@ export const EditableBlock: FC<EditableBlockProps> = ({editionItems, children, c
                 <div
                     className="actions-control__item"
                     onClick={() => setVisible(!visible)}>
-                    <EditIcon/>
+                    <Tippy content="Paramètres">
+                        <EditIcon/>
+                    </Tippy>
                 </div>
 
                 <div
                     onClick={() => removeItem()}
                     className="actions-control__item">
-                    <TrashIcon/>
+                    <Tippy content="Supprimer">
+                        <TrashIcon/>
+                    </Tippy>
                 </div>
             </div>
 

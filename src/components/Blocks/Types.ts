@@ -14,7 +14,6 @@ export type OptionProps = {
 export type SelectProps = {
     id: string
     label: string
-    placeHolder: string
     helpText: string
     maxItems: number
     multiple: boolean
@@ -34,12 +33,14 @@ export type EditableBlockProps = {
 }
 
 export type FieldSetProps = {
+    id: string
     children: JSX.Element[]
     editItem: (key: string, children: JSX.Element[] | string) => void
     removeItem: () => void
 }
 
 export type RepeatableProps = {
+    id: string
     children: JSX.Element[]
     maxItems: number | string
     editItem: (key: string, children: JSX.Element[] | string | boolean) => void
@@ -52,8 +53,7 @@ export type FileInputProps = {
     helpText: string
     maxItems: number
     required: boolean
-    value: string
-    acceptedFile?: Array<{ label: string, value: string }>
+    acceptedFile: string
     editItem: (key: string, value: string | boolean | OptionProps[]) => void
     removeItem: () => void
 }
@@ -116,9 +116,18 @@ export type TelInputProps = TextInputProps
 
 export type UrlInputProps = TextInputProps
 
-export type DateTimeInputProps = TextInputProps & {
+export type DateTimeInputProps = {
+    id: string
+    label: string
+    placeHolder: string
+    helpText: string
+    hasCurrentDate: boolean
+    readOnly: boolean
+    required: boolean
     showDate: boolean
     showHour: boolean
+    editItem: (key: string, value: string | boolean) => void
+    removeItem: () => void
 }
 
 export type NumberInputProps = {

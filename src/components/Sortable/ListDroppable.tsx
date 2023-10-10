@@ -1,5 +1,6 @@
 import React, { useContext, useRef } from "react";
 import { Context } from "./DndContext";
+import Tippy from "@tippyjs/react";
 
 export function DroppableList({items, renderItem, dropItem}: any) {
     const {setMovingItem, setMovingItemHeight} = useContext(Context);
@@ -27,7 +28,11 @@ export function DroppableList({items, renderItem, dropItem}: any) {
                     key={i}
                     draggable
                     onDragStart={e => onDragStart(e, item)}
-                >{renderItem(item, i)}</div>))
+                >
+                    <Tippy content={item.tooltip}>
+                        {renderItem(item, i)}
+                    </Tippy>
+                </div>))
             }
         </div>);
 }

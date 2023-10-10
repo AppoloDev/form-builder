@@ -22,13 +22,42 @@ interface IDictionary<TValue> {
 
 export interface Block {
     title: string;
+    tooltip: string;
     component: FC<any>;
     base: any
 }
 
 export const blocks: IDictionary<Block> = {
+    "FieldSet": {
+        title: "Groupe de champs",
+        tooltip: 'Permet de regrouper visuellement des champs dans une encadré.',
+        component: FieldSet,
+        base: {
+            id: "",
+            children: []
+        }
+    },
+    "Title": {
+        title: "Titre",
+        tooltip: 'Insertion d\'un titre informatif ne nécessitant pas de réponse de l\'utilisateur.',
+        component: Title,
+        base: {
+            id: "",
+            text: "Titre"
+        }
+    },
+    "Paragraph": {
+        title: "Texte de présentation",
+        tooltip: 'Insertion d\'un paragraphe informatif ne nécessitant pas de réponse de l\'utilisateur.',
+        component: Paragraph,
+        base: {
+            id: "",
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        }
+    },
     "Address": {
         title: "Adresse",
+        tooltip: 'Permet d\'ajouter une adresse postale.',
         component: Address,
         base: {
             id: "",
@@ -38,12 +67,13 @@ export const blocks: IDictionary<Block> = {
         }
     },
     "TextInput": {
-        title: "Champ texte",
+        title: "Texte court",
+        tooltip: 'Permet la saisie d\'un texte court.',
         component: TextInput,
         base: {
             id: "",
-            label: "Champ texte",
-            placeHolder: "PlaceHolder",
+            label: "Texte court",
+            placeHolder: "",
             defaultValue: "",
             required: false,
             readOnly: false,
@@ -51,25 +81,27 @@ export const blocks: IDictionary<Block> = {
         }
     },
     "NumberInput": {
-        title: "Champ numérique",
+        title: "Numérique",
+        tooltip: 'Saisie d\'une valeur numérique.',
         component: NumberInput,
         base: {
             id: "",
-            label: "Champ numérique",
+            label: "Numérique",
             helpText: "",
             defaultValue: "",
             readOnly: false,
             required: false,
-            allowDecimal: true
+            allowDecimal: false
         }
     },
     "EmailInput": {
-        title: "Champ email",
+        title: "Email",
+        tooltip: 'Saisie d\'un email qui doit obligatoirement contenir un "@".',
         component: EmailInput,
         base: {
             id: "",
             label: "Champ email",
-            helpText: "Text d'aide",
+            helpText: "",
             placeHolder: '',
             defaultValue: '',
             readOnly: false,
@@ -77,62 +109,41 @@ export const blocks: IDictionary<Block> = {
         }
     },
     "TelInput": {
-        title: "Champ téléphone",
+        title: "Téléphone",
+        tooltip: 'Saisie d\'un numéro de téléphone.',
         component: TelInput,
         base: {
             id: "",
-            label: "Champ téléphone",
+            label: "Téléphone",
             placeHolder: '',
             defaultValue: '',
-            helpText: "Text d'aide",
+            helpText: "",
             readOnly: false,
             required: false
         }
     },
     "UrlInput": {
-        title: "Champ URL",
+        title: "Lien",
+        tooltip: 'Saisie d\'un lien url.',
         component: UrlInput,
         base: {
             id: "",
-            label: "Champ URL",
+            label: "Lien",
             placeHolder: '',
             defaultValue: '',
-            helpText: "Text d'aide",
+            helpText: "",
             readOnly: false,
             required: false
         }
     },
-    "FieldSet": {
-        title: "FieldSet",
-        component: FieldSet,
-        base: {
-            id: "",
-            children: []
-        }
-    },
-    "Paragraph": {
-        title: "Paragraphe",
-        component: Paragraph,
-        base: {
-            id: "",
-            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-        }
-    },
-    "Title": {
-        title: "Titre",
-        component: Title,
-        base: {
-            id: "",
-            text: "Titre"
-        }
-    },
     "TextAreaInput": {
         title: "Zone de texte",
+        tooltip: 'Saisie d\'une grande quantité de texte par l\'utilisateur.',
         component: TextAreaInput,
         base: {
             id: "",
             label: "Zone de texte",
-            placeHolder: "Placeholder",
+            placeHolder: "",
             required: false,
             helpText: '',
             defaultValue: '',
@@ -142,33 +153,39 @@ export const blocks: IDictionary<Block> = {
     },
     "FileInput": {
         title: "Fichier",
+        tooltip: 'Permet de joindre un ou des fichiers au formulaire.',
         component: FileInput,
         base: {
             id: "",
             label: "Fichier",
             helpText: "",
             maxItems: 1,
-            value: "",
             required: false,
-            acceptedFile: []
+            acceptedFile: "image"
         }
     },
     "DateTimeInput": {
         title: "Date",
+        tooltip: 'Saisie d\'une date.',
         component: DateTimeInput,
         base: {
             id: "",
-            label: "Champ Date & Heure",
-            placeHolder: "Placeholder",
+            label: "Date",
+            helpText: "",
+            hasCurrentDate: false,
+            readOnly: false,
+            required: false,
+            showDate: false,
+            showHour: false,
         }
     },
     "Select": {
-        title: "Liste à choix",
+        title: "Liste de choix",
+        tooltip: 'Affichage d\'une liste sélectionnable par l\'utilisateur.',
         component: Select,
         base: {
             id: "",
-            label: "Sélecteur",
-            placeHolder: "Placeholder",
+            label: "Liste de choix",
             options: [],
             multiple: false,
             checkCases: false,
@@ -179,6 +196,7 @@ export const blocks: IDictionary<Block> = {
     },
     /*"HourMinuteInput": {
         title: "Champ heure : minute",
+        tooltip: 'Je suis une description',
         component: HourMinuteInput,
         base: {
             id: "",
@@ -191,6 +209,7 @@ export const blocks: IDictionary<Block> = {
     },*/
     "Signature": {
         title: "Signature",
+        tooltip: 'Affichage d\'une zone permettant à l\'utilisateur de dessiner sa signature.',
         component: Signature,
         base: {
             id: "",
@@ -200,7 +219,8 @@ export const blocks: IDictionary<Block> = {
         }
     },
     "Repeatable": {
-        title: "Répétable",
+        title: "Répétition de champs",
+        tooltip: 'Permet de répéter un ensemble de champs configurable comme le reste du formulaire.',
         component: Repeatable,
         base: {
             id: "",

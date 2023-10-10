@@ -7,11 +7,11 @@ import { HourMinuteInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 import ReactInputMask from "react-input-mask";
 
-const HourMinuteInput: FC<HourMinuteInputProps> = ({label = '', helpText = '', defaultValue = '', readOnly= false, required = false, editItem, removeItem}) => {
-    const idInput = `hourminutes_${IdGenerator()}`;
-
+const HourMinuteInput: FC<HourMinuteInputProps> = ({id = '', label = '', helpText = '', defaultValue = '', readOnly= false, required = false, editItem, removeItem}) => {
     useEffect(() => {
-        editItem('id', idInput);
+        if (id === '') {
+            editItem('id', `hourminutes_${IdGenerator()}`);
+        }
     }, [])
 
     return (
@@ -19,15 +19,16 @@ const HourMinuteInput: FC<HourMinuteInputProps> = ({label = '', helpText = '', d
             removeItem={removeItem}
             editionItems={[
                 <TextEdition
-                    label={"Label"}
+                    label={"Libellé"}
                     value={label}
                     editItem={(val) => editItem('label', val)}
                     key={1}
                 />,
 
                 <TextEdition
-                    label={"Texte par défaut"}
+                    label={"Valeur par défaut"}
                     value={defaultValue}
+                    helpText={"Saisie une valeur par défaut que l'utilisateur pourra remplacer."}
                     editItem={(val) => editItem('defaultValue', val)}
                     key={3}
                 />,
@@ -35,12 +36,14 @@ const HourMinuteInput: FC<HourMinuteInputProps> = ({label = '', helpText = '', d
                 <TextEdition
                     label={"Texte d'aide"}
                     value={helpText}
+                    helpText={"Affiche un texte sous le champ, permettant d'aider et d'orienter l'utilisateur."}
                     editItem={(val) => editItem('helpText', val)}
                     key={4}
                 />,
 
                 <CheckboxEdition
                     label={"Requis"}
+                    helpText={"Permet de déterminer si ce champ est requis, ainsi rentre la saisie obligatoire."}
                     checked={required}
                     editItem={(val) => editItem('required', val)}
                     key={5}
@@ -49,19 +52,20 @@ const HourMinuteInput: FC<HourMinuteInputProps> = ({label = '', helpText = '', d
                 <CheckboxEdition
                     label={"Lecture seule"}
                     checked={readOnly}
+                    helpText={"Permet de déterminer si ce champ est seulement visible, mais non modifiable."}
                     editItem={(val) => editItem('readOnly', val)}
                     key={6}
                 />,
             ]}
         >
-            <label htmlFor={idInput}>
+            <label htmlFor={id}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
 
             <ReactInputMask
                 type="text"
-                id={idInput}
+                id={id}
                 disabled={readOnly}
                 defaultValue={defaultValue}
                 required={required}

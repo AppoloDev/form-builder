@@ -8,11 +8,11 @@ import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 import { NumberEdition } from "../Edition/NumberEdition";
 import { TextAreaEdition } from "../Edition/TextAreaEdition";
 
-const TextAreaInput: FC<TextAreaProps> = ({label = '', placeHolder = '', helpText = '', required = false, defaultValue = '', readOnly = false, rows = 5, editItem, removeItem}) => {
-    const idInput = `textarea_${IdGenerator()}`;
-
+const TextAreaInput: FC<TextAreaProps> = ({id = '', label = '', placeHolder = '', helpText = '', required = false, defaultValue = '', readOnly = false, rows = 5, editItem, removeItem}) => {
     useEffect(() => {
-        editItem('id', idInput);
+        if (id === '') {
+            editItem('id', `textarea_${IdGenerator()}`);
+        }
     }, [])
 
     return (
@@ -20,22 +20,24 @@ const TextAreaInput: FC<TextAreaProps> = ({label = '', placeHolder = '', helpTex
             removeItem={removeItem}
             editionItems={[
             <TextEdition
-                label={"Label"}
+                label={"Libellé"}
                 value={label}
                 editItem={(val) => editItem('label', val)}
                 key={1}
             />,
 
                 <TextEdition
-                    label={"PlaceHolder"}
+                    label={"Placeholder"}
                     value={placeHolder}
+                    helpText={"Affiche un texte dans le champ lorsqu'aucune valeur n'y est saisie."}
                     editItem={(val) => editItem('placeHolder', val)}
                     key={2}
                 />,
 
                 <TextAreaEdition
-                    label={"Texte par défaut"}
+                    label={"Valeur par défaut"}
                     value={defaultValue}
+                    helpText={"Saisie une valeur par défaut que l'utilisateur pourra remplacer."}
                     editItem={(val) => editItem('defaultValue', val)}
                     key={3}
                 />,
@@ -43,12 +45,14 @@ const TextAreaInput: FC<TextAreaProps> = ({label = '', placeHolder = '', helpTex
                 <TextEdition
                     label={"Texte d'aide"}
                     value={helpText}
+                    helpText={"Affiche un texte sous le champ, permettant d'aider et d'orienter l'utilisateur."}
                     editItem={(val) => editItem('helpText', val)}
                     key={4}
                 />,
 
                 <CheckboxEdition
                     label={"Requis"}
+                    helpText={"Permet de déterminer si ce champ est requis, ainsi rentre la saisie obligatoire."}
                     checked={required}
                     editItem={(val) => editItem('required', val)}
                     key={5}
@@ -57,6 +61,7 @@ const TextAreaInput: FC<TextAreaProps> = ({label = '', placeHolder = '', helpTex
                 <CheckboxEdition
                     label={"Lecture seule"}
                     checked={readOnly}
+                    helpText={"Permet de déterminer si ce champ est seulement visible, mais non modifiable."}
                     editItem={(val) => editItem('readOnly', val)}
                     key={6}
                 />,
@@ -64,17 +69,18 @@ const TextAreaInput: FC<TextAreaProps> = ({label = '', placeHolder = '', helpTex
                 <NumberEdition
                     label={'Nombre de lignes'}
                     value={rows}
+                    helpText={"Permet de déterminer le nombre de ligne visible pour l'utilisateur."}
                     editItem={(val) => editItem('rows', val)}
                     key={7}
                 />
             ]}>
-            <label htmlFor={idInput}>
+            <label htmlFor={id}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
 
             <textarea
-                id={idInput}
+                id={id}
                 placeholder={placeHolder}
                 rows={rows}
                 defaultValue={defaultValue}

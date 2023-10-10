@@ -1,23 +1,30 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, Fragment, useEffect, useState } from "react";
 import { EditableBlock } from "./EditableBlock";
 import { TextAreaEdition } from "../Edition/TextAreaEdition";
 import { ParagraphProps } from "./Types";
 import { IdGenerator } from "../../utilities/String";
 
-const Paragraph: FC<ParagraphProps> = ({text = '', editItem, removeItem}) => {
+const Paragraph: FC<ParagraphProps> = ({id = '', text = '', editItem, removeItem}) => {
     const [visible, setVisible] = useState<boolean>(false);
-    const idInput = `paragraph_${IdGenerator()}`;
 
     useEffect(() => {
-        editItem('id', idInput);
+        if (id === '') {
+            editItem('id', `paragraph_${IdGenerator()}`);
+        }
     }, [])
 
     return (
         <EditableBlock
             removeItem={removeItem}
-            editionItems={<TextAreaEdition label={"Paragraphe"} value={text} rows={10}
-                                           editItem={(val) => editItem('text', val)}/>}>
-            <p id={idInput} onClick={() => setVisible(!visible)}>{text}</p>
+            editionItems={<TextAreaEdition
+                label={"Paragraphe"}
+                value={text}
+                rows={10}
+                editItem={(val) => editItem('text', val)}/>}
+        >
+            <p id={id} onClick={() => setVisible(!visible)}>
+                {text.split('\n').map((item, key) => <Fragment key={key}>{item}<br/></Fragment>)}
+            </p>
         </EditableBlock>
     )
 }

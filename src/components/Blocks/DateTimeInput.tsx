@@ -6,18 +6,14 @@ import { IdGenerator } from "../../utilities/String";
 import { DateTimeInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const DateTimeInput: FC<DateTimeInputProps> = ({label = '', helpText = '', defaultValue = '', readOnly = false, required = false, showDate = true, showHour = true, editItem, removeItem}) => {
-    const idInput = `datetime_${IdGenerator()}`;
-    const [value, setValue] = useState(defaultValue);
+const DateTimeInput: FC<DateTimeInputProps> = ({id= '', label = '', helpText  = '', readOnly = false, required = false, showDate = false, showHour = false, hasCurrentDate = false, editItem, removeItem}) => {
     const [inputType, setInputType] = useState('datetime-local');
 
     useEffect(() => {
-        editItem('id', idInput);
-    }, [])
-
-    useEffect(() => {
-        setValue(defaultValue);
-    }, [defaultValue]);
+        if (id === '') {
+            editItem('id', `datetime_${IdGenerator()}`);
+        }
+    }, []);
 
     useEffect(() => {
         if (showDate && !showHour) {
@@ -34,31 +30,25 @@ const DateTimeInput: FC<DateTimeInputProps> = ({label = '', helpText = '', defau
             removeItem={removeItem}
             editionItems={[
                 <TextEdition
-                    label={"Label"}
+                    label={"Libellé"}
                     value={label}
                     editItem={(val) => editItem('label', val)}
                     key={1}
                 />,
 
                 <TextEdition
-                    label={"Texte par défaut"}
-                    value={defaultValue}
-                    editItem={(val) => editItem('defaultValue', val)}
-                    key={2}
-                />,
-
-                <TextEdition
                     label={"Texte d'aide"}
                     value={helpText}
+                    helpText={"Affiche un texte sous le champ, permettant d'aider et d'orienter l'utilisateur."}
                     editItem={(val) => editItem('helpText', val)}
-                    key={3}
+                    key={2}
                 />,
 
                 <CheckboxEdition
                     label={"Afficher la date ?"}
                     checked={showDate}
                     editItem={(val) => editItem('showDate', val)}
-                    key={5}
+                    key={3}
                 />,
 
                 <CheckboxEdition
@@ -69,7 +59,15 @@ const DateTimeInput: FC<DateTimeInputProps> = ({label = '', helpText = '', defau
                 />,
 
                 <CheckboxEdition
+                    label={"Afficher l'heure ou la date courante ?"}
+                    checked={hasCurrentDate}
+                    editItem={(val) => editItem('hasCurrentDate', val)}
+                    key={5}
+                />,
+
+                <CheckboxEdition
                     label={"Requis"}
+                    helpText={"Permet de déterminer si ce champ est requis, ainsi rentre la saisie obligatoire."}
                     checked={required}
                     editItem={(val) => editItem('required', val)}
                     key={6}
@@ -78,21 +76,20 @@ const DateTimeInput: FC<DateTimeInputProps> = ({label = '', helpText = '', defau
                 <CheckboxEdition
                     label={"Lecture seule"}
                     checked={readOnly}
+                    helpText={"Permet de déterminer si ce champ est seulement visible, mais non modifiable."}
                     editItem={(val) => editItem('readOnly', val)}
                     key={7}
                 />,
             ]}
         >
-            <label htmlFor={idInput}>
+            <label htmlFor={id}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
 
             <input type={inputType}
-                   id={idInput}
+                   id={id}
                    disabled={readOnly}
-                   value={value}
-                   onChange={({target}) => setValue(target.value)}
                    required={required}
             />
 

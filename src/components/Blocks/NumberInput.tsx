@@ -7,11 +7,11 @@ import { NumberInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 import { NumberEdition } from "../Edition/NumberEdition";
 
-const NumberInput: FC<NumberInputProps> = ({label = '', helpText = '', defaultValue = '', readOnly = false, required = false, allowDecimal = true, editItem, removeItem}) => {
-    const idInput = `number_${IdGenerator()}`;
-
+const NumberInput: FC<NumberInputProps> = ({id= '', label = '', helpText = '', defaultValue = '', readOnly = false, required = false, allowDecimal = false, editItem, removeItem}) => {
     useEffect(() => {
-        editItem('id', idInput);
+        if (id === '') {
+            editItem('id', `number_${IdGenerator()}`);
+        }
     }, [])
 
     return (
@@ -19,7 +19,7 @@ const NumberInput: FC<NumberInputProps> = ({label = '', helpText = '', defaultVa
             removeItem={removeItem}
             editionItems={[
             <TextEdition
-                label={"Label"}
+                label={"Libellé"}
                 value={label}
                 editItem={(val) => editItem('label', val)}
                 key={1}
@@ -28,6 +28,7 @@ const NumberInput: FC<NumberInputProps> = ({label = '', helpText = '', defaultVa
             <NumberEdition
                 label={"Valeur par défaut"}
                 value={defaultValue}
+                helpText={"Saisie une valeur par défaut que l'utilisateur pourra remplacer."}
                 editItem={(val) => editItem('defaultValue', val)}
                 key={2}
             />,
@@ -35,12 +36,14 @@ const NumberInput: FC<NumberInputProps> = ({label = '', helpText = '', defaultVa
             <TextEdition
                 label={"Texte d'aide"}
                 value={helpText}
+                helpText={"Affiche un texte sous le champ, permettant d'aider et d'orienter l'utilisateur."}
                 editItem={(val) => editItem('helpText', val)}
                 key={3}
             />,
 
             <CheckboxEdition
                 label={"Requis"}
+                helpText={"Permet de déterminer si ce champ est requis, ainsi rentre la saisie obligatoire."}
                 checked={required}
                 editItem={(val) => editItem('required', val)}
                 key={4}
@@ -56,17 +59,18 @@ const NumberInput: FC<NumberInputProps> = ({label = '', helpText = '', defaultVa
             <CheckboxEdition
                 label={"Lecture seule"}
                 checked={readOnly}
+                helpText={"Permet de déterminer si ce champ est seulement visible, mais non modifiable."}
                 editItem={(val) => editItem('readOnly', val)}
                 key={6}
             />,
         ]}>
-            <label htmlFor={idInput}>
+            <label htmlFor={id}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
 
             <input type="number"
-                   id={idInput}
+                   id={id}
                    disabled={readOnly}
                    defaultValue={defaultValue}
                    required={required}

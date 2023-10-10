@@ -2,6 +2,7 @@ import { OptionProps } from "../Blocks/Types";
 
 export type CheckboxEditionProps = {
     label: string
+    helpText?: string
     checked: boolean
     disabled?: boolean
     editItem: (value: boolean) => void
@@ -16,6 +17,7 @@ export type EditionModalProps = {
 export type NumberEditionProps = {
     label: string
     value: number | string
+    helpText?: string
     min?: number
     max?: number
     editItem: (value: string | boolean) => void
@@ -24,6 +26,7 @@ export type NumberEditionProps = {
 export type TextAreaEditionProps = {
     label: string
     value: string
+    helpText?: string
     rows?: number
     editItem: (value: string) => void
 }
@@ -31,6 +34,7 @@ export type TextAreaEditionProps = {
 export type TextEditionProps = {
     label: string
     value: string
+    helpText?: string
     editItem: (value: string) => void
 }
 
@@ -44,5 +48,6 @@ export type SelectEditionProps = {
 export type SelectOptionEditionProps = {
     label: string
     options: OptionProps[]
+    multiple: boolean
     editItem: (value: OptionProps[]) => void
 }

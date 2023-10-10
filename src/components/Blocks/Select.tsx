@@ -7,12 +7,13 @@ import { IdGenerator } from "../../utilities/String";
 import { SelectProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const Select: FC<SelectProps> = ({label = '', placeHolder = '', helpText = '', multiple = false, customOption = false, checkCases = false, required = false,options , editItem, removeItem}) => {
-    const idInput = `select_${IdGenerator()}`;
+const Select: FC<SelectProps> = ({id = '', label = '', helpText = '', multiple = false, customOption = false, checkCases = false, required = false,options , editItem, removeItem}) => {
     const [enabledCustomOption, enableCustomOption] = useState<boolean>(false)
 
     useEffect(() => {
-        editItem('id', idInput);
+        if (id === '') {
+            editItem('id', `select_${IdGenerator()}`);
+        }
     }, [])
 
     useEffect(() => {
@@ -24,35 +25,30 @@ const Select: FC<SelectProps> = ({label = '', placeHolder = '', helpText = '', m
         }
     }, [checkCases])
 
-    const defaultValue = options.filter((el) => el.isSelected)[0];
+    const defaultValue = options.filter((el) => el.isSelected).map((el) => el.label);
 
     return (
         <EditableBlock
             removeItem={removeItem}
             editionItems={[
                 <TextEdition
-                    label={"Label"}
+                    label={"Libellé"}
                     value={label}
                     editItem={(val) => editItem('label', val)}
                     key={1}
                 />,
 
                 <TextEdition
-                    label={"PlaceHolder"}
-                    value={placeHolder}
-                    editItem={(val) => editItem('placeHolder', val)}
-                    key={2}
-                />,
-
-                <TextEdition
                     label={"Texte d'aide"}
                     value={helpText}
+                    helpText={"Affiche un texte sous le champ, permettant d'aider et d'orienter l'utilisateur."}
                     editItem={(val) => editItem('helpText', val)}
                     key={3}
                 />,
 
                 <CheckboxEdition
                     label={"Requis"}
+                    helpText={"Permet de déterminer si ce champ est requis, ainsi rentre la saisie obligatoire."}
                     checked={required}
                     editItem={(val) => editItem('required', val)}
                     key={4}
@@ -61,6 +57,7 @@ const Select: FC<SelectProps> = ({label = '', placeHolder = '', helpText = '', m
                 <CheckboxEdition
                     label={"Choix multiple"}
                     checked={multiple}
+                    helpText={"Permet de déterminer si l'utilisateur peut sélectionner plusieurs options."}
                     editItem={(val) => editItem('multiple', val)}
                     key={5}
                 />,
@@ -68,12 +65,14 @@ const Select: FC<SelectProps> = ({label = '', placeHolder = '', helpText = '', m
                 <CheckboxEdition
                     label={"Cases à cocher"}
                     checked={checkCases}
+                    helpText={"Permet d'afficher les options sous forme de cases à cocher."}
                     editItem={(val) => editItem('checkCases', val)}
                     key={6}
                 />,
 
                 <CheckboxEdition
                     label={"Autoriser l'ajout d'une option personnalisée"}
+                    helpText={"Permet à l'utilisateur d'ajouter une option personnalisée."}
                     disabled={!enabledCustomOption}
                     checked={customOption}
                     editItem={(val) => editItem('customOption', val)}
@@ -82,12 +81,13 @@ const Select: FC<SelectProps> = ({label = '', placeHolder = '', helpText = '', m
 
                 <SelectOptionEdition
                     label={"Options"}
+                    multiple={multiple}
                     options={options}
                     editItem={(val) => editItem('options', val)}
                     key={8}
                 />
             ]}>
-            <label htmlFor={idInput}>
+            <label htmlFor={id}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
@@ -99,17 +99,18 @@ const Select: FC<SelectProps> = ({label = '', placeHolder = '', helpText = '', m
                             <div className="stack checkbox" key={i}>
                                 <input type={multiple ? 'checkbox' : 'radio'}
                                        id={radioID}
-                                       name={idInput}
-                                       value={option.label}
+                                       name={id}
+                                       defaultValue={option.label}
                                        checked={option.isSelected}
+                                       onChange={() => {}}
                                 />
                                 <label htmlFor={radioID}>{option.label}</label>
                             </div>) : null
                     })) :
                     (<select
-                        id={idInput}
-                        placeholder={placeHolder}
-                        value={defaultValue ? defaultValue?.label : options[0]?.label}
+                        id={id}
+                        value={multiple ? defaultValue : defaultValue[0]}
+                        onChange={() => {}}
                         multiple={multiple}
                         required={required}>
                         {options.map((option, i) => option.label ?

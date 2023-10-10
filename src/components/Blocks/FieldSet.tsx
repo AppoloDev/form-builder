@@ -1,17 +1,18 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect } from "react";
 import { blocks } from "./Definition";
 import { FieldSetProps } from "./Types";
 import { SortableList } from "../Sortable/ListSortable";
 import { TrashIcon } from "../Icons/TrashIcon";
 import { IdGenerator } from "../../utilities/String";
+import Tippy from "@tippyjs/react";
 
 
-const FieldSet: FC<FieldSetProps> = ({children, editItem, removeItem}) => {
-    const idInput = `fieldset_${IdGenerator()}`;
-
+const FieldSet: FC<FieldSetProps> = ({id = '', children, editItem, removeItem}) => {
     useEffect(() => {
-        editItem('id', idInput);
-    }, [])
+        if (id === '') {
+            editItem('id', `fieldset_${IdGenerator()}`);
+        }
+    }, [id])
 
     const editChildrenItem = (item: JSX.Element, key: keyof JSX.Element, value: JSX.Element[]) => {
         item[key] = value;
@@ -29,12 +30,14 @@ const FieldSet: FC<FieldSetProps> = ({children, editItem, removeItem}) => {
     }
 
     return (
-        <fieldset>
+        <fieldset id={id}>
             <div className="actions-control">
                 <div
                     onClick={() => removeItem()}
                     className="actions-control__item">
-                    <TrashIcon/>
+                    <Tippy content="Supprimer">
+                        <TrashIcon/>
+                    </Tippy>
                 </div>
             </div>
 

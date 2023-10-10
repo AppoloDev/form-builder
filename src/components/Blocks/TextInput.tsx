@@ -6,34 +6,36 @@ import { IdGenerator } from "../../utilities/String";
 import { TextInputProps } from "./Types";
 import { WarningCircledIcon } from "../Icons/WarningCircledIcon";
 
-const TextInput: FC<TextInputProps> = ({label = '', placeHolder = '', helpText = '', defaultValue = '', readOnly= false, required = false, editItem, removeItem}) => {
-    const idInput = `text_${IdGenerator()}`;
-
+const TextInput: FC<TextInputProps> = ({id = '', label = '', placeHolder = '', helpText = '', defaultValue = '', readOnly= false, required = false, editItem, removeItem}) => {
     useEffect(() => {
-        editItem('id', idInput);
-    }, [])
+        if (id === '') {
+            editItem('id', `text_${IdGenerator()}`);
+        }
+    }, []);
 
     return (
         <EditableBlock
             removeItem={removeItem}
             editionItems={[
                 <TextEdition
-                    label={"Label"}
+                    label={"Libellé"}
                     value={label}
                     editItem={(val) => editItem('label', val)}
                     key={1}
                 />,
 
                 <TextEdition
-                    label={"PlaceHolder"}
+                    label={"Placeholder"}
                     value={placeHolder}
+                    helpText={"Affiche un texte dans le champ lorsqu'aucune valeur n'y est saisie."}
                     editItem={(val) => editItem('placeHolder', val)}
                     key={2}
                 />,
 
                 <TextEdition
-                    label={"Texte par défaut"}
+                    label={"Valeur par défaut"}
                     value={defaultValue}
+                    helpText={"Saisie une valeur par défaut que l'utilisateur pourra remplacer."}
                     editItem={(val) => editItem('defaultValue', val)}
                     key={3}
                 />,
@@ -41,6 +43,7 @@ const TextInput: FC<TextInputProps> = ({label = '', placeHolder = '', helpText =
                 <TextEdition
                     label={"Texte d'aide"}
                     value={helpText}
+                    helpText={"Affiche un texte sous le champ, permettant d'aider et d'orienter l'utilisateur."}
                     editItem={(val) => editItem('helpText', val)}
                     key={4}
                 />,
@@ -48,6 +51,7 @@ const TextInput: FC<TextInputProps> = ({label = '', placeHolder = '', helpText =
                 <CheckboxEdition
                     label={"Requis"}
                     checked={required}
+                    helpText={"Permet de déterminer si ce champ est requis, ainsi rentre la saisie obligatoire."}
                     editItem={(val) => editItem('required', val)}
                     key={5}
                 />,
@@ -55,18 +59,19 @@ const TextInput: FC<TextInputProps> = ({label = '', placeHolder = '', helpText =
                 <CheckboxEdition
                     label={"Lecture seule"}
                     checked={readOnly}
+                    helpText={"Permet de déterminer si ce champ est seulement visible, mais non modifiable."}
                     editItem={(val) => editItem('readOnly', val)}
                     key={6}
                 />,
             ]}
         >
-            <label htmlFor={idInput}>
+            <label htmlFor={id}>
                 {label}
                 {required && <span className="required">Requis</span>}
             </label>
 
             <input type="text"
-                   id={idInput}
+                   id={id}
                    placeholder={placeHolder}
                    disabled={readOnly}
                    defaultValue={defaultValue}

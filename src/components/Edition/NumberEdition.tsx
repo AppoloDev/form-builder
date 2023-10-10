@@ -2,7 +2,7 @@ import { IdGenerator } from "../../utilities/String";
 import { NumberEditionProps } from "./Types";
 import { FC } from "react";
 
-export const NumberEdition: FC<NumberEditionProps> = ({ label, value, min, max, editItem }) => {
+export const NumberEdition: FC<NumberEditionProps> = ({ label, value, helpText, min, max, editItem }) => {
     const id = IdGenerator();
 
     return (
@@ -16,6 +16,7 @@ export const NumberEdition: FC<NumberEditionProps> = ({ label, value, min, max, 
                 max={max}
                 onChange={e => editItem(e.target.value) }
             />
+            <small className="form-text help-text text-muted">{helpText}</small>
         </div>
     );
 }
