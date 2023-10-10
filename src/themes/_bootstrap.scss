@@ -14,7 +14,7 @@
         background-color: #f6f1fc;
         content: '';
         position: absolute;
-        width: 100%;
+        width: calc(100% - 32px);
         height: 72px;
         border-radius: 4px;
         border: 1px dotted #5710b2;
