@@ -1,5 +1,7 @@
 class FormBuilderManager extends HTMLElement {
     connectedCallback() {
+        console.log("okjeee");
+
         this.openBuilder = this.openBuilder.bind(this);
 
         this.formBuilderEl = this.querySelector('form-builder');

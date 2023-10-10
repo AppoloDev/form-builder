@@ -8,7 +8,7 @@ export function DroppableList({items, renderItem, dropItem}: any) {
 
     const onDragStart = (e: any, item: any) => {
         setMovingItem(dropItem(item));
-        setMovingItemHeight(ref.current.children[items.indexOf(item)].getBoundingClientRect().height);
+        setMovingItemHeight(ref.current.children[items.indexOf(item)].getBoundingClientRect().height + 30);
         e.stopPropagation();
     }
 

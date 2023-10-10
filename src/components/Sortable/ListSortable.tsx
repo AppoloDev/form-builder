@@ -14,6 +14,8 @@ export function SortableList({ items, renderItem, margin = 16, name = "Parent", 
     const isHoverDragging = movingItem !== null && placeholder !== null;
 
     const onDrop = (e: DragEvent<HTMLDivElement>) => {
+        document.querySelectorAll('[class*=dragarea]').forEach(e => e.classList.remove('dragarea', 'dragareaafter'));
+
         if (canAddChildren(movingItem)) {
             setMovingItem(null);
             moveItem(movingItem, items, getIndexOfItem(e.clientY));
@@ -108,11 +110,21 @@ export function SortableList({ items, renderItem, margin = 16, name = "Parent", 
                     top += el.children[clone[i]].getBoundingClientRect().height + margin;
                 }
             } else {
+                let found = false;
+                document.querySelectorAll('[class*=dragarea]').forEach(e => e.classList.remove('dragarea', 'dragareaafter'));
                 for (let i = 0; i < items.length; i++) {
-                    if (i === placeholder) { // TODO : (Improving some weird spaces ?)
+                    if (i === placeholder) {
                         top += movingItemHeight + margin;
+                        el.children[i].classList.add('dragarea');
+                        found = true;
                     }
-                    if (i === key) break;
+
+                    if (i === key) {
+                        if(key === (items.length -1) && !found) {
+                            el.children[i].classList.add('dragareaafter');
+                        }
+                        break;
+                    }
                     top += el.children[i].getBoundingClientRect().height + margin;
                 }
             }
