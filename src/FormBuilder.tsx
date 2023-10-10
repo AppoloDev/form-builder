@@ -58,7 +58,7 @@ function FormBuilder({blocks, onChange, onClose, modalLayout, json}: FormBuilder
                                 ...block.base
                             }
                         }}
-                        renderItem={(block: Block) => <div className="droppable-item__title">{block.title}</div>}
+                        renderItem={(block: Block) => <div draggable={true}>{block.title}</div>}
                     />
 
                     <div className="form-builder__wrapper">

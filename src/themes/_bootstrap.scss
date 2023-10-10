@@ -1,4 +1,5 @@
-//@import "bootstrap/scss/bootstrap"; @import "tippy.js/dist/tippy.css";
+//@import "bootstrap/scss/bootstrap";
+//@import "tippy.js/dist/tippy.css";
 
 .form-builder {
     display: flex;
@@ -7,6 +8,25 @@
 
     &__wrapper {
         flex: 1;
+    }
+
+    .dragareaafter::after, .dragarea::before {
+        background-color: #f6f1fc;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 72px;
+        border-radius: 4px;
+        border: 1px dotted #5710b2;
+        left: 0;
+    }
+
+    .dragarea::before {
+        top: -88px;
+    }
+
+    .dragareaafter::after {
+        bottom: -88px;
     }
 
     .no-items {
@@ -204,7 +224,8 @@
     }
 
     .repeatable {
-        .repeatable-more {
+
+        .repeatable-more, .dragareaafter::after, .dragarea::before {
             width: calc(100% - 32px);
         }
     }
