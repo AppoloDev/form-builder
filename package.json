@@ -4,44 +4,27 @@
   "private": true,
   "main": "./dist/index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@tippyjs/react": "^4.2.6",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-input-mask": "3.0.0-alpha.2",
-    "tippy.js": "^6.3.7"
+    "@floating-ui/react": "^0.27.16",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-input-mask": "3.0.0-alpha.2"
   },
   "devDependencies": {
-    "@types/node": "^18.11.10",
-    "@types/react": "^18.0.26",
-    "@types/react-dom": "^18.0.9",
-    "@types/react-input-mask": "^3.0.2",
-    "bootstrap": "^5.2.3",
-    "react-scripts": "5.0.1",
-    "sass": "^1.56.1",
-    "typescript": "^4.9.3"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "@eslint/js": "^9.36.0",
+    "@types/react": "^19.1.16",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.4",
+    "eslint": "^9.36.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.22",
+    "globals": "^16.4.0",
+    "sass-embedded": "^1.93.2",
+    "vite": "^7.1.11"
   }
 }

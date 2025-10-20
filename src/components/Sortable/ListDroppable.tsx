@@ -1,11 +1,11 @@
 import React, { useContext, useRef } from "react";
 import { Context } from "./DndContext";
-import Tippy from "@tippyjs/react";
+import { Tooltip } from "../Tooltip";
 
 export function DroppableList({items, renderItem, dropItem}: any) {
     const {setMovingItem, setMovingItemHeight} = useContext(Context);
 
-    const ref = useRef<any>();
+    const ref = useRef(null);
 
     const onDragStart = (e: any, item: any) => {
         setMovingItem(dropItem(item));
@@ -23,16 +23,16 @@ export function DroppableList({items, renderItem, dropItem}: any) {
             onDragEnd={onDragEnd}
             ref={ref}>
             {items.map((item: any, i: number) => (
-                <div
-                    className="droppable-item"
-                    key={i}
-                    draggable
-                    onDragStart={e => onDragStart(e, item)}
-                >
-                    <Tippy content={item.tooltip}>
+                <Tooltip content={item.tooltip} key={i}>
+                    <div
+                        className="droppable-item"
+                        draggable
+                        onDragStart={e => onDragStart(e, item)}
+                    >
                         {renderItem(item, i)}
-                    </Tippy>
-                </div>))
+                    </div>
+                </Tooltip>
+            ))
             }
         </div>);
 }

@@ -4,7 +4,7 @@ import { FieldSetProps } from "./Types";
 import { SortableList } from "../Sortable/ListSortable";
 import { TrashIcon } from "../Icons/TrashIcon";
 import { IdGenerator } from "../../utilities/String";
-import Tippy from "@tippyjs/react";
+import { Tooltip } from "../Tooltip";
 
 
 const FieldSet: FC<FieldSetProps> = ({id = '', children, editItem, removeItem}) => {
@@ -14,13 +14,13 @@ const FieldSet: FC<FieldSetProps> = ({id = '', children, editItem, removeItem}) 
         }
     }, [id])
 
-    const editChildrenItem = (item: JSX.Element, key: keyof JSX.Element, value: JSX.Element[]) => {
+    const editChildrenItem = (item: Element, key: keyof Element, value: Element[]) => {
         item[key] = value;
         const childrenClone = [...children];
         editItem('children', childrenClone);
     };
 
-    const removeChildrenItem = (item: JSX.Element) => {
+    const removeChildrenItem = (item: Element) => {
         const index = children.indexOf(item);
 
         if (index > -1) {
@@ -35,9 +35,9 @@ const FieldSet: FC<FieldSetProps> = ({id = '', children, editItem, removeItem}) 
                 <div
                     onClick={() => removeItem()}
                     className="actions-control__item">
-                    <Tippy content="Supprimer">
+                    <Tooltip content="Supprimer">
                         <TrashIcon/>
-                    </Tippy>
+                    </Tooltip>
                 </div>
             </div>
 
@@ -47,7 +47,7 @@ const FieldSet: FC<FieldSetProps> = ({id = '', children, editItem, removeItem}) 
                 renderItem={(item: any, key: number) => React.createElement(blocks[item.type].component, {
                     ...item,
                     key,
-                    editItem: (key: keyof JSX.Element, value: JSX.Element[]) => editChildrenItem(item, key, value),
+                    editItem: (key: keyof Element, value: Element[]) => editChildrenItem(item, key, value),
                     removeItem: () => removeChildrenItem(item)
                 })}
                 items={children}>

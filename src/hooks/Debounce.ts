@@ -4,7 +4,7 @@ const useDebounce = <F extends (...args: any) => any>(
     func: F,
     waitFor: number,
 ): ((...args: Parameters<F>) => ReturnType<F>) => {
-    const timer = useRef<NodeJS.Timer | null>();
+    const timer = useRef<NodeJS.Timer | null>(null);
     const savedFunc = useRef<F | null>(func);
 
     useEffect(() => {

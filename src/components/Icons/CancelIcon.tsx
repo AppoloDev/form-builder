@@ -1,4 +1,4 @@
-import { SvgProps } from "./Types";
+import { SvgProps } from "../../types/Icon.type";
 
 export const CancelIcon = ({height = 24, width = 24}: SvgProps) => (
     <svg width={width} height={height} strokeWidth="1.5" viewBox="0 0 24 24" fill="none"

@@ -1,5 +1,4 @@
 //@import "bootstrap/scss/bootstrap";
-//@import "tippy.js/dist/tippy.css";
 
 .form-builder {
     display: flex;
@@ -176,24 +175,24 @@
         }
 
         .stack-heading {
-            @extend .d-flex;
-            @extend .justify-content-between;
-            @extend .align-items-center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .delete {
-            @extend .d-flex;
-            @extend .justify-content-end;
+            display: flex;
+            justify-content: flex-end;
 
             button {
-                @extend .btn;
-                @extend .btn-danger
+                //@extend .btn;
+                //@extend .btn-danger
             }
         }
 
         &-horizontal {
-            @extend .d-flex;
-            @extend .align-items-end;
+            display: flex;
+            align-items: flex-end;
             gap: 4px;
 
             .stack {
@@ -204,7 +203,7 @@
                 }
 
                 &:not(:last-child) {
-                    @extend .mb-0;
+                    margin-bottom: 0;
                 }
             }
         }
@@ -242,7 +241,7 @@
 
 
         & + fieldset, + .repeatable {
-            @extend .mt-3;
+            margin-top: 1.5rem;
         }
     }
 
@@ -256,14 +255,14 @@
     }
 
     label {
-        @extend .form-label;
+        //@extend .form-label;
 
         display: flex;
         align-items: center;
 
         .required {
-            @extend .badge;
-            @extend .bg-danger;
+            //@extend .badge;
+            //@extend .bg-danger;
 
             margin-left: 4px;
 
@@ -275,44 +274,44 @@
 
     input {
         &[type="text"], &[type="file"], &[type="number"], &[type="tel"], &[type="email"], &[type="url"], &[type="date"], &[type="datetime-local"], &[type="time"] {
-            @extend .form-control;
+            //@extend .form-control;
         }
     }
 
     textarea {
-        @extend .form-control;
+        //@extend .form-control;
     }
 
     select {
-        @extend .form-select;
+        //@extend .form-select;
     }
 
     .checkbox, .radio {
-        @extend .form-check;
+        //@extend .form-check;
         margin-bottom: .5rem;
 
         input {
-            @extend .form-check-input;
+            //@extend .form-check-input;
 
             margin-left: 0;
             margin-right: .5rem;
         }
 
         label {
-            @extend .form-check-label;
+            //@extend .form-check-label;
             margin-bottom: 0;
         }
     }
 
     button {
-        @extend .btn;
-        @extend .btn-primary;
+        //@extend .btn;
+        //@extend .btn-primary;
     }
 
     .help-text {
         display: flex;
         align-items: center;
-        @extend .form-text;
+        //@extend .form-text;
 
         svg {
             align-self: start;
@@ -344,7 +343,7 @@
     }
 
     .sign-area {
-        @extend .h4;
+        //@extend .h4;
 
         display: flex;
         align-items: center;
