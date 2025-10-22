@@ -1,88 +1,220 @@
-import React, { useState } from 'react';
-import { Block, blocks as blockDefinition } from "./components/Blocks/Definition";
-import DndContext from "./components/Sortable/DndContext";
-import { SortableList } from "./components/Sortable/ListSortable";
-import { DroppableList } from "./components/Sortable/ListDroppable";
-import { FormBuilderProps } from "./components/Blocks/Types";
-import { merge } from "./utilities/Object";
-import useDebounce from "./utilities/Debounce";
-import { CancelIcon } from "./components/Icons/CancelIcon";
+import { useCallback, useMemo } from "react";
+import { Block, getAllBlockDefinitions } from "./components/Blocks/Definition";
+import { useFormBuilderStore } from "./stores/block.store";
+import {
+    DndContext,
+    DragEndEvent,
+    DragOverEvent, DragOverlay,
+    DragStartEvent,
+    PointerSensor,
+    useSensor,
+    useSensors
+} from "@dnd-kit/core";
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { DraggableItem } from "./components/Sortable/DraggableItem";
+import { EmptyDropZone } from "./components/Sortable/EmptyDropZone";
+import React from "react";
+import { SortableItem } from "./components/Sortable/SortableItem";
+import { createBlockFromTemplate, isValidDropTarget } from "./utilities/block.utiles";
+import { DropEndZone } from "./components/Sortable/DropEndZone";
 
-function FormBuilder({blocks, onChange, onClose, modalLayout, json}: FormBuilderProps) {
-    const [items, setItems] = useState(json);
+const WORK_CONTAINER_ID = "work-container";
+const DROP_END_ZONE_ID = "drop-end-zone";
 
-    const [isLoaded, setIsLoaded] = useState<boolean>(false)
-    let mergedBlocks: any = blockDefinition
+export const FormBuilder = () => {
+    const SIDEBAR_ITEMS = useMemo(() => getAllBlockDefinitions(), []);
 
-    if (blocks) {
-        mergedBlocks = merge(blockDefinition, blocks);
-    }
+    const {
+        blocks,
+        activeId,
+        overId,
+        setActiveId,
+        setOverId,
+        addBlock,
+        moveBlock,
+        moveBlockToEnd,
+    } = useFormBuilderStore();
 
-    const editItem = (item: any, key: string, value: any) => {
-        item[key] = value;
-        setItems([...items]);
-    }
+    console.log(blocks);
 
-    const removeItem = (item: any) => {
-        const index = items.indexOf(item)
+    const sensors = useSensors(
+        useSensor(PointerSensor, {
+            activationConstraint: { distance: 8 },
+        })
+    );
 
-        if (index > -1) {
-            setItems((current) => {
-                current.splice(index, 1);
+    const isDragging = !!activeId;
+    const isDraggingFromSidebar = useMemo(
+        () => !!activeId && SIDEBAR_ITEMS.some((i) => i.id === activeId),
+        [activeId, SIDEBAR_ITEMS]
+    );
 
-                return [...current];
-            })
-        }
-    }
+    const validDropIds = useMemo(
+        () =>
+            new Set([
+                WORK_CONTAINER_ID,
+                DROP_END_ZONE_ID,
+                ...blocks.map((i) => String(i.id)),
+            ]),
+        [blocks]
+    );
 
-    useDebounce(() => {
-        if (isLoaded) {
-            onChange(items);
-        } else {
-            setIsLoaded(true);
-        }
-    }, [items], 250);
+    const handleDragStart = useCallback(
+        (event: DragStartEvent) => {
+            setActiveId(event.active.id);
+        },
+        [setActiveId]
+    );
+
+    const handleDragOver = useCallback(
+        (event: DragOverEvent) => {
+            const id = event.over?.id ?? null;
+            setOverId(
+                isValidDropTarget(id, validDropIds) ? String(id) : null
+            );
+        },
+        [setOverId, validDropIds]
+    );
+
+    const handleDragEnd = useCallback(
+        (event: DragEndEvent) => {
+            const { active, over } = event;
+
+            setActiveId(null);
+            setOverId(null);
+
+            if (!over) return;
+
+            const aId = String(active.id);
+            const oId = String(over.id);
+
+            if (!validDropIds.has(oId)) return;
+
+            const fromSidebar = SIDEBAR_ITEMS.some((i) => i.id === aId);
+            const fromList = blocks.some((i) => i.id === aId);
+
+            // Handle drop from sidebar
+            if (fromSidebar) {
+                const template = SIDEBAR_ITEMS.find((i) => i.id === aId);
+                if (!template) return;
+
+                const newBlock = createBlockFromTemplate(template as Block);
+
+                let targetIndex = blocks.length;
+                if (oId !== WORK_CONTAINER_ID && oId !== DROP_END_ZONE_ID) {
+                    const idx = blocks.findIndex((i) => i.id === oId);
+                    if (idx !== -1) targetIndex = idx;
+                }
+
+                addBlock(newBlock, targetIndex);
+                return;
+            }
+
+            // Handle reorder within list
+            if (fromList) {
+                if (oId === DROP_END_ZONE_ID) {
+                    moveBlockToEnd(aId);
+                    return;
+                }
+                if (oId === WORK_CONTAINER_ID) {
+                    return;
+                }
+                moveBlock(aId, oId);
+            }
+        },
+        [
+            setActiveId,
+            setOverId,
+            validDropIds,
+            SIDEBAR_ITEMS,
+            blocks,
+            addBlock,
+            moveBlock,
+            moveBlockToEnd,
+        ]
+    );
+
+    const activeItem = useMemo(() => {
+        if (!activeId) return null;
+        return (
+            SIDEBAR_ITEMS.find((i) => i.id === activeId) ||
+            blocks.find((i) => i.id === activeId) ||
+            null
+        );
+    }, [activeId, blocks, SIDEBAR_ITEMS]);
 
     return (
-        <>
-            <div className={`form-builder ${modalLayout ? 'modal-layout' : ''}`}>
-                <DndContext
-                    items={items}
-                    setReorder={(items: any[]) => setItems(items)}
-                >
-                    <DroppableList
-                        items={Object.values(mergedBlocks)}
-                        dropItem={(block: Block) => {
-                            return {
-                                type: block.component.name,
-                                ...block.base
-                            }
-                        }}
-                        renderItem={(block: Block) => <div draggable={true}>{block.title}</div>}
-                    />
+        <DndContext
+            sensors={sensors}
+            onDragStart={handleDragStart}
+            onDragOver={handleDragOver}
+            onDragEnd={handleDragEnd}
+        >
+            <div className="flex h-screen bg-gray-50">
+                {/* Sidebar */}
+                <aside className="w-80 bg-white border-r border-gray-200 p-6 overflow-y-auto">
+                    <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                        Composants
+                    </h2>
+                    <SortableContext
+                        items={SIDEBAR_ITEMS.map((item) => item.id)}
+                        strategy={verticalListSortingStrategy}
+                    >
+                        <div className="space-y-3">
+                            {SIDEBAR_ITEMS.map((item) => (
+                                <DraggableItem key={item.id} {...item} />
+                            ))}
+                        </div>
+                    </SortableContext>
+                </aside>
 
-                    <div className="form-builder__wrapper">
-                        <SortableList
-                            renderItem={(item: any, key: number) => React.createElement(mergedBlocks[item.type].component, {
-                                key,
-                                ...item,
-                                editItem: (key: string, value: any) => editItem(item, key, value),
-                                removeItem: () => removeItem(item)
-                            })}
-                            items={items}
+                {/* Main work area */}
+                <main className="flex-1 p-8 overflow-y-auto">
+                    {blocks.length === 0 ? (
+                        <EmptyDropZone />
+                    ) : (
+                        <div
+                            id={WORK_CONTAINER_ID}
+                            className="min-h-[240px] border-2 border-dashed rounded-xl p-6 bg-blue-50/50 border-blue-200"
                         >
-                            {items.length === 0 && <div className="no-items">Déplacer un élément dans la zone…</div>}
-                        </SortableList>
-                    </div>
-                </DndContext>
+                            <SortableContext
+                                items={blocks.map((i) => i.id)}
+                                strategy={verticalListSortingStrategy}
+                            >
+                                <div className="space-y-3 pb-3">
+                                    {blocks.map((item) => (
+                                        <React.Fragment key={item.id}>
+                                            {isDraggingFromSidebar && overId === item.id && (
+                                                <div className="h-14 border-2 border-dashed border-green-500 bg-green-50 rounded-lg flex items-center justify-center animate-pulse">
+                          <span className="text-green-600 font-medium">
+                            ↓ Insérer ici ↓
+                          </span>
+                                                </div>
+                                            )}
 
-                {modalLayout && <div className="close" onClick={() => onClose(items)}>
-                    <CancelIcon height={32} width={32}/>
-                </div>}
+                                            <SortableItem {...item} />
+                                        </React.Fragment>
+                                    ))}
+
+                                    {isDragging && <DropEndZone />}
+                                </div>
+                            </SortableContext>
+                        </div>
+                    )}
+                </main>
             </div>
-        </>
 
-    )
-}
+            <DragOverlay>
+                {activeItem ? (
+                    isDraggingFromSidebar ? (
+                        <DraggableItem {...activeItem} />
+                    ) : (
+                        <SortableItem {...activeItem} />
+                    )
+                ) : null}
+            </DragOverlay>
+        </DndContext>
+    );
+};
 
 export default FormBuilder;

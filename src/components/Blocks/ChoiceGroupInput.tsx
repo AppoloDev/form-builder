@@ -3,28 +3,25 @@ import { EditableBlock } from "./EditableBlock";
 import { useFormBuilderStore } from "../../stores/block.store";
 import { TextEdition } from "../Edition/TextEdition";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
-import { Tooltip } from "../Tooltip";
 import { OptionsEdition } from "../Edition/OptionsEdition";
+import { Tooltip } from "../Tooltip";
 
-type Props = {
-    id: string;
-    helpText?: string;
-};
+type Props = { id: string; helpText?: string };
 
-export const SelectInput: FC<Props> = ({ id, helpText }) => {
+const ChoiceGroupInput: FC<Props> = ({ id, helpText }) => {
     const { updateBlock } = useFormBuilderStore();
 
     const [form, setForm] = useState({
         label: "",
-        placeHolder: "",
         helpText: "",
-        required: false,
-        multiple: false,
+        required: false,  // interprétation: au moins une sélection requise si multiple, sinon une sélection requise
+        inline: false,    // disposition visuelle
+        multiple: false,  // false => radios, true => checkboxes
         options: [] as string[],
     });
 
     const handleChange = (key: keyof typeof form, value: any) => {
-        setForm((prev) => ({ ...prev, [key]: value }));
+        setForm(prev => ({ ...prev, [key]: value }));
         updateBlock(id, { [key]: value });
     };
 
@@ -35,12 +32,6 @@ export const SelectInput: FC<Props> = ({ id, helpText }) => {
                 label="Titre"
                 value={form.label}
                 editItem={(v) => handleChange("label", v)}
-            />,
-            <TextEdition
-                key="placeholder"
-                label="Placeholder"
-                value={form.placeHolder}
-                editItem={(v) => handleChange("placeHolder", v)}
             />,
             <TextEdition
                 key="helpText"
@@ -56,7 +47,7 @@ export const SelectInput: FC<Props> = ({ id, helpText }) => {
             />,
             <CheckboxEdition
                 key="multiple"
-                label="Sélection multiple"
+                label="Plusieurs sélections (checkboxes)"
                 checked={form.multiple}
                 editItem={(v) => handleChange("multiple", v)}
             />,
@@ -70,6 +61,8 @@ export const SelectInput: FC<Props> = ({ id, helpText }) => {
         ],
         [form]
     );
+
+    const groupName = `choice-${id}`;
 
     return (
         <EditableBlock id={id} editionItems={editionItems}>
@@ -86,20 +79,18 @@ export const SelectInput: FC<Props> = ({ id, helpText }) => {
                 )}
             </label>
 
-            <select
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                   focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                multiple={form.multiple}
-            >
-                {form.placeHolder && !form.multiple && (
-                    <option value="">{form.placeHolder}</option>
-                )}
-                {form.options.map((opt, idx) => (
-                    <option key={`${opt}-${idx}`} value={opt}>
-                        {opt}
-                    </option>
-                ))}
-            </select>
+            <div className="flex flex-col">
+                {form.options.map((opt, idx) => {
+                    const inputId = `${groupName}-${idx}`;
+                    const type = form.multiple ? "checkbox" : "radio";
+                    return (
+                        <label key={inputId} htmlFor={inputId} className="inline-flex items-center gap-2 text-sm text-gray-700">
+                            <input id={inputId} name={groupName} type={type} disabled />
+                            <span>{opt}</span>
+                        </label>
+                    );
+                })}
+            </div>
 
             {(helpText || form.helpText) && (
                 <div className="flex items-center gap-2 italic text-s text-gray-400 mt-1">
@@ -110,4 +101,4 @@ export const SelectInput: FC<Props> = ({ id, helpText }) => {
     );
 };
 
-export default SelectInput;
+export default ChoiceGroupInput;

@@ -5,17 +5,6 @@ class FormBuilderManager extends HTMLElement {
         this.openBuilder = this.openBuilder.bind(this);
 
         this.formBuilderEl = this.querySelector('form-builder');
-
-        if (this.formBuilderEl) {
-            this.openBuilderEl = this.querySelector(this.getAttribute('open'));
-            this.targetEl = this.querySelector(this.getAttribute('target'));
-            if (this.openBuilderEl && this.targetEl) {
-                this.openBuilderEl.addEventListener('click', this.openBuilder);
-                this.formBuilderEl.addEventListener('close', this.closeBuilder.bind(this));
-                this.formBuilderEl.addEventListener('change', (e) => {
-                });
-            }
-        }
     }
 
     openBuilder() {
@@ -23,7 +12,7 @@ class FormBuilderManager extends HTMLElement {
     }
 
     closeBuilder() {
-        this.formBuilderEl.setAttribute('hidden', '');
+        //this.formBuilderEl.setAttribute('hidden', '');
     }
 }
 
