@@ -1,88 +1,71 @@
-import React, { useState } from 'react';
-import { Block, blocks as blockDefinition } from "./components/Blocks/Definition";
-import DndContext from "./components/Sortable/DndContext";
-import { SortableList } from "./components/Sortable/ListSortable";
-import { DroppableList } from "./components/Sortable/ListDroppable";
-import { FormBuilderProps } from "./components/Blocks/Types";
-import { merge } from "./utilities/Object";
-import useDebounce from "./utilities/Debounce";
-import { CancelIcon } from "./components/Icons/CancelIcon";
+import React, { useEffect } from "react";
+import { Block, BlockDefinition } from "./components/Blocks/Definition";
+import { useFormBuilderStore } from "./stores/block.store";
+import { createBlockFromTemplate } from "./utilities/block.utiles";
+import { AddMenu } from "./components/AddMenu";
 
-function FormBuilder({blocks, onChange, onClose, modalLayout, json}: FormBuilderProps) {
-    const [items, setItems] = useState(json);
+type Props = {
+    onChange: (blocks:  Block[]) => void
+}
 
-    const [isLoaded, setIsLoaded] = useState<boolean>(false)
-    let mergedBlocks: any = blockDefinition
+export const FormBuilder = ({onChange}: Props) => {
+    const { blocks, addBlock } = useFormBuilderStore();
 
-    if (blocks) {
-        mergedBlocks = merge(blockDefinition, blocks);
-    }
+    const handleAddAt = (afterIndex: number, def: BlockDefinition) => {
+        const newBlock = createBlockFromTemplate(def as unknown as Block);
+        addBlock(newBlock, afterIndex + 1);
+    };
 
-    const editItem = (item: any, key: string, value: any) => {
-        item[key] = value;
-        setItems([...items]);
-    }
-
-    const removeItem = (item: any) => {
-        const index = items.indexOf(item)
-
-        if (index > -1) {
-            setItems((current) => {
-                current.splice(index, 1);
-
-                return [...current];
-            })
-        }
-    }
-
-    useDebounce(() => {
-        if (isLoaded) {
-            onChange(items);
-        } else {
-            setIsLoaded(true);
-        }
-    }, [items], 250);
+    useEffect(() => {
+        onChange(blocks)
+    }, [blocks])
 
     return (
-        <>
-            <div className={`form-builder ${modalLayout ? 'modal-layout' : ''}`}>
-                <DndContext
-                    items={items}
-                    setReorder={(items: any[]) => setItems(items)}
-                >
-                    <DroppableList
-                        items={Object.values(mergedBlocks)}
-                        dropItem={(block: Block) => {
-                            return {
-                                type: block.component.name,
-                                ...block.base
+        <div className="flex h-screen bg-gray-50">
+            <main className="flex-1 p-8 overflow-y-auto">
+                <div className="max-w-3xl mx-auto">
+                    <div className="mb-3">
+                        <AddMenu
+                            onPick={(def) => handleAddAt(-1, def)}
+                            placeholder="Rechercher un type…"
+                            trigger={
+                                <button
+                                    type="button"
+                                    className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg border border-gray-300 bg-white hover:bg-gray-50"
+                                >
+                                    <span className="text-lg leading-none">＋</span> Ajouter un bloc
+                                </button>
                             }
-                        }}
-                        renderItem={(block: Block) => <div draggable={true}>{block.title}</div>}
-                    />
-
-                    <div className="form-builder__wrapper">
-                        <SortableList
-                            renderItem={(item: any, key: number) => React.createElement(mergedBlocks[item.type].component, {
-                                key,
-                                ...item,
-                                editItem: (key: string, value: any) => editItem(item, key, value),
-                                removeItem: () => removeItem(item)
-                            })}
-                            items={items}
-                        >
-                            {items.length === 0 && <div className="no-items">Déplacer un élément dans la zone…</div>}
-                        </SortableList>
+                        />
                     </div>
-                </DndContext>
 
-                {modalLayout && <div className="close" onClick={() => onClose(items)}>
-                    <CancelIcon height={32} width={32}/>
-                </div>}
-            </div>
-        </>
+                    {blocks.length === 0 ? (
+                        <div className="min-h-[240px] border-2 border-dashed rounded-xl p-8 flex items-center justify-center bg-white border-gray-300">
+                            <div className="text-center text-gray-400">Aucun bloc pour l’instant.</div>
+                        </div>
+                    ) : (
+                        <div className="space-y-4">
+                            {blocks.map((b, idx) => (
+                                <div key={b.id} className="group relative">
+                                    {/* bouton + qui n’apparaît qu’au hover (en haut-droite) */}
+                                    <div className="absolute -right-3 -top-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <AddMenu
+                                            onPick={(def) => handleAddAt(idx, def)}
+                                            placeholder="Rechercher un type…"
+                                        />
+                                    </div>
 
-    )
-}
+                                    <div className="bg-white border-2 border-gray-200 rounded-lg shadow-sm p-4">
+                                        {React.createElement(b.component as any, { ...b })}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </main>
+        </div>
+    );
+};
 
 export default FormBuilder;

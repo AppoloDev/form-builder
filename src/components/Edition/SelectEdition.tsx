@@ -1,28 +1,29 @@
-import { IdGenerator } from "../../utilities/String";
-import { SelectEditionProps } from "./Types";
-import { FC, useEffect, useState } from "react";
+import React from "react";
 
-export const SelectEdition: FC<SelectEditionProps> = ({label, value, options, editItem}) => {
-    const id = IdGenerator();
-    const [optionValue, setOptionValue] = useState<string>(value);
+type Option = { value: string; label: string };
 
-    useEffect(() => {
-        editItem(optionValue);
-    }, [optionValue])
+type Props = {
+    label: string;
+    value: string;
+    options: Option[];
+    helpText?: string;
+    editItem: (value: string) => void;
+};
 
+export const SelectEdition: React.FC<Props> = ({ label, value, options, helpText, editItem }) => {
     return (
-        <div className="stack">
-            <label htmlFor={id}>{label}</label>
+        <div className="mb-3">
+            <label className="block mb-2 text-sm font-medium text-gray-900">{label}</label>
             <select
-                id={id} value={optionValue}
-                onChange={({target}) => {
-                    setOptionValue(target.value);
-                }}
+                value={value ?? ""}
+                onChange={(e) => editItem(e.target.value)}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             >
-                {options.map((option, index) => (
-                    <option value={option.value} key={index}>{option.label}</option>
+                {options.map(opt => (
+                    <option key={opt.value} value={opt.value}>{opt.label}</option>
                 ))}
             </select>
+            {helpText && <p className="mt-1 text-xs text-gray-500 italic">{helpText}</p>}
         </div>
     );
-}
+};
