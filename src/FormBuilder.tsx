@@ -3,13 +3,15 @@ import { Block, BlockDefinition } from "./components/Blocks/Definition";
 import { useFormBuilderStore } from "./stores/block.store";
 import { createBlockFromTemplate } from "./utilities/block.utiles";
 import { AddMenu } from "./components/AddMenu";
+import { BLOCK_COMPONENTS } from "./components/BlockRegistry";
 
 type Props = {
-    onChange: (blocks:  Block[]) => void
+    onChange: (blocks: Block[]) => void
+    json: Block[];
 }
 
-export const FormBuilder = ({onChange}: Props) => {
-    const { blocks, addBlock } = useFormBuilderStore();
+export const FormBuilder = ({onChange, json}: Props) => {
+    const { blocks, addBlock, setBlocks } = useFormBuilderStore();
 
     const handleAddAt = (afterIndex: number, def: BlockDefinition) => {
         const newBlock = createBlockFromTemplate(def as unknown as Block);
@@ -17,8 +19,13 @@ export const FormBuilder = ({onChange}: Props) => {
     };
 
     useEffect(() => {
+        console.log(json);
+        setBlocks(json);
+    }, [])
+
+    useEffect(() => {
         onChange(blocks)
-    }, [blocks])
+    }, [blocks]);
 
     return (
         <div className="flex h-screen bg-gray-50">
@@ -41,25 +48,33 @@ export const FormBuilder = ({onChange}: Props) => {
 
                     {blocks.length === 0 ? (
                         <div className="min-h-[240px] border-2 border-dashed rounded-xl p-8 flex items-center justify-center bg-white border-gray-300">
-                            <div className="text-center text-gray-400">Aucun bloc pour l’instant.</div>
+                            <div className="text-center text-gray-400">Aucun bloc pour l'instant.</div>
                         </div>
                     ) : (
                         <div className="space-y-4">
-                            {blocks.map((b, idx) => (
-                                <div key={b.id} className="group relative">
-                                    {/* bouton + qui n’apparaît qu’au hover (en haut-droite) */}
-                                    <div className="absolute -right-3 -top-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <AddMenu
-                                            onPick={(def) => handleAddAt(idx, def)}
-                                            placeholder="Rechercher un type…"
-                                        />
-                                    </div>
+                            {blocks && blocks.map((b, idx) => {
+                                const Component = BLOCK_COMPONENTS[b.type as keyof typeof BLOCK_COMPONENTS];
 
-                                    <div className="bg-white border-2 border-gray-200 rounded-lg shadow-sm p-4">
-                                        {React.createElement(b.component as any, { ...b })}
+                                if (!Component) {
+                                    console.error(`Component not found for type: ${b.type}`);
+                                    return null;
+                                }
+
+                                return (
+                                    <div key={b.id} className="group relative">
+                                        <div className="absolute -right-3 -top-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <AddMenu
+                                                onPick={(def) => handleAddAt(idx, def)}
+                                                placeholder="Rechercher un type…"
+                                            />
+                                        </div>
+
+                                        <div className="bg-white border-2 border-gray-200 rounded-lg shadow-sm p-4">
+                                            <Component {...b} />
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     )}
                 </div>

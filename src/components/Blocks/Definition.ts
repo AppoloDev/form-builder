@@ -137,7 +137,7 @@ export interface ChoiceGroupProps extends BaseBlockProps {
     }>;
 }
 
-type BlockPropsByType = {
+export type BlockPropsByType = {
     TextInput: TextInputProps;
     NumberInput: NumberInputProps;
     EmailInput: EmailInputProps;
