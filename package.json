@@ -1,6 +1,6 @@
 {
   "name": "form-builder",
-  "version": "0.0.47",
+  "version": "1.0.0-alpha",
   "private": true,
   "main": "./dist/index.js",
   "scripts": {
