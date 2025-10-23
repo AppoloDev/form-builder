@@ -13,15 +13,11 @@ import DateTimeInput from "./DateTimeInput";
 import TextareaInput from "./TextareaInput";
 import ChoiceGroupInput from "./ChoiceGroupInput";
 
-// -----------------------------------------------------
-// Déclarations des props par bloc
-// -----------------------------------------------------
-
 export type BlockId = UniqueIdentifier;
 
 export interface BaseBlockProps {
     id: BlockId;
-    type: BlockType; // défini plus bas une fois dérivé
+    type: BlockType;
 }
 
 export interface TextInputProps extends BaseBlockProps {
@@ -78,7 +74,7 @@ export interface UrlInputProps extends BaseBlockProps {
 }
 
 export interface TextareaInputProps extends BaseBlockProps {
-    type: 'TextareaInput'; // ⚠️ On reste cohérents: "TextareaInput" partout
+    type: 'TextareaInput';
     label: string;
     placeHolder?: string;
     required?: boolean;
@@ -127,13 +123,19 @@ export interface ChoiceGroupProps extends BaseBlockProps {
     helpText?: string;
     required?: boolean;
     inline?: boolean;
-    multiple?: boolean; // false => radio, true => checkboxes
+    multiple?: boolean;
     options: string[];
+    followUps: Record<number, {
+        enabled: boolean;
+        type: 'text' | 'number' | 'date' | 'email';
+        label: string;
+        placeholder: string;
+        parentId: string;
+        optionIndex: number;
+        optionValue?: string;
+        open?: boolean;
+    }>;
 }
-
-// -----------------------------------------------------
-// Mapping "clé -> props" et types dérivés
-// -----------------------------------------------------
 
 type BlockPropsByType = {
     TextInput: TextInputProps;
@@ -219,7 +221,6 @@ export const blockDefinitions: BlockDefinitions = {
             readOnly: false,
             required: false,
             allowDecimal: false
-            // min/max/step possibles mais optionnels
         }
     },
     EmailInput: {
@@ -335,9 +336,10 @@ export const blockDefinitions: BlockDefinitions = {
             required: false,
             inline: false,
             multiple: false,
-            options: []
+            options: [],
+            followUps: {}
         }
-    },
+    }
 };
 
 export const getAllBlockDefinitions = () => Object.values(blockDefinitions);

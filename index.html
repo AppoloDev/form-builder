@@ -3,23 +3,19 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
-    <link rel="stylesheet" href="src/themes/_bootstrap.scss"/>
     <title>Form Builder</title>
 </head>
 <body>
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <form-builder-manager target="#json" open="#displayBuilder">
                 <form>
-                    <form-builder></form-builder>
-                    <textarea id="json"></textarea>
-                    <button type="button" id="displayBuilder">Ouvrir le builder</button>
+                    <form-builder>
+                        <textarea></textarea>
+                    </form-builder>
 
                     <input type="submit" value="Enregistrer"/>
                 </form>
-            </form-builder-manager>
         </div>
     </div>
 </div>

@@ -51,11 +51,19 @@ export const Tooltip = ({children, content}: Props) => {
                     <div
                         id="tooltip"
                         ref={refs.setFloating}
-                        style={floatingStyles}
+                        style={{
+                            ...floatingStyles,
+                            width: 'max-content',
+                            backgroundColor: '#000000',
+                            color: '#FFFFFF',
+                            fontSize: 16,
+                            padding: '4px 8px',
+                            borderRadius: 4,
+                            textAlign: 'center'
+                        }}
                         {...getFloatingProps()}
                     >
                         {content}
-
                         <FloatingArrow ref={arrowRef} context={context}/>
                     </div>
                 </>

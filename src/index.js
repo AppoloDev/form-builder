@@ -4,4 +4,3 @@
 
 import './themes/app.scss';
 import './elements/formBuilder';
-import './elements/formBuilderManager';
