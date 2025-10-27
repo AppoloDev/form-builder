@@ -11,15 +11,16 @@ interface ContextMenuProps {
     maxWidth?: number;
 }
 
-export const ContextMenu = ({
-                                visible,
-                                x,
-                                y,
-                                onClose,
-                                children,
-                                title = "Configuration du champ",
-                                maxWidth = 400,
-                            }: ContextMenuProps) => {
+export const ContextMenu = (
+    {
+        visible,
+        x,
+        y,
+        onClose,
+        children,
+        title = "Configuration du champ",
+        maxWidth = 400,
+    }: ContextMenuProps) => {
     const menuRef = useRef<HTMLDivElement>(null);
 
     const adjustPosition = useCallback(() => {
@@ -68,7 +69,6 @@ export const ContextMenu = ({
             }
         };
 
-        // Small delay to prevent immediate closing
         const timeoutId = setTimeout(() => {
             document.addEventListener("mousedown", handleClickOutside);
             document.addEventListener("keydown", handleEscape);
@@ -104,7 +104,7 @@ export const ContextMenu = ({
                 role="dialog"
                 aria-modal="true"
                 aria-label={title}
-                className="fixed z-50 bg-white rounded-lg shadow-xl border border-gray-200 py-2 min-w-[280px] max-h-[80vh] overflow-y-auto"
+                className="fixed z-50 bg-white rounded-lg border border-gray-200 py-2 min-w-[280px] max-h-[80vh] overflow-y-auto"
                 style={{
                     left: `${x}px`,
                     top: `${y}px`,
@@ -133,7 +133,6 @@ export const ContextMenu = ({
                     </div>
                 </div>
 
-                {/* Content */}
                 <div className="px-4 py-3 space-y-4">
                     {children}
                 </div>

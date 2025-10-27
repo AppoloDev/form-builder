@@ -13,7 +13,8 @@ export class FormBuilderElement extends HTMLElement {
             try {
                 json = JSON.parse(inputTarget.value);
             } catch (e) {
-                json = []
+                console.error("Erreur lors du parsing du JSON:", e);
+                json = [];
             }
 
             inputTarget.style.display = "none";

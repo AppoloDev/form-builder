@@ -1,73 +1,25 @@
-import {
-    arrow,
-    autoUpdate,
-    FloatingArrow,
-    offset,
-    shift, useDismiss,
-    useFloating,
-    useFocus,
-    useHover,
-    useInteractions,
-} from "@floating-ui/react";
-import { PropsWithChildren, useRef, useState } from "react";
+import { PropsWithChildren, useEffect, useRef } from "react";
+import { HSTooltip } from "preline";
 
 type Props = { content: string } & PropsWithChildren
 export const Tooltip = ({children, content}: Props) => {
-    const arrowRef = useRef(null);
-    const [isOpen, setIsOpen] = useState(false);
+    const tooltipRef = useRef(null);
 
-    const {refs, floatingStyles, context} = useFloating({
-        placement: 'top',
-        open: isOpen,
-        onOpenChange: setIsOpen,
-        whileElementsMounted: autoUpdate,
-        middleware: [
-            offset(10),
-            shift(),
-            arrow({
-                element: arrowRef,
-            }),
-        ],
-    });
-
-    const hover = useHover(context, {move: false});
-    const focus = useFocus(context);
-    const dismiss = useDismiss(context);
-
-    const {getReferenceProps, getFloatingProps} = useInteractions([
-        hover,
-        focus,
-        dismiss,
-    ]);
+    useEffect(() => {
+        if (tooltipRef.current) {
+            new HSTooltip(tooltipRef.current);
+        }
+    }, [tooltipRef.current]);
 
     return (
-        <>
-            <div ref={refs.setReference} {...getReferenceProps()}>
-                {children}
-            </div>
+        <div className="hs-tooltip inline-block" ref={tooltipRef}>
+            {children}
 
-            {isOpen && (
-                <>
-                    <div
-                        id="tooltip"
-                        ref={refs.setFloating}
-                        style={{
-                            ...floatingStyles,
-                            width: 'max-content',
-                            backgroundColor: '#000000',
-                            color: '#FFFFFF',
-                            fontSize: 16,
-                            padding: '4px 8px',
-                            borderRadius: 4,
-                            textAlign: 'center'
-                        }}
-                        {...getFloatingProps()}
-                    >
-                        {content}
-                        <FloatingArrow ref={arrowRef} context={context}/>
-                    </div>
-                </>
-            )}
-        </>
-    );
+            <span
+                className="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-2xs dark:bg-neutral-700"
+                role="tooltip">
+                    {content}
+                </span>
+        </div>
+    )
 }

@@ -1,12 +1,18 @@
-import React, { FC, useMemo, useState } from "react";
-import { EditableBlock } from "./EditableBlock";
+import React, { FC, HTMLInputTypeAttribute, useMemo, useState } from "react";
 import { useFormBuilderStore } from "../../stores/block.store";
 import { TextEdition } from "../Edition/TextEdition";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
 import { SelectEdition } from "../Edition/SelectEdition";
-import { Tooltip } from "../Tooltip";
+import { FieldInput } from "./FieldInput";
 
-type CommonProps = { id: string; helpText?: string };
+type CommonProps = {
+    id: string;
+    helpText?: string;
+    label?: string;
+    placeHolder?: string;
+    required?: boolean;
+    [key: string]: any;
+};
 
 type FormStateBase = {
     label: string;
@@ -16,15 +22,21 @@ type FormStateBase = {
 };
 
 export type EditionItem =
-    | { key: keyof FormStateBase | string; label: string; type: "text"; helpText?: string }
+    | { key: keyof FormStateBase | string; label: string; type: "text" | "textarea"; helpText?: string; rows?: number }
     | { key: keyof FormStateBase | string; label: string; type: "checkbox" }
-    | { key: keyof FormStateBase | string; label: string; type: "select"; options: { value: string; label: string }[]; helpText?: string };
+    | {
+    key: keyof FormStateBase | string;
+    label: string;
+    type: "select";
+    options: { value: string; label: string }[];
+    helpText?: string
+};
 
 const baseSchema: EditionItem[] = [
-    { key: "label",       label: "Titre",          type: "text" },
-    { key: "placeHolder", label: "Placeholder",    type: "text" },
-    { key: "helpText",    label: "Message d'aide", type: "text" },
-    { key: "required",    label: "Requis",         type: "checkbox" },
+    {key: "label", label: "Titre", type: "text"},
+    {key: "placeHolder", label: "Placeholder", type: "text"},
+    {key: "helpText", label: "Message d'aide", type: "textarea", rows: 2},
+    {key: "required", label: "Requis", type: "checkbox"},
 ];
 
 type MakeOpts = {
@@ -36,14 +48,16 @@ export const makeInputBlock = (
     inputType: React.HTMLInputTypeAttribute | HTMLTextAreaElement,
     opts: MakeOpts = {}
 ) => {
-    const InputBlock: FC<CommonProps> = ({ id, helpText }) => {
-        const { updateBlock } = useFormBuilderStore();
+    const InputBlock: FC<CommonProps> = (props) => {
+        const {id, ...restProps} = props;
+        const {updateBlock} = useFormBuilderStore();
 
         const [form, setForm] = useState<Record<string, any>>({
-            label: "",
-            placeHolder: "",
-            helpText: "",
-            required: false,
+            label: restProps.label || "",
+            placeHolder: restProps.placeHolder || "",
+            helpText: restProps.helpText || "",
+            required: restProps.required || false,
+            ...restProps
         });
 
         const editionSchema = useMemo(
@@ -52,8 +66,8 @@ export const makeInputBlock = (
         );
 
         const handleChange = (key: string, value: any) => {
-            setForm(prev => ({ ...prev, [key]: value }));
-            updateBlock(id, { [key]: value });
+            setForm(prev => ({...prev, [key]: value}));
+            updateBlock(id, {[key]: value});
         };
 
         const editionItems = useMemo(
@@ -90,7 +104,9 @@ export const makeInputBlock = (
                             key={String(def.key)}
                             label={def.label}
                             value={value ?? ""}
+                            type={def.type || "text"}
                             helpText={def.helpText || ""}
+                            rows={def.rows}
                             editItem={(v: string) => handleChange(def.key as string, v)}
                         />
                     );
@@ -99,35 +115,34 @@ export const makeInputBlock = (
         );
 
         const rawInputAttrs = opts.toInputAttrs?.(form) ?? {};
-        const { type: overrideType, ...restInputAttrs } = rawInputAttrs;
-        const finalType = (overrideType as React.HTMLInputTypeAttribute) ?? inputType;
+        const {type: overrideType, ...restInputAttrs} = rawInputAttrs;
+        const finalType = (overrideType as HTMLInputTypeAttribute) ?? inputType;
 
         return (
-            <EditableBlock id={id} editionItems={editionItems}>
-                <label className={`flex mb-1 text-sm font-medium ${form.label ? "text-gray-900" : "text-gray-400"}`}>
-                    {form.label || "Titre"}
-                    {form.required && (
-                        <Tooltip content={"Requis"}>
-                            <span className="ml-1 text-red-500">*</span>
-                        </Tooltip>
-                    )}
-                </label>
+            <FieldInput
+                editionItems={editionItems}
+                form={form}
+                id={id}
+            >
+                {finalType === 'textarea' ?
+                    <textarea
+                        id={id}
+                        placeholder={form.placeHolder}
+                        rows={props.rows}
+                        disabled
+                        {...restInputAttrs}
+                    />
+                :
+                    <input
+                        id={id}
+                        type={finalType}
+                        placeholder={form.placeHolder}
+                        disabled
+                        {...restInputAttrs}
+                    />
+                }
 
-                <input
-                    type={finalType}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                     focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    placeholder={form.placeHolder}
-                    disabled
-                    {...restInputAttrs}
-                />
-
-                {(helpText || form.helpText) && (
-                    <div className="flex items-center gap-2 italic text-s text-gray-400">
-                        {helpText || form.helpText}
-                    </div>
-                )}
-            </EditableBlock>
+            </FieldInput>
         );
     };
 

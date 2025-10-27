@@ -27,6 +27,43 @@ interface FormBuilderState {
 }
 
 // ============================================
+// HELPER FUNCTIONS
+// ============================================
+
+// Fonction récursive pour mettre à jour un bloc, même imbriqué
+const updateBlockRecursive = (blocks: Block[], id: BlockId, updates: any): Block[] => {
+    return blocks.map((block) => {
+        if (block.id === id) {
+            return { ...block, ...updates };
+        }
+
+        if (block.type === 'ChoiceGroup' && 'options' in block) {
+            const updatedOptions = block.options.map((option: any) => {
+                if (!option.children || option.children.length === 0) {
+                    return option;
+                }
+
+                // Chercher et mettre à jour dans les children
+                const updatedChildren = updateBlockRecursive(option.children, id, updates);
+
+                // Si les children ont changé, retourner une nouvelle option
+                if (updatedChildren !== option.children) {
+                    return { ...option, children: updatedChildren };
+                }
+
+                return option;
+            });
+
+            if (JSON.stringify(updatedOptions) !== JSON.stringify(block.options)) {
+                return { ...block, options: updatedOptions };
+            }
+        }
+
+        return block;
+    });
+};
+
+// ============================================
 // STORE
 // ============================================
 
@@ -41,7 +78,6 @@ export const useFormBuilderStore = create<FormBuilderState>((set, get) => ({
         set({ blocks });
     },
 
-    // Ajouter un bloc
     addBlock: (block, index) => {
         set((state) => {
             const newBlocks = [...state.blocks];
@@ -56,21 +92,16 @@ export const useFormBuilderStore = create<FormBuilderState>((set, get) => ({
         });
     },
 
-    // Supprimer un bloc
     removeBlock: (id) => {
         set((state) => ({
             blocks: state.blocks.filter((b) => b.id !== id)
         }));
     },
 
-    // Mettre à jour un bloc
+    // Mettre à jour un bloc (avec support des blocs imbriqués)
     updateBlock: (id, updates) => {
         set((state) => ({
-            blocks: state.blocks.map((block) =>
-                block.id === id
-                    ? { ...block, ...updates }
-                    : block
-            )
+            blocks: updateBlockRecursive(state.blocks, id, updates)
         }));
     },
 

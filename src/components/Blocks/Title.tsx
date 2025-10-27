@@ -1,79 +1,68 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import { EditableBlock } from "./EditableBlock";
 import { TitleProps } from "./Definition";
 import { useFormBuilderStore } from "../../stores/block.store";
+import { EditableBlock } from "./EditableBlock";
+import { TextEdition } from "../Edition/TextEdition";
+import { SelectEdition } from "../Edition/SelectEdition";
 
-const Title = ({id, text}: TitleProps) => {
+const Title = ({id, text, heading}: TitleProps) => {
     const {updateBlock} = useFormBuilderStore();
-    const [inputText, setInputText] = useState<string>(text ?? '');
-    const inputRef = useRef<HTMLInputElement>(null);
-    const spanRef = useRef<HTMLSpanElement>(null);
-    const [label, setLabel] = useState("");
-    const [onEdit, setOnEdit] = useState(false);
-    const [inputWidth, setInputWidth] = useState(0);
-
-    const handleOnClick = () => {
-        setOnEdit(true);
-    };
-
-    const handleOnChange = ({target}: ChangeEvent<HTMLInputElement>) => {
-        setLabel(target.value);
-    };
-
-    const handleOnBlur = () => {
-        setOnEdit(false);
-        handleChange('text', label);
-    };
-
-    useEffect(() => {
-        if (onEdit && inputRef.current) {
-            inputRef.current.focus();
-        }
-    }, [onEdit]);
-
-    useEffect(() => {
-        if (spanRef.current) {
-            const width = spanRef.current.offsetWidth;
-            setInputWidth(width);
-        }
-    }, [label]);
-
-    useEffect(() => {
-        setInputText(inputText);
-    }, [inputText]);
+    const [label, setLabel] = useState(text);
+    const [headingLevel, setHeadingLevel] = useState(heading);
 
     const handleChange = <K extends keyof Omit<TitleProps, "id">>(field: K, value: TitleProps[K]) => {
         updateBlock(id, {[field]: value} as Partial<TitleProps>);
     };
 
-    return (
-        <div className="flex items-center">
-            {onEdit ? (
-                <>
-                        <span
-                            ref={spanRef}
-                            className="invisible absolute whitespace-pre text-gray-700 font-bold"
-                        >
-                            {label || "Renseigner un titre"}
-                        </span>
+    const renderClass = (headingLevel: string) => {
+        switch (headingLevel) {
+            case 'h1':
+                return 'text-4xl';
+            case 'h2':
+                return 'text-3xl';
+            case 'h3':
+                return 'text-2xl';
+            case 'h4':
+                return 'text-xl';
+            case 'h5':
+                return 'text-lg';
+            case 'h6':
+                return 'text-base';
+        }
+    }
 
-                    <input
-                        ref={inputRef}
-                        value={label}
-                        onChange={handleOnChange}
-                        onBlur={handleOnBlur}
-                        style={{width: inputWidth || 50}}
-                        className="text-base font-bold text-gray-700 focus:border-gray-300 focus:outline-none"
-                    />
-                </>
-            ) : (
-                <div
-                    onClick={handleOnClick}
-                    className={`text-base cursor-text font-bold ${label ? "" : "text-slate-400 italic"}`}
-                >
-                    {label || "Renseigner un titre"}
+    return (
+        <div className="flex items-center gap-4 ">
+            <EditableBlock id={id} editionItems={[
+                <TextEdition
+                    label={'Titre'}
+                    value={label}
+                    editItem={(v) => {
+                        handleChange('text', v)
+                        setLabel(v);
+                    }}
+                />,
+                <SelectEdition
+                    label={'Niveau de titre'}
+                    value={headingLevel}
+                    options={[
+                        {value: 'h1', label: 'Titre de niveau 1'},
+                        {value: 'h2', label: 'Titre de niveau 2'},
+                        {value: 'h3', label: 'Titre de niveau 3'},
+                        {value: 'h4', label: 'Titre de niveau 4'},
+                        {value: 'h5', label: 'Titre de niveau 5'},
+                        {value: 'h6', label: 'Titre de niveau 6'},
+                    ]}
+                    editItem={(v) => {
+                        handleChange('heading', v)
+                        setHeadingLevel(v);
+                    }}
+                />
+            ]}>
+                <div className="border border-gray-200 rounded-lg p-4 flex-1">
+                    {React.createElement(headingLevel, {className: renderClass(headingLevel)}, label)}
                 </div>
-            )}
+            </EditableBlock>
         </div>
     );
 };

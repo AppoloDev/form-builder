@@ -3,28 +3,39 @@ import React, { ChangeEvent } from "react";
 type Props = {
     label: string;
     value: string;
-    type?: "text" | "number";
+    type?: "text" | "textarea";
     helpText?: string;
+    rows?: number;
     editItem: (text: string) => void
 }
 
-export const TextEdition = ({ label, value, helpText, editItem, type = 'text' }: Props) => {
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+export const TextEdition = ({label, value, helpText, editItem, type = 'text', rows = 10}: Props) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         editItem(e.target.value);
     };
 
     return (
-        <div className="space-y-1">
-            <label className="block mb-2 text-sm font-medium text-gray-900">
+        <div className="space-y-.5 form_row">
+            <label>
                 {label}
             </label>
-            <input type={type}
-                   value={value}
-                   onChange={handleChange}
-                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            />
+
+            {type === "textarea" ? (
+                    <textarea
+                        value={value}
+                        onChange={handleChange}
+                        rows={rows}
+                    />
+                ) :
+                (
+                    <input type={type}
+                           value={value}
+                           onChange={handleChange}
+                    />
+                )}
+
             {helpText && (
-                <p className="text-xs text-gray-500 mt-1">{helpText}</p>
+                <p className="help-text">{helpText}</p>
             )}
         </div>
     );

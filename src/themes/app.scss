@@ -1,1 +1,27 @@
 @use "tailwindcss";
+
+@theme {
+    --color-appolo-50: #eefbf4;
+    --color-appolo-100: #CEF6D7;
+    --color-appolo-200: #A0EEBA;
+    --color-appolo-300: #69CE94;
+    --color-appolo-400: #3D9D6F;
+    --color-appolo-500: #115C40;
+    --color-appolo-600: #0C4F3C;
+    --color-appolo-700: #084238;
+    --color-appolo-800: #053531;
+    --color-appolo-900: #032B2C;
+
+    --breakpoint-3xl: 1920px;
+}
+
+/* Preline UI */
+@import "preline/variants.css";
+@source "../node_modules/preline/dist/*.js";
+
+
+/* Plugins */
+@plugin "@tailwindcss/forms";
+
+@import "/css/app.css";
+

@@ -1,4 +1,4 @@
-import { Block, BlockId } from "../components/Blocks/Definition";
+import { Block, BlockDefinition, BlockId } from "../components/Blocks/Definition";
 import { v4 as uuidv4 } from 'uuid';
 
 export const generateBlockId = (type: string): BlockId => {
@@ -16,13 +16,13 @@ export const findBlockIndex = (blocks: Block[], id: BlockId): number => {
     return blocks.findIndex((b) => b.id === id);
 };
 
-export const createBlockFromTemplate = <T extends Block>(
-    template: T,
-    overrides?: Partial<T>
-): T => {
+export const createBlockFromTemplate = (
+    definition: BlockDefinition,
+    overrides?: Partial<Block>
+): Block => {
     return {
-        ...template,
-        id: generateBlockId(template.type),
+        ...definition.defaultProps,
+        id: generateBlockId(definition.type),
         ...overrides,
-    };
+    } as Block;
 };
