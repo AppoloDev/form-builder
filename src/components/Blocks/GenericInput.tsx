@@ -49,7 +49,7 @@ export const makeInputBlock = (
     opts: MakeOpts = {}
 ) => {
     const InputBlock: FC<CommonProps> = (props) => {
-        const {id, ...restProps} = props;
+        const {id, index, ...restProps} = props;
         const {updateBlock} = useFormBuilderStore();
 
         const [form, setForm] = useState<Record<string, any>>({

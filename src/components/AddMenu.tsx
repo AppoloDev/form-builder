@@ -5,6 +5,7 @@ type AddMenuProps = {
     onPick: (def: BlockDefinition) => void;
     trigger?: React.ReactNode;
     placeholder?: string;
+    placement?: 'left' | 'right';
     allowTypes?: Array<BlockDefinition["type"]>;
 } & PropsWithChildren;
 
@@ -12,6 +13,7 @@ export const AddMenu: React.FC<AddMenuProps> = (
     {
         onPick,
         placeholder = "Rechercher un bloc…",
+        placement = 'left',
         allowTypes,
         children
     }) => {
@@ -63,7 +65,7 @@ export const AddMenu: React.FC<AddMenuProps> = (
             </div>
 
             {open && (
-                <div className="absolute left-0 z-20 mt-2 w-80 rounded-lg border border-gray-200 bg-white">
+                <div className={`absolute ${placement}-0 z-20 mt-2 w-80 rounded-lg border border-gray-200 bg-white`}>
                     <div className="p-2 border-b border-gray-200">
                         <input
                             ref={inputRef}
