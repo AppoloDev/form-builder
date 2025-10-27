@@ -11,7 +11,9 @@ export class FormBuilderElement extends HTMLElement {
             this.appendChild(elementRoot);
 
             try {
-                json = JSON.parse(inputTarget.value);
+                if (inputTarget.value) {
+                    json = JSON.parse(inputTarget.value);
+                }
             } catch (e) {
                 console.error("Erreur lors du parsing du JSON:", e);
                 json = [];

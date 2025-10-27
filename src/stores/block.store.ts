@@ -63,12 +63,7 @@ const updateBlockRecursive = (blocks: Block[], id: BlockId, updates: any): Block
     });
 };
 
-// ============================================
-// STORE
-// ============================================
-
 export const useFormBuilderStore = create<FormBuilderState>((set, get) => ({
-    // État initial
     blocks: [],
     overId: null,
     activeId: null,

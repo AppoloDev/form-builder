@@ -75,7 +75,7 @@ const SortableItem: React.FC<{ id: UniqueIdentifier; children: React.ReactNode }
     );
 };
 
-export const FormBuilder = ({onChange, json}: Props) => {
+export const FormBuilder = ({onChange, json = []}: Props) => {
     const {blocks, addBlock, setBlocks} = useFormBuilderStore();
     const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
     const [activeSize, setActiveSize] = useState<{ width: number; height: number } | null>(null);
@@ -98,7 +98,6 @@ export const FormBuilder = ({onChange, json}: Props) => {
     }, []);
 
     useEffect(() => {
-        console.log(blocks);
         onChange(blocks);
     }, [blocks]);
 
