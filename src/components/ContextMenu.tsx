@@ -3,25 +3,19 @@ import { createPortal } from "react-dom";
 
 interface ContextMenuProps {
     visible: boolean;
-    x?: number;
-    y?: number;
     onClose: () => void;
     children: ReactNode;
     title?: string;
     maxWidth?: number;
-    centered?: boolean;
 }
 
 export const ContextMenu = (
     {
         visible,
-        x = 0,
-        y = 0,
         onClose,
         children,
         title = "Configuration du champ",
         maxWidth = 400,
-        centered = true,
     }: ContextMenuProps) => {
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -55,16 +49,8 @@ export const ContextMenu = (
                 role="dialog"
                 aria-modal="true"
                 aria-label={title}
-                className={`fixed z-50 bg-white rounded-lg border border-gray-200 py-2 min-w-[280px] max-h-[80vh] overflow-y-auto ${
-                    centered ? 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' : ''
-                }`}
-                style={centered ? {
-                    maxWidth: `${maxWidth}px`,
-                } : {
-                    left: `${x}px`,
-                    top: `${y}px`,
-                    maxWidth: `${maxWidth}px`,
-                }}
+                className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg border border-gray-200 py-2 min-w-[280px] max-h-[80vh] overflow-y-auto"
+                style={{ maxWidth: `${maxWidth}px` }}
             >
                 <div className="px-4 py-3 border-b border-gray-200">
                     <div className="flex items-center justify-between">

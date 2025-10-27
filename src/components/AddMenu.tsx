@@ -4,9 +4,7 @@ import { BlockDefinition, getAllBlockDefinitions } from "./Blocks/Definition";
 
 type AddMenuProps = {
     onPick: (def: BlockDefinition) => void;
-    trigger?: React.ReactNode;
     placeholder?: string;
-    placement?: 'left' | 'right';
     allowTypes?: Array<BlockDefinition["type"]>;
 } & PropsWithChildren;
 
@@ -14,7 +12,6 @@ export const AddMenu: React.FC<AddMenuProps> = (
     {
         onPick,
         placeholder = "Rechercher un bloc…",
-        placement = 'left',
         allowTypes,
         children
     }) => {
@@ -27,7 +24,6 @@ export const AddMenu: React.FC<AddMenuProps> = (
 
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState("");
-    const rootRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
     const filtered = useMemo(() => {
@@ -68,10 +64,7 @@ export const AddMenu: React.FC<AddMenuProps> = (
                 role="presentation"
             />
 
-            <div
-                ref={rootRef}
-                className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 rounded-lg border border-gray-200 bg-white"
-            >
+            <div className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 rounded-lg border border-gray-200 bg-white">
                 <div className="p-2 border-b border-gray-200">
                     <input
                         ref={inputRef}
