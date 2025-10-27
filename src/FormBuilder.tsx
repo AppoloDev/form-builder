@@ -161,7 +161,7 @@ export const FormBuilder = ({onChange, json = []}: Props) => {
                                     <div className="group relative">
 
                                         <div
-                                            className="absolute -right-3 -top-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            className="absolute -right-3 -top-3">
                                             <AddMenu
                                                 onPick={(def) => handleAddAt(idx, def)}
                                                 placeholder="Rechercher un type…"

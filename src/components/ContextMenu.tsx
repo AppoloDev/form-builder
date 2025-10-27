@@ -1,67 +1,32 @@
-import React, { useEffect, useRef, ReactNode, useCallback } from "react";
+import React, { useEffect, useRef, ReactNode } from "react";
 import { createPortal } from "react-dom";
 
 interface ContextMenuProps {
     visible: boolean;
-    x: number;
-    y: number;
+    x?: number;
+    y?: number;
     onClose: () => void;
     children: ReactNode;
     title?: string;
     maxWidth?: number;
+    centered?: boolean;
 }
 
 export const ContextMenu = (
     {
         visible,
-        x,
-        y,
+        x = 0,
+        y = 0,
         onClose,
         children,
         title = "Configuration du champ",
         maxWidth = 400,
+        centered = true,
     }: ContextMenuProps) => {
     const menuRef = useRef<HTMLDivElement>(null);
 
-    const adjustPosition = useCallback(() => {
-        if (!menuRef.current) return {x, y};
-
-        const menu = menuRef.current;
-        const rect = menu.getBoundingClientRect();
-        const viewportWidth = window.innerWidth;
-        const viewportHeight = window.innerHeight;
-
-        const padding = 10;
-        let adjustedX = x;
-        let adjustedY = y;
-
-        if (rect.right > viewportWidth - padding) {
-            adjustedX = Math.max(padding, viewportWidth - rect.width - padding);
-        }
-
-        if (rect.bottom > viewportHeight - padding) {
-            adjustedY = Math.max(padding, viewportHeight - rect.height - padding);
-        }
-
-        if (adjustedX < padding) {
-            adjustedX = padding;
-        }
-
-        if (adjustedY < padding) {
-            adjustedY = padding;
-        }
-
-        return {x: adjustedX, y: adjustedY};
-    }, [x, y]);
-
     useEffect(() => {
         if (!visible) return;
-
-        const handleClickOutside = (e: MouseEvent) => {
-            if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-                onClose();
-            }
-        };
 
         const handleEscape = (e: KeyboardEvent) => {
             if (e.key === "Escape") {
@@ -69,32 +34,18 @@ export const ContextMenu = (
             }
         };
 
-        const timeoutId = setTimeout(() => {
-            document.addEventListener("mousedown", handleClickOutside);
-            document.addEventListener("keydown", handleEscape);
-        }, 0);
-
+        document.addEventListener("keydown", handleEscape);
         return () => {
-            clearTimeout(timeoutId);
-            document.removeEventListener("mousedown", handleClickOutside);
             document.removeEventListener("keydown", handleEscape);
         };
     }, [visible, onClose]);
-
-    useEffect(() => {
-        if (!visible || !menuRef.current) return;
-
-        const {x: adjustedX, y: adjustedY} = adjustPosition();
-        menuRef.current.style.left = `${adjustedX}px`;
-        menuRef.current.style.top = `${adjustedY}px`;
-    }, [visible, adjustPosition]);
 
     if (!visible) return null;
 
     const menuContent = (
         <>
             <div
-                className="fixed inset-0 z-40 bg-black/5"
+                className="fixed inset-0 z-40 bg-black/30"
                 onClick={onClose}
                 role="presentation"
             />
@@ -104,8 +55,12 @@ export const ContextMenu = (
                 role="dialog"
                 aria-modal="true"
                 aria-label={title}
-                className="fixed z-50 bg-white rounded-lg border border-gray-200 py-2 min-w-[280px] max-h-[80vh] overflow-y-auto"
-                style={{
+                className={`fixed z-50 bg-white rounded-lg border border-gray-200 py-2 min-w-[280px] max-h-[80vh] overflow-y-auto ${
+                    centered ? 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' : ''
+                }`}
+                style={centered ? {
+                    maxWidth: `${maxWidth}px`,
+                } : {
                     left: `${x}px`,
                     top: `${y}px`,
                     maxWidth: `${maxWidth}px`,

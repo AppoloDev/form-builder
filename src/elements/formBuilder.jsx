@@ -13,6 +13,10 @@ export class FormBuilderElement extends HTMLElement {
             try {
                 if (inputTarget.value) {
                     json = JSON.parse(inputTarget.value);
+
+                    if (json === null || json === undefined) {
+                        throw new Error("Input must be a string");
+                    }
                 }
             } catch (e) {
                 console.error("Erreur lors du parsing du JSON:", e);

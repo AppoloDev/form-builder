@@ -1,4 +1,5 @@
 import React, { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { BlockDefinition, getAllBlockDefinitions } from "./Blocks/Definition";
 
 type AddMenuProps = {
@@ -42,70 +43,91 @@ export const AddMenu: React.FC<AddMenuProps> = (
     useEffect(() => {
         if (!open) return;
 
-        if (open) setTimeout(() => inputRef.current?.focus(), 0);
+        setTimeout(() => inputRef.current?.focus(), 0);
 
-        const onDoc = (e: MouseEvent) => {
-            if (!rootRef.current) return;
-            if (!rootRef.current.contains(e.target as Node)) setOpen(false);
+        const handleEscape = (e: KeyboardEvent) => {
+            if (e.key === "Escape") {
+                setOpen(false);
+            }
         };
-        document.addEventListener("mousedown", onDoc);
-        return () => document.removeEventListener("mousedown", onDoc);
+
+        document.addEventListener("keydown", handleEscape);
+        return () => document.removeEventListener("keydown", handleEscape);
     }, [open]);
 
-    return (
-        <div className="relative inline-block cursor-pointer" ref={rootRef}>
+    const handleClose = () => {
+        setOpen(false);
+        setQuery("");
+    };
+
+    const menuContent = open && (
+        <>
             <div
-                onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setOpen(o => !o);
-                }}
+                className="fixed inset-0 z-40 bg-black/30"
+                onClick={handleClose}
+                role="presentation"
+            />
+
+            <div
+                ref={rootRef}
+                className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 rounded-lg border border-gray-200 bg-white"
             >
-                {children}
+                <div className="p-2 border-b border-gray-200">
+                    <input
+                        ref={inputRef}
+                        type="text"
+                        value={query}
+                        onChange={e => setQuery(e.target.value)}
+                        placeholder={placeholder}
+                        className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                    />
+                </div>
+
+                <div className="max-h-80 overflow-auto">
+                    {filtered.length === 0 ? (
+                        <div className="p-3 text-sm text-gray-400">Aucun résultat…</div>
+                    ) : (
+                        <ul className="p-1">
+                            {filtered.map(def => (
+                                <li key={def.id}>
+                                    <button
+                                        type="button"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            onPick(def);
+                                            handleClose();
+                                        }}
+                                        className="flex-col !items-start btn btn-size-small btn-mode-ghost w-full text-left !gap-1"
+                                        title={def.description}
+                                    >
+                                        <div className="text-black">{def.title}</div>
+                                        <p className="text-xs">{def.description}</p>
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+            </div>
+        </>
+    );
+
+    return (
+        <>
+            <div className="relative inline-block cursor-pointer">
+                <div
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setOpen(o => !o);
+                    }}
+                >
+                    {children}
+                </div>
             </div>
 
-            {open && (
-                <div className={`absolute ${placement}-0 z-20 mt-2 w-80 rounded-lg border border-gray-200 bg-white`}>
-                    <div className="p-2 border-b border-gray-200">
-                        <input
-                            ref={inputRef}
-                            type="text"
-                            value={query}
-                            onChange={e => setQuery(e.target.value)}
-                            placeholder={placeholder}
-                        />
-                    </div>
-
-                    <div className="max-h-80 overflow-auto">
-                        {filtered.length === 0 ? (
-                            <div className="p-3 text-sm text-gray-400">Aucun résultat…</div>
-                        ) : (
-                            <ul className="p-1">
-                                {filtered.map(def => (
-                                    <li key={def.id}>
-                                        <button
-                                            type="button"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                e.stopPropagation();
-                                                onPick(def);
-                                                setOpen(false);
-                                                setQuery("");
-                                            }}
-                                            className="flex-col !items-start btn btn-size-small btn-mode-ghost w-full text-left !gap-1"
-                                            title={def.description}
-                                        >
-                                            <div className="text-black">{def.title}</div>
-
-                                            <p className="text-xs">{def.description}</p>
-                                        </button>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </div>
-                </div>
-            )}
-        </div>
+            {menuContent && createPortal(menuContent, document.body)}
+        </>
     );
 };
