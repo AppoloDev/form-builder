@@ -104,7 +104,7 @@ export const blockDefinitions: BlockDefinitions = {
             label: "Libellé",
             placeHolder: "",
             required: false,
-            helpText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+            helpText: ""
         }
     },
     TextareaInput: {
@@ -117,7 +117,7 @@ export const blockDefinitions: BlockDefinitions = {
             label: "Libellé",
             placeHolder: "",
             required: false,
-            helpText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+            helpText: '',
             rows: 5
         }
     },
@@ -129,7 +129,7 @@ export const blockDefinitions: BlockDefinitions = {
         defaultProps: {
             type: "ChoiceGroup",
             label: "Libellé",
-            helpText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+            helpText: "",
             required: false,
             inline: false,
             multiple: false,

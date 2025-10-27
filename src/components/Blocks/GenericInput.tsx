@@ -35,7 +35,7 @@ export type EditionItem =
 const baseSchema: EditionItem[] = [
     {key: "label", label: "Titre", type: "text"},
     {key: "placeHolder", label: "Placeholder", type: "text"},
-    {key: "helpText", label: "Message d'aide", type: "textarea", rows: 2},
+    {key: "helpText", label: "Message d'aide", type: "textarea"},
     {key: "required", label: "Requis", type: "checkbox"},
 ];
 

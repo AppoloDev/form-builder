@@ -9,7 +9,7 @@ type Props = {
     editItem: (text: string) => void
 }
 
-export const TextEdition = ({label, value, helpText, editItem, type = 'text', rows = 10}: Props) => {
+export const TextEdition = ({label, value, helpText, editItem, type = 'text', rows = 3}: Props) => {
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         editItem(e.target.value);
     };

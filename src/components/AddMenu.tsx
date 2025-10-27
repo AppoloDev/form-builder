@@ -64,7 +64,7 @@ export const AddMenu: React.FC<AddMenuProps> = (
                 role="presentation"
             />
 
-            <div className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 rounded-lg border border-gray-200 bg-white">
+            <div className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-xl rounded-lg border border-gray-200 bg-white">
                 <div className="p-2 border-b border-gray-200">
                     <input
                         ref={inputRef}
