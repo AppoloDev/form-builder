@@ -31,6 +31,7 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { EyeClosedIcon } from "../Icons/EyeClosedIcon";
 import { EyeIcon } from "../Icons/EyeIcon";
+import { TrashIcon } from "../Icons/TrashIcon";
 
 type Props = {
     id: string;
@@ -252,6 +253,11 @@ const ChoiceGroupInput: FC<Props> = (props) => {
         setFormLocal({options: next});
     };
 
+    const removeOption = (idx: number) => {
+        const next = form.options.filter((_, i) => i !== idx);
+        setFormLocal({ options: next });
+    };
+
     const addFollowUpFromDef = (idx: number, def: BlockDefinition) => {
         const newBlock = createBlockFromTemplate(def);
         const next = form.options.map((opt, i) =>
@@ -279,6 +285,15 @@ const ChoiceGroupInput: FC<Props> = (props) => {
                                 }
                                 className="min-w-0 flex-1"
                             />
+
+                            <button
+                                type="button"
+                                onClick={() => removeOption(idx)}
+                                className="btn btn-size-small btn-color-red btn-mode-ghost"
+                                aria-label="Supprimer l'option"
+                            >
+                                <TrashIcon size={20} />
+                            </button>
 
                             {useContionnalField && <button
                                 type="button"
