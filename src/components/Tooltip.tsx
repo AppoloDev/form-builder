@@ -1,18 +1,10 @@
-import { PropsWithChildren, useEffect, useRef } from "react";
-import { HSTooltip } from "preline";
+import { PropsWithChildren } from "react";
 
-type Props = { content: string } & PropsWithChildren
-export const Tooltip = ({children, content}: Props) => {
-    const tooltipRef = useRef(null);
+type Props = { content: string } & PropsWithChildren;
 
-    useEffect(() => {
-        if (tooltipRef.current) {
-            new HSTooltip(tooltipRef.current);
-        }
-    }, [tooltipRef.current]);
-
+export const Tooltip = ({ children, content }: Props) => {
     return (
-        <div className="hs-tooltip inline-block" ref={tooltipRef}>
+        <div className="hs-tooltip inline-block" data-hs-tooltip>
             {children}
 
             <span
@@ -21,5 +13,5 @@ export const Tooltip = ({children, content}: Props) => {
                     {content}
                 </span>
         </div>
-    )
+    );
 }

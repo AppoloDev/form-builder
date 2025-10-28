@@ -13,10 +13,10 @@
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
+    "@preline/tooltip": "^3.2.3",
     "@tailwindcss/vite": "^4.1.14",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-input-mask": "3.0.0-alpha.2",
     "tailwindcss": "^4.1.14",
     "uuid": "^13.0.0",
     "zustand": "^5.0.8"
@@ -24,7 +24,6 @@
   "devDependencies": {
     "@eslint/js": "^9.36.0",
     "@floating-ui/dom": "^1.7.4",
-    "@preline/tooltip": "^3.2.3",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/postcss": "^4.1.14",
     "@types/react": "^19.1.16",

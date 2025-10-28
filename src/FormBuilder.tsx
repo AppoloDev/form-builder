@@ -161,11 +161,10 @@ export const FormBuilder = ({onChange, json = []}: Props) => {
                                     <div className="group relative">
 
                                         <div
-                                            className="absolute -right-3 -top-3">
+                                            className="absolute -right-3 -bottom-3">
                                             <AddMenu
                                                 onPick={(def) => handleAddAt(idx, def)}
                                                 placeholder="Rechercher un type…"
-                                                placement={'right'}
                                             >
                                                 <button
                                                     type="button"
