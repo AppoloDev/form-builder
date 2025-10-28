@@ -1,9 +1,10 @@
-import React, { FC, HTMLInputTypeAttribute, useMemo, useState } from "react";
+import React, { FC, HTMLInputTypeAttribute, useMemo, useState, useEffect } from "react";
 import { useFormBuilderStore } from "../../stores/block.store";
 import { TextEdition } from "../Edition/TextEdition";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
 import { SelectEdition } from "../Edition/SelectEdition";
 import { FieldInput } from "./FieldInput";
+import { labelToName } from "../../utilities/string.utiles";
 
 type CommonProps = {
     id: string;
@@ -53,12 +54,24 @@ export const makeInputBlock = (
         const {updateBlock} = useFormBuilderStore();
 
         const [form, setForm] = useState<Record<string, any>>({
+            ...restProps,
             label: restProps.label || "",
             placeHolder: restProps.placeHolder || "",
             helpText: restProps.helpText || "",
             required: restProps.required || false,
-            ...restProps
+            name: restProps.name || labelToName(restProps.label || ""),
         });
+
+        useEffect(() => {
+            setForm({
+                ...restProps,
+                label: restProps.label || "",
+                placeHolder: restProps.placeHolder || "",
+                helpText: restProps.helpText || "",
+                required: restProps.required || false,
+                name: restProps.name || labelToName(restProps.label || ""),
+            });
+        }, [JSON.stringify(restProps)]);
 
         const editionSchema = useMemo(
             () => [...baseSchema, ...(opts.extraSchema ?? [])],
@@ -66,8 +79,16 @@ export const makeInputBlock = (
         );
 
         const handleChange = (key: string, value: any) => {
-            setForm(prev => ({...prev, [key]: value}));
-            updateBlock(id, {[key]: value});
+            if (key === 'label') {
+                const newName = labelToName(value);
+                const patch = { label: value, name: newName };
+                setForm(prev => ({ ...prev, ...patch }));
+                updateBlock(id, patch);
+            } else {
+                const patch = { [key]: value };
+                setForm(prev => ({ ...prev, ...patch }));
+                updateBlock(id, patch);
+            }
         };
 
         const editionItems = useMemo(
@@ -132,7 +153,7 @@ export const makeInputBlock = (
                         disabled
                         {...restInputAttrs}
                     />
-                :
+                    :
                     <input
                         id={id}
                         type={finalType}
@@ -141,7 +162,6 @@ export const makeInputBlock = (
                         {...restInputAttrs}
                     />
                 }
-
             </FieldInput>
         );
     };

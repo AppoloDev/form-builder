@@ -4,7 +4,7 @@ import { TextEdition } from "../Edition/TextEdition";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
 import { Empty } from "../Empty";
 import { AddMenu } from "../AddMenu";
-import { Block, BlockDefinition } from "./Definition";
+import { Block, BlockDefinition, OptionItem } from "./Definition";
 import { BLOCK_COMPONENTS } from "../BlockRegistry";
 import { createBlockFromTemplate } from "../../utilities/block.utiles";
 import { useFormBuilderStore } from "../../stores/block.store";
@@ -32,23 +32,17 @@ import { CSS } from "@dnd-kit/utilities";
 import { EyeClosedIcon } from "../Icons/EyeClosedIcon";
 import { EyeIcon } from "../Icons/EyeIcon";
 import { TrashIcon } from "../Icons/TrashIcon";
+import { labelToName } from "../../utilities/string.utiles";
 
 type Props = {
     id: string;
     helpText?: string;
     label?: string;
+    name?: string;
     required?: boolean;
     multiple?: boolean;
     options?: OptionItem[];
     useContionnalField?: boolean;
-};
-
-type OptionItem = {
-    id: string;
-    label: string;
-    value: string;
-    showConditionalField: boolean;
-    children: Block[];
 };
 
 const FollowUpRenderer: React.FC<{ child: Block }> = ({child}) => {
@@ -171,40 +165,46 @@ const ChildrenSorter: React.FC<{
 const ChoiceGroupInput: FC<Props> = (props) => {
     const {
         id,
-        helpText,
-        label,
-        required,
-        multiple,
+        helpText: propsHelpText,
+        label: propsLabel,
+        name: propsName,
+        required: propsRequired,
+        multiple: propsMultiple,
         options: propsOptions,
-        useContionnalField = true,
+        useContionnalField: propsUseContionnalField = true,
     } = props;
 
     const {updateBlock} = useFormBuilderStore();
 
     const [form, setForm] = useState({
-        label: label || "",
-        helpText: helpText || "",
-        required: required ?? false,
-        multiple: multiple ?? false,
+        label: propsLabel || "",
+        name: propsName || labelToName(propsLabel || ""),
+        helpText: propsHelpText || "",
+        required: propsRequired ?? false,
+        multiple: propsMultiple ?? false,
         options: (propsOptions || []) as OptionItem[],
-        useContionnalField: useContionnalField ?? true,
+        useContionnalField: propsUseContionnalField ?? true,
     });
 
-    const setFormLocal = (patch: Partial<typeof form>) => {
-        setForm((prev) => ({ ...prev, ...patch }));
-    };
-
-    const isFirst = useRef(true);
     useEffect(() => {
-        // éviter une propagation immédiate au tout premier render si tu veux
-        if (isFirst.current) {
-            isFirst.current = false;
-            return;
-        }
-        // Ici, on pousse la version actuelle du formulaire vers le store,
-        // donc vers FormBuilder, mais APRÈS le commit du render.
-        updateBlock(id, form);
-    }, [form, id, updateBlock]);
+        setForm({
+            label: propsLabel || "",
+            name: propsName || labelToName(propsLabel || ""),
+            helpText: propsHelpText || "",
+            required: propsRequired ?? false,
+            multiple: propsMultiple ?? false,
+            options: (propsOptions || []) as OptionItem[],
+            useContionnalField: propsUseContionnalField ?? true,
+        });
+    }, [
+        propsLabel,
+        propsName,
+        propsHelpText,
+        propsRequired,
+        propsMultiple,
+        JSON.stringify(propsOptions),
+        propsUseContionnalField,
+    ]);
 
     useEffect(() => {
         if (form.options.length === 0) {
@@ -212,12 +212,23 @@ const ChoiceGroupInput: FC<Props> = (props) => {
                 const lbl = `Option ${i + 1}`;
                 return {id: uuidv4(), label: lbl, value: lbl, showConditionalField: false, children: []};
             });
-            setFormLocal({options: defaults});
+            const patch = { options: defaults };
+            setForm(prev => ({ ...prev, ...patch }));
+            updateBlock(id, patch);
         }
     }, []);
 
     const handleChange = <K extends keyof typeof form>(key: K, value: (typeof form)[K]) => {
-        setFormLocal({[key]: value} as Partial<typeof form>);
+        if (key === 'label') {
+            const newName = labelToName(value as string);
+            const patch = { label: value, name: newName };
+            setForm(prev => ({ ...prev, ...patch }));
+            updateBlock(id, patch);
+        } else {
+            const patch = { [key]: value };
+            setForm(prev => ({ ...prev, ...patch as Partial<typeof form> }));
+            updateBlock(id, patch);
+        }
     };
 
     const editionItems = useMemo(
@@ -234,36 +245,53 @@ const ChoiceGroupInput: FC<Props> = (props) => {
                 editItem={(v) => handleChange("multiple", v)}
             />,
         ],
-        [form]
+        [form.label, form.helpText, form.required, form.multiple]
     );
 
     const addOption = () => {
         const n = form.options.length + 1;
         const lbl = `Option ${n}`;
-        setFormLocal({
-            options: [
-                ...form.options,
-                {id: uuidv4(), label: lbl, value: lbl, showConditionalField: false, children: []},
-            ],
-        });
+        const newOption = {id: uuidv4(), label: lbl, value: lbl, showConditionalField: false, children: []};
+
+        const patch = { options: [...form.options, newOption] };
+        setForm(prev => ({ ...prev, ...patch }));
+        updateBlock(id, patch);
     };
 
-    const updateOption = (idx: number, patch: Partial<OptionItem>) => {
-        const next = form.options.map((o, i) => (i === idx ? {...o, ...patch} : o));
-        setFormLocal({options: next});
+    const updateOption = (idx: number, optionPatch: Partial<OptionItem>) => {
+        const nextOptions = form.options.map((o, i) => (i === idx ? {...o, ...optionPatch} : o));
+
+        const patch = { options: nextOptions };
+        setForm(prev => ({ ...prev, ...patch }));
+        updateBlock(id, patch);
     };
 
     const removeOption = (idx: number) => {
-        const next = form.options.filter((_, i) => i !== idx);
-        setFormLocal({ options: next });
+        const nextOptions = form.options.filter((_, i) => i !== idx);
+
+        const patch = { options: nextOptions };
+        setForm(prev => ({ ...prev, ...patch }));
+        updateBlock(id, patch);
     };
 
     const addFollowUpFromDef = (idx: number, def: BlockDefinition) => {
         const newBlock = createBlockFromTemplate(def);
-        const next = form.options.map((opt, i) =>
+        const nextOptions = form.options.map((opt, i) =>
             i === idx ? {...opt, children: [...opt.children, newBlock], showConditionalField: true} : opt
         );
-        setFormLocal({options: next});
+
+        const patch = { options: nextOptions };
+        setForm(prev => ({ ...prev, ...patch }));
+        updateBlock(id, patch);
+    };
+
+    const handleReorderChildren = (optionIndex: number, reorderedChildren: Block[]) => {
+        const nextOptions = [...form.options];
+        nextOptions[optionIndex] = { ...nextOptions[optionIndex], children: reorderedChildren };
+
+        const patch = { options: nextOptions };
+        setForm(prev => ({ ...prev, ...patch }));
+        updateBlock(id, patch);
     };
 
     return (
@@ -295,7 +323,7 @@ const ChoiceGroupInput: FC<Props> = (props) => {
                                 <TrashIcon size={20} />
                             </button>
 
-                            {useContionnalField && <button
+                            {propsUseContionnalField && <button
                                 type="button"
                                 onClick={() => updateOption(idx, {showConditionalField: !opt.showConditionalField})}
                                 className={'btn btn-size-small btn-color-appolo btn-mode-ghost'}
@@ -305,7 +333,7 @@ const ChoiceGroupInput: FC<Props> = (props) => {
                             </button>}
                         </div>
 
-                        {useContionnalField && opt.showConditionalField && (
+                        {propsUseContionnalField && opt.showConditionalField && (
                             <div className="mt-3 rounded-lg border border-gray-200 bg-gray-50 p-3 space-y-3">
                                 {opt.children.length === 0 ? (
                                     <Empty onPick={(def) => addFollowUpFromDef(idx, def)}/>
@@ -314,9 +342,7 @@ const ChoiceGroupInput: FC<Props> = (props) => {
                                         <ChildrenSorter
                                             childrenBlocks={opt.children}
                                             onReorder={(next) => {
-                                                const cloned = [...form.options];
-                                                cloned[idx] = {...cloned[idx], children: next};
-                                                setFormLocal({options: cloned});
+                                                handleReorderChildren(idx, next);
                                             }}
                                         />
 

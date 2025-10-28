@@ -1,4 +1,5 @@
 import { UniqueIdentifier } from "@dnd-kit/core";
+import { labelToName } from "../../utilities/string.utiles";
 
 export type BlockId = UniqueIdentifier;
 
@@ -10,6 +11,7 @@ export interface BaseBlockProps {
 export interface TextInputProps extends BaseBlockProps {
     type: 'TextInput';
     label: string;
+    name: string;
     placeHolder?: string;
     helpText?: string;
     required?: boolean;
@@ -20,6 +22,7 @@ export interface TextInputProps extends BaseBlockProps {
 export interface TextareaInputProps extends BaseBlockProps {
     type: 'TextareaInput';
     label: string;
+    name: string;
     placeHolder?: string;
     required?: boolean;
     helpText?: string;
@@ -41,12 +44,21 @@ export interface ParagraphProps extends BaseBlockProps {
 export interface ChoiceGroupProps extends BaseBlockProps {
     type: 'ChoiceGroup';
     label: string;
+    name: string;
     helpText?: string;
     required?: boolean;
     inline?: boolean;
     multiple?: boolean;
-    options: string[];
+    options: OptionItem[];
 }
+
+export type OptionItem = {
+    id: string;
+    label: string;
+    value: string;
+    showConditionalField: boolean;
+    children: Block[];
+};
 
 export type BlockPropsByType = {
     Title: TitleProps;
@@ -102,6 +114,7 @@ export const blockDefinitions: BlockDefinitions = {
         defaultProps: {
             type: "TextInput",
             label: "Libellé",
+            name: labelToName("Libellé"),
             placeHolder: "",
             required: false,
             helpText: ""
@@ -115,6 +128,7 @@ export const blockDefinitions: BlockDefinitions = {
         defaultProps: {
             type: "TextareaInput",
             label: "Libellé",
+            name: labelToName("Libellé"),
             placeHolder: "",
             required: false,
             helpText: '',
@@ -129,6 +143,7 @@ export const blockDefinitions: BlockDefinitions = {
         defaultProps: {
             type: "ChoiceGroup",
             label: "Libellé",
+            name: labelToName("Libellé"),
             helpText: "",
             required: false,
             inline: false,

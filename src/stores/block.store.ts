@@ -3,34 +3,22 @@ import { arrayMove } from "@dnd-kit/sortable";
 import { Block, BlockId } from "../components/Blocks/Definition";
 import { UniqueIdentifier } from "@dnd-kit/core";
 
-// ============================================
-// TYPES
-// ============================================
-
 interface FormBuilderState {
-    // State
     blocks: Block[];
     overId: string | null;
     activeId: UniqueIdentifier | null;
 
-    // Actions simples
     setBlocks: (blocks: Block[]) => void;
     addBlock: (block: Block, index?: number) => void;
     removeBlock: (id: BlockId) => void;
     updateBlock: <T extends Block>(id: BlockId, updates: Partial<Omit<T, 'id' | 'type'>>) => void;
 
-    // DnD
     setOverId: (id: string | null) => void;
     setActiveId: (id: UniqueIdentifier | null) => void;
     moveBlock: (activeId: string, overId: string) => void;
     moveBlockToEnd: (activeId: string) => void;
 }
 
-// ============================================
-// HELPER FUNCTIONS
-// ============================================
-
-// Fonction récursive pour mettre à jour un bloc, même imbriqué
 const updateBlockRecursive = (blocks: Block[], id: BlockId, updates: any): Block[] => {
     return blocks.map((block) => {
         if (block.id === id) {
@@ -43,10 +31,8 @@ const updateBlockRecursive = (blocks: Block[], id: BlockId, updates: any): Block
                     return option;
                 }
 
-                // Chercher et mettre à jour dans les children
                 const updatedChildren = updateBlockRecursive(option.children, id, updates);
 
-                // Si les children ont changé, retourner une nouvelle option
                 if (updatedChildren !== option.children) {
                     return { ...option, children: updatedChildren };
                 }
@@ -63,12 +49,42 @@ const updateBlockRecursive = (blocks: Block[], id: BlockId, updates: any): Block
     });
 };
 
+const removeBlockRecursive = (blocks: Block[], id: BlockId): Block[] => {
+    const filteredBlocks = blocks.filter((block) => block.id !== id);
+
+    return filteredBlocks.map((block) => {
+        if (block.type === 'ChoiceGroup' && 'options' in block && Array.isArray(block.options)) {
+
+            let optionsChanged = false;
+
+            const updatedOptions = block.options.map((option: any) => {
+                if (!option.children || option.children.length === 0) {
+                    return option;
+                }
+
+                const updatedChildren = removeBlockRecursive(option.children, id);
+
+                if (updatedChildren.length !== option.children.length) {
+                    optionsChanged = true;
+                    return { ...option, children: updatedChildren };
+                }
+
+                return option;
+            });
+
+            if (optionsChanged) {
+                return { ...block, options: updatedOptions };
+            }
+        }
+
+        return block;
+    });
+};
 export const useFormBuilderStore = create<FormBuilderState>((set, get) => ({
     blocks: [],
     overId: null,
     activeId: null,
 
-    // Définir tous les blocs
     setBlocks: (blocks) => {
         set({ blocks });
     },
@@ -89,28 +105,24 @@ export const useFormBuilderStore = create<FormBuilderState>((set, get) => ({
 
     removeBlock: (id) => {
         set((state) => ({
-            blocks: state.blocks.filter((b) => b.id !== id)
+            blocks: removeBlockRecursive(state.blocks, id)
         }));
     },
 
-    // Mettre à jour un bloc (avec support des blocs imbriqués)
     updateBlock: (id, updates) => {
         set((state) => ({
             blocks: updateBlockRecursive(state.blocks, id, updates)
         }));
     },
 
-    // Définir l'ID survolé (DnD)
     setOverId: (id) => {
         set({ overId: id });
     },
 
-    // Définir l'ID actif (DnD)
     setActiveId: (id) => {
         set({ activeId: id });
     },
 
-    // Déplacer un bloc
     moveBlock: (activeId, overId) => {
         set((state) => {
             const oldIndex = state.blocks.findIndex((b) => b.id === activeId);
