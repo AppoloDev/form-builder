@@ -43,12 +43,13 @@ type Props = {
     multiple?: boolean;
     options?: OptionItem[];
     useContionnalField?: boolean;
+    isChildBlock?: boolean;
 };
 
 const FollowUpRenderer: React.FC<{ child: Block }> = ({child}) => {
     const Comp = BLOCK_COMPONENTS[child.type];
     if (!Comp) return null;
-    return <Comp {...child} useContionnalField={false}/>;
+    return <Comp {...child} useContionnalField={false} isChildBlock={true} />;
 };
 
 const SortableChildBlock: React.FC<{
@@ -172,6 +173,7 @@ const ChoiceGroupInput: FC<Props> = (props) => {
         multiple: propsMultiple,
         options: propsOptions,
         useContionnalField: propsUseContionnalField = true,
+        isChildBlock,
     } = props;
 
     const {updateBlock} = useFormBuilderStore();
@@ -232,20 +234,28 @@ const ChoiceGroupInput: FC<Props> = (props) => {
     };
 
     const editionItems = useMemo(
-        () => [
-            <TextEdition key="label" label="Titre" value={form.label} editItem={(v) => handleChange("label", v)}/>,
-            <TextEdition key="helpText" label="Message d'aide" value={form.helpText} type="textarea"
-                         editItem={(v) => handleChange("helpText", v)}/>,
-            <CheckboxEdition key="required" label="Requis" checked={form.required}
-                             editItem={(v) => handleChange("required", v)}/>,
-            <CheckboxEdition
-                key="multiple"
-                label="Sélections multiples"
-                checked={form.multiple}
-                editItem={(v) => handleChange("multiple", v)}
-            />,
-        ],
-        [form.label, form.helpText, form.required, form.multiple]
+        () => {
+            const items = [
+                <TextEdition key="label" label="Titre" value={form.label} editItem={(v) => handleChange("label", v)}/>,
+                <TextEdition key="helpText" label="Message d'aide" value={form.helpText} type="textarea"
+                             editItem={(v) => handleChange("helpText", v)}/>,
+                <CheckboxEdition key="required" label="Requis" checked={form.required}
+                                 editItem={(v) => handleChange("required", v)}/>,
+                <CheckboxEdition
+                    key="multiple"
+                    label="Sélections multiples"
+                    checked={form.multiple}
+                    editItem={(v) => handleChange("multiple", v)}
+                />,
+            ];
+
+            if (isChildBlock) {
+                return items.filter(item => item.key !== 'required');
+            }
+
+            return items;
+        },
+        [form.label, form.helpText, form.required, form.multiple, isChildBlock]
     );
 
     const addOption = () => {

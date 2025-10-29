@@ -12,6 +12,7 @@ type CommonProps = {
     label?: string;
     placeHolder?: string;
     required?: boolean;
+    isChildBlock?: boolean;
     [key: string]: any;
 };
 
@@ -50,7 +51,7 @@ export const makeInputBlock = (
     opts: MakeOpts = {}
 ) => {
     const InputBlock: FC<CommonProps> = (props) => {
-        const {id, index, ...restProps} = props;
+        const {id, index, isChildBlock, ...restProps} = props;
         const {updateBlock} = useFormBuilderStore();
 
         const [form, setForm] = useState<Record<string, any>>({
@@ -74,8 +75,14 @@ export const makeInputBlock = (
         }, [JSON.stringify(restProps)]);
 
         const editionSchema = useMemo(
-            () => [...baseSchema, ...(opts.extraSchema ?? [])],
-            [opts.extraSchema]
+            () => {
+                let schema = [...baseSchema, ...(opts.extraSchema ?? [])];
+                if (isChildBlock) {
+                    schema = schema.filter(item => item.key !== 'required');
+                }
+                return schema;
+            },
+            [opts.extraSchema, isChildBlock]
         );
 
         const handleChange = (key: string, value: any) => {
