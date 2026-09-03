@@ -19,66 +19,40 @@ interface FormBuilderState {
     moveBlockToEnd: (activeId: string) => void;
 }
 
+// Applies `recurse` to every nested Block[] a container block carries,
+// whether it lives directly on the block (FieldSet/Repeatable) or per-option (ChoiceGroup).
+const recurseIntoChildren = (block: Block, recurse: (children: Block[]) => Block[]): Block => {
+    if (block.type === 'FieldSet' || block.type === 'Repeatable') {
+        if (block.children.length === 0) return block;
+        return { ...block, children: recurse(block.children) };
+    }
+
+    if (block.type === 'ChoiceGroup') {
+        const nextOptions = block.options.map((option) =>
+            option.children.length === 0 ? option : { ...option, children: recurse(option.children) }
+        );
+        return { ...block, options: nextOptions };
+    }
+
+    return block;
+};
+
 const updateBlockRecursive = (blocks: Block[], id: BlockId, updates: any): Block[] => {
     return blocks.map((block) => {
         if (block.id === id) {
             return { ...block, ...updates };
         }
 
-        if (block.type === 'ChoiceGroup' && 'options' in block) {
-            const updatedOptions = block.options.map((option: any) => {
-                if (!option.children || option.children.length === 0) {
-                    return option;
-                }
-
-                const updatedChildren = updateBlockRecursive(option.children, id, updates);
-
-                if (updatedChildren !== option.children) {
-                    return { ...option, children: updatedChildren };
-                }
-
-                return option;
-            });
-
-            if (JSON.stringify(updatedOptions) !== JSON.stringify(block.options)) {
-                return { ...block, options: updatedOptions };
-            }
-        }
-
-        return block;
+        return recurseIntoChildren(block, (children) => updateBlockRecursive(children, id, updates));
     });
 };
 
 const removeBlockRecursive = (blocks: Block[], id: BlockId): Block[] => {
     const filteredBlocks = blocks.filter((block) => block.id !== id);
 
-    return filteredBlocks.map((block) => {
-        if (block.type === 'ChoiceGroup' && 'options' in block && Array.isArray(block.options)) {
-
-            let optionsChanged = false;
-
-            const updatedOptions = block.options.map((option: any) => {
-                if (!option.children || option.children.length === 0) {
-                    return option;
-                }
-
-                const updatedChildren = removeBlockRecursive(option.children, id);
-
-                if (updatedChildren.length !== option.children.length) {
-                    optionsChanged = true;
-                    return { ...option, children: updatedChildren };
-                }
-
-                return option;
-            });
-
-            if (optionsChanged) {
-                return { ...block, options: updatedOptions };
-            }
-        }
-
-        return block;
-    });
+    return filteredBlocks.map((block) =>
+        recurseIntoChildren(block, (children) => removeBlockRecursive(children, id))
+    );
 };
 export const useFormBuilderStore = create<FormBuilderState>((set) => ({
     blocks: [],

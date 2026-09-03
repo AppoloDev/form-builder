@@ -52,6 +52,112 @@ export interface ChoiceGroupProps extends BaseBlockProps {
     options: OptionItem[];
 }
 
+export interface NumberInputProps extends BaseBlockProps {
+    type: 'NumberInput';
+    label: string;
+    name: string;
+    placeHolder?: string;
+    helpText?: string;
+    required?: boolean;
+    min?: string;
+    max?: string;
+    step?: string;
+}
+
+export interface EmailInputProps extends BaseBlockProps {
+    type: 'EmailInput';
+    label: string;
+    name: string;
+    placeHolder?: string;
+    helpText?: string;
+    required?: boolean;
+}
+
+export interface TelInputProps extends BaseBlockProps {
+    type: 'TelInput';
+    label: string;
+    name: string;
+    placeHolder?: string;
+    helpText?: string;
+    required?: boolean;
+}
+
+export interface UrlInputProps extends BaseBlockProps {
+    type: 'UrlInput';
+    label: string;
+    name: string;
+    placeHolder?: string;
+    helpText?: string;
+    required?: boolean;
+}
+
+export interface DateTimeInputProps extends BaseBlockProps {
+    type: 'DateTimeInput';
+    label: string;
+    name: string;
+    placeHolder?: string;
+    helpText?: string;
+    required?: boolean;
+    mode?: string;
+}
+
+export interface AddressInputProps extends BaseBlockProps {
+    type: 'AddressInput';
+    label: string;
+    name: string;
+    placeHolder?: string;
+    helpText?: string;
+    required?: boolean;
+}
+
+export interface FileInputProps extends BaseBlockProps {
+    type: 'FileInput';
+    label: string;
+    name: string;
+    helpText?: string;
+    required?: boolean;
+    acceptedFile?: string;
+    allowMultiple?: boolean;
+}
+
+export interface HourMinuteInputProps extends BaseBlockProps {
+    type: 'HourMinuteInput';
+    label: string;
+    name: string;
+    placeHolder?: string;
+    helpText?: string;
+    required?: boolean;
+}
+
+export interface SelectProps extends BaseBlockProps {
+    type: 'Select';
+    label: string;
+    name: string;
+    helpText?: string;
+    required?: boolean;
+    multiple?: boolean;
+    options: string[];
+}
+
+export interface SignatureProps extends BaseBlockProps {
+    type: 'Signature';
+    label: string;
+    name: string;
+    helpText?: string;
+    required?: boolean;
+}
+
+export interface FieldSetProps extends BaseBlockProps {
+    type: 'FieldSet';
+    children: Block[];
+}
+
+export interface RepeatableProps extends BaseBlockProps {
+    type: 'Repeatable';
+    children: Block[];
+    maxItems?: number;
+}
+
 export type OptionItem = {
     id: string;
     label: string;
@@ -66,6 +172,18 @@ export type BlockPropsByType = {
     TextInput: TextInputProps;
     TextareaInput: TextareaInputProps;
     ChoiceGroup: ChoiceGroupProps;
+    NumberInput: NumberInputProps;
+    EmailInput: EmailInputProps;
+    TelInput: TelInputProps;
+    UrlInput: UrlInputProps;
+    DateTimeInput: DateTimeInputProps;
+    AddressInput: AddressInputProps;
+    FileInput: FileInputProps;
+    HourMinuteInput: HourMinuteInputProps;
+    Select: SelectProps;
+    Signature: SignatureProps;
+    FieldSet: FieldSetProps;
+    Repeatable: RepeatableProps;
 };
 
 export type BlockType = keyof BlockPropsByType;
@@ -149,6 +267,172 @@ export const blockDefinitions: BlockDefinitions = {
             inline: false,
             multiple: false,
             options: [],
+        }
+    },
+    NumberInput: {
+        id: "drag-numberinput",
+        type: "NumberInput",
+        title: "Nombre",
+        description: 'Permet la saisie d\'une valeur numérique, avec bornes min/max optionnelles.',
+        defaultProps: {
+            type: "NumberInput",
+            label: "Libellé",
+            name: labelToName("Libellé"),
+            placeHolder: "",
+            required: false,
+            helpText: "",
+            min: "",
+            max: "",
+            step: "",
+        }
+    },
+    EmailInput: {
+        id: "drag-emailinput",
+        type: "EmailInput",
+        title: "Email",
+        description: 'Permet la saisie d\'une adresse email.',
+        defaultProps: {
+            type: "EmailInput",
+            label: "Libellé",
+            name: labelToName("Libellé"),
+            placeHolder: "",
+            required: false,
+            helpText: "",
+        }
+    },
+    TelInput: {
+        id: "drag-telinput",
+        type: "TelInput",
+        title: "Téléphone",
+        description: 'Permet la saisie d\'un numéro de téléphone.',
+        defaultProps: {
+            type: "TelInput",
+            label: "Libellé",
+            name: labelToName("Libellé"),
+            placeHolder: "",
+            required: false,
+            helpText: "",
+        }
+    },
+    UrlInput: {
+        id: "drag-urlinput",
+        type: "UrlInput",
+        title: "URL",
+        description: 'Permet la saisie d\'une adresse web.',
+        defaultProps: {
+            type: "UrlInput",
+            label: "Libellé",
+            name: labelToName("Libellé"),
+            placeHolder: "",
+            required: false,
+            helpText: "",
+        }
+    },
+    DateTimeInput: {
+        id: "drag-datetimeinput",
+        type: "DateTimeInput",
+        title: "Date / Heure",
+        description: 'Permet la saisie d\'une date, d\'une heure, ou des deux.',
+        defaultProps: {
+            type: "DateTimeInput",
+            label: "Libellé",
+            name: labelToName("Libellé"),
+            placeHolder: "",
+            required: false,
+            helpText: "",
+            mode: "datetime-local",
+        }
+    },
+    AddressInput: {
+        id: "drag-addressinput",
+        type: "AddressInput",
+        title: "Adresse",
+        description: 'Permet la saisie d\'une adresse postale.',
+        defaultProps: {
+            type: "AddressInput",
+            label: "Libellé",
+            name: labelToName("Libellé"),
+            placeHolder: "Indiquez un lieu…",
+            required: false,
+            helpText: "",
+        }
+    },
+    FileInput: {
+        id: "drag-fileinput",
+        type: "FileInput",
+        title: "Fichier",
+        description: 'Permet le dépôt d\'un ou plusieurs fichiers.',
+        defaultProps: {
+            type: "FileInput",
+            label: "Libellé",
+            name: labelToName("Libellé"),
+            required: false,
+            helpText: "",
+            acceptedFile: "image",
+            allowMultiple: false,
+        }
+    },
+    HourMinuteInput: {
+        id: "drag-hourminuteinput",
+        type: "HourMinuteInput",
+        title: "Heure",
+        description: 'Permet la saisie d\'une heure (HH:MM).',
+        defaultProps: {
+            type: "HourMinuteInput",
+            label: "Libellé",
+            name: labelToName("Libellé"),
+            placeHolder: "",
+            required: false,
+            helpText: "",
+        }
+    },
+    Select: {
+        id: "drag-select",
+        type: "Select",
+        title: "Liste déroulante",
+        description: 'Affiche une liste déroulante d\'options, à choix unique ou multiple.',
+        defaultProps: {
+            type: "Select",
+            label: "Libellé",
+            name: labelToName("Libellé"),
+            helpText: "",
+            required: false,
+            multiple: false,
+            options: [],
+        }
+    },
+    Signature: {
+        id: "drag-signature",
+        type: "Signature",
+        title: "Signature",
+        description: 'Affiche une zone dédiée à la signature de l\'utilisateur.',
+        defaultProps: {
+            type: "Signature",
+            label: "Libellé",
+            name: labelToName("Libellé"),
+            helpText: "",
+            required: false,
+        }
+    },
+    FieldSet: {
+        id: "drag-fieldset",
+        type: "FieldSet",
+        title: "Groupe de champs",
+        description: 'Regroupe plusieurs blocs à l\'intérieur d\'un même ensemble.',
+        defaultProps: {
+            type: "FieldSet",
+            children: [],
+        }
+    },
+    Repeatable: {
+        id: "drag-repeatable",
+        type: "Repeatable",
+        title: "Répétable",
+        description: 'Permet à l\'utilisateur de répéter un ensemble de blocs plusieurs fois.',
+        defaultProps: {
+            type: "Repeatable",
+            children: [],
+            maxItems: 1,
         }
     }
 };
