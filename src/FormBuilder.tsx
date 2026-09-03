@@ -98,7 +98,6 @@ export const FormBuilder = ({onChange, json = []}: Props) => {
     }, []);
 
     useEffect(() => {
-        console.log(blocks);
         onChange(blocks);
     }, [blocks]);
 

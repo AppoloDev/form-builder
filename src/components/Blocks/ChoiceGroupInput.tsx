@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useState, useCallback, useRef } from "react";
+import React, { FC, useEffect, useMemo, useState, useCallback } from "react";
 import { FieldInput } from "./FieldInput";
 import { TextEdition } from "../Edition/TextEdition";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
@@ -223,7 +223,7 @@ const ChoiceGroupInput: FC<Props> = (props) => {
     const handleChange = <K extends keyof typeof form>(key: K, value: (typeof form)[K]) => {
         if (key === 'label') {
             const newName = labelToName(value as string);
-            const patch = { label: value, name: newName };
+            const patch = { label: value as string, name: newName };
             setForm(prev => ({ ...prev, ...patch }));
             updateBlock(id, patch);
         } else {

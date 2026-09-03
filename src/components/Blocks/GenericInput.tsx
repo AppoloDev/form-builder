@@ -43,7 +43,7 @@ const baseSchema: EditionItem[] = [
 
 type MakeOpts = {
     extraSchema?: EditionItem[];
-    toInputAttrs?: (form: Record<string, any>) => React.InputHTMLAttributes<HTMLInputElement>;
+    toInputAttrs?: (form: Record<string, any>) => Record<string, any>;
 };
 
 export const makeInputBlock = (
@@ -51,7 +51,7 @@ export const makeInputBlock = (
     opts: MakeOpts = {}
 ) => {
     const InputBlock: FC<CommonProps> = (props) => {
-        const {id, index, isChildBlock, ...restProps} = props;
+        const {id, index: _index, isChildBlock, ...restProps} = props;
         const {updateBlock} = useFormBuilderStore();
 
         const [form, setForm] = useState<Record<string, any>>({

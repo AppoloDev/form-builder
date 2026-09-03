@@ -6,8 +6,6 @@ import { UniqueIdentifier } from "@dnd-kit/core";
 import { ContextMenu, ContextMenuItem } from "../ContextMenu";
 import { useBlockOperations } from "../../hooks/useBlockOperations";
 import { BlockDefinition } from "./Definition";
-import { createBlockFromTemplate } from "../../utilities/block.utiles";
-import { useFormBuilderStore } from "../../stores/block.store";
 import { DragHandleContext } from "../../FormBuilder";
 import { DotsIcon } from "../Icons/DotsIcon";
 
@@ -28,7 +26,6 @@ export const EditableBlock = (
         className = "",
     }: EditableBlockProps) => {
     const [contextMenuVisible, setContextMenuVisible] = useState(false);
-    const [contextMenuPosition, setContextMenuPosition] = useState({x: 0, y: 0});
 
     const {handleRemove} = useBlockOperations(id);
 
@@ -36,10 +33,6 @@ export const EditableBlock = (
         e.preventDefault();
         e.stopPropagation();
 
-        setContextMenuPosition({
-            x: e.clientX,
-            y: e.clientY,
-        });
         setContextMenuVisible(true);
     }, []);
 
@@ -102,8 +95,6 @@ export const EditableBlock = (
             {items.length > 0 && (
                 <ContextMenu
                     visible={contextMenuVisible}
-                    x={contextMenuPosition.x}
-                    y={contextMenuPosition.y}
                     onClose={handleCloseContextMenu}
                 >
                     {items.map((item, index) => (

@@ -7,7 +7,7 @@ export const merge = (target: object, ...sources: object[]): object => {
     const source = sources?.shift();
 
     if (source && isObject(target) && isObject(source)) {
-        for (let key in source) {
+        for (const key in source) {
             if (isObject(source[key as keyof typeof source])) {
                 if (!target[key as keyof typeof source]) Object.assign(target, {
                     [key]: {}

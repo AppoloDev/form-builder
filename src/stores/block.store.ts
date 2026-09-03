@@ -80,7 +80,7 @@ const removeBlockRecursive = (blocks: Block[], id: BlockId): Block[] => {
         return block;
     });
 };
-export const useFormBuilderStore = create<FormBuilderState>((set, get) => ({
+export const useFormBuilderStore = create<FormBuilderState>((set) => ({
     blocks: [],
     overId: null,
     activeId: null,
