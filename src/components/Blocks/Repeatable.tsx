@@ -6,6 +6,7 @@ import { AddMenu } from "../AddMenu";
 import { ChildrenSorter } from "./ChildrenSorter";
 import { createBlockFromTemplate } from "../../utilities/block.utiles";
 import { TextEdition } from "../Edition/TextEdition";
+import { Button } from "@/src/components/ui/button";
 
 const Repeatable = ({id, children, maxItems}: RepeatableProps) => {
     const {updateBlock} = useFormBuilderStore();
@@ -42,9 +43,9 @@ const Repeatable = ({id, children, maxItems}: RepeatableProps) => {
 
                         <div className="pt-1">
                             <AddMenu onPick={addChild}>
-                                <button type="button" className="btn btn-size-small btn-color-appolo btn-mode-solid">
+                                <Button type="button" size="sm">
                                     Ajouter un bloc
-                                </button>
+                                </Button>
                             </AddMenu>
                         </div>
                     </>

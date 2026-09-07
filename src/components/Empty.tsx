@@ -1,6 +1,6 @@
 import { AddMenu } from "./AddMenu";
-import React from "react";
 import { BlockDefinition } from "./Blocks/Definition";
+import { Button } from "@/src/components/ui/button";
 
 type Props = {
     onPick: (def: BlockDefinition, overrides?: Record<string, any>) => void;
@@ -23,9 +23,9 @@ export const Empty = ({onPick}: Props) => {
                 <AddMenu
                     onPick={onPick}
                 >
-                    <button className="btn btn-size-default btn-color-appolo btn-mode-solid">
+                    <Button type="button">
                         Ajouter un bloc
-                    </button>
+                    </Button>
                 </AddMenu>
             </div>
         </div>

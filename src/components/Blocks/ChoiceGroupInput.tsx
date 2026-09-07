@@ -9,6 +9,7 @@ import { createBlockFromTemplate } from "../../utilities/block.utiles";
 import { useFormBuilderStore } from "../../stores/block.store";
 import { v4 as uuidv4 } from "uuid";
 import { ChildrenSorter } from "./ChildrenSorter";
+import { Button } from "@/src/components/ui/button";
 import { EyeClosedIcon } from "../Icons/EyeClosedIcon";
 import { EyeIcon } from "../Icons/EyeIcon";
 import { TrashIcon } from "../Icons/TrashIcon";
@@ -187,23 +188,26 @@ const ChoiceGroupInput: FC<Props> = (props) => {
                                 className="min-w-0 flex-1"
                             />
 
-                            <button
+                            <Button
                                 type="button"
+                                variant="ghost"
+                                size="sm"
                                 onClick={() => removeOption(idx)}
-                                className="btn btn-size-small btn-color-red btn-mode-ghost"
+                                className="text-destructive hover:text-destructive"
                                 aria-label="Supprimer l'option"
                             >
                                 <TrashIcon size={20} />
-                            </button>
+                            </Button>
 
-                            {propsUseContionnalField && <button
+                            {propsUseContionnalField && <Button
                                 type="button"
+                                variant="ghost"
+                                size="sm"
                                 onClick={() => updateOption(idx, {showConditionalField: !opt.showConditionalField})}
-                                className={'btn btn-size-small btn-color-appolo btn-mode-ghost'}
                             >
                                 {opt.showConditionalField ? <EyeClosedIcon size={22}/> : <EyeIcon size={22}/>}
                                 Champs conditionnés
-                            </button>}
+                            </Button>}
                         </div>
 
                         {propsUseContionnalField && opt.showConditionalField && (
@@ -221,12 +225,9 @@ const ChoiceGroupInput: FC<Props> = (props) => {
 
                                         <div className="pt-1">
                                             <AddMenu onPick={(def, overrides) => addFollowUpFromDef(idx, def, overrides)}>
-                                                <button
-                                                    type="button"
-                                                    className="btn btn-size-small btn-color-appolo btn-mode-solid"
-                                                >
+                                                <Button type="button" size="sm">
                                                     Ajouter un bloc
-                                                </button>
+                                                </Button>
                                             </AddMenu>
                                         </div>
                                     </>
@@ -237,13 +238,9 @@ const ChoiceGroupInput: FC<Props> = (props) => {
                 ))}
 
                 <div className="flex justify-end">
-                    <button
-                        type="button"
-                        onClick={addOption}
-                        className="btn btn-size-small btn-color-appolo btn-mode-solid"
-                    >
+                    <Button type="button" size="sm" onClick={addOption}>
                         Ajouter une option
-                    </button>
+                    </Button>
                 </div>
             </div>
         </FieldInput>

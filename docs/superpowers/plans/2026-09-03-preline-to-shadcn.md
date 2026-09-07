@@ -10,6 +10,29 @@
 
 **Spec:** `docs/superpowers/specs/2026-09-03-preline-to-shadcn-design.md`
 
+> **⚠️ STATUT : PLAN SUPERSEDÉ — historique uniquement, ne pas ré-exécuter.**
+>
+> Ce plan décrit une implémentation **Radix UI** (style `new-york`), exécutée en
+> subagent-driven-development dans un worktree isolé (`feature/preline-to-shadcn`).
+> Task 1 (fondation + Tooltip) et une grande partie de Task 2 (Button) ont été
+> implémentées et revues avec succès sur cette base.
+>
+> Pendant une interruption de Task 2 (limite de session de l'agent implémenteur), une
+> installation shadcn/ui **Base UI** (style `base-nova`) a été faite indépendamment,
+> directement sur `develop`, via la vraie CLI `shadcn` (interactive, donc impossible à
+> lancer dans l'environnement de cet agent). Décision prise de reprendre le travail sur
+> cette base réelle plutôt que sur le worktree Radix. Le worktree et la branche
+> `feature/preline-to-shadcn` ont été supprimés — l'implémentation Radix décrite
+> ci-dessous n'existe plus.
+>
+> **La migration a été menée à son terme sur Base UI**, directement sur `develop`
+> (sans worktree, sans re-décomposition en tâches — le reste a été fait en exécution
+> directe au fil de la conversation). Le spec associé
+> (`docs/superpowers/specs/2026-09-03-preline-to-shadcn-design.md`) a été mis à jour
+> pour refléter l'implémentation réelle : c'est la référence à jour, pas ce plan.
+> Les tâches ci-dessous restent comme trace de la conception Radix d'origine et de la
+> méthode SDD suivie jusqu'au pivot.
+
 ## Global Constraints
 
 - Thème shadcn **neutre par défaut** (`baseColor: "neutral"`) — pas de mapping vers la palette `--color-appolo-*`.

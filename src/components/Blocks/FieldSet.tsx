@@ -5,6 +5,7 @@ import { Empty } from "../Empty";
 import { AddMenu } from "../AddMenu";
 import { ChildrenSorter } from "./ChildrenSorter";
 import { createBlockFromTemplate } from "../../utilities/block.utiles";
+import { Button } from "@/src/components/ui/button";
 
 const FieldSet = ({id, children}: FieldSetProps) => {
     const {updateBlock} = useFormBuilderStore();
@@ -29,9 +30,9 @@ const FieldSet = ({id, children}: FieldSetProps) => {
 
                         <div className="pt-1">
                             <AddMenu onPick={addChild}>
-                                <button type="button" className="btn btn-size-small btn-color-appolo btn-mode-solid">
+                                <Button type="button" size="sm">
                                     Ajouter un bloc
-                                </button>
+                                </Button>
                             </AddMenu>
                         </div>
                     </>

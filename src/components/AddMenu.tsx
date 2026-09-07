@@ -85,7 +85,7 @@ export const AddMenu: React.FC<AddMenuProps> = (
 
     const handleFormChange = (key: string, value: any) => {
         setFormState(prev => {
-            const next = { ...prev, [key]: value };
+            const next = {...prev, [key]: value};
             // Auto-derive `name` from `label`
             if (key === "label") {
                 next.name = labelToName(value);
@@ -162,8 +162,9 @@ export const AddMenu: React.FC<AddMenuProps> = (
                 role="presentation"
             />
 
-            <div className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4xl max-w-[90vw] rounded-lg border border-gray-200 bg-white shadow-xl flex overflow-hidden"
-                 style={{maxHeight: "80vh"}}>
+            <div
+                className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4xl max-w-[90vw] rounded-lg border border-gray-200 bg-white shadow-xl flex overflow-hidden"
+                style={{maxHeight: "80vh"}}>
 
                 {/* Left panel – Block list */}
                 <div className="w-72 min-w-72 border-r border-gray-200 flex flex-col">
@@ -182,32 +183,31 @@ export const AddMenu: React.FC<AddMenuProps> = (
                         {filtered.length === 0 ? (
                             <div className="p-3 text-sm text-gray-400">Aucun résultat…</div>
                         ) : (
-                            <ul className="p-1">
+                            <ul className="p-2 space-y-1">
                                 {filtered.map(def => (
                                     <li key={def.id}>
-                                        <button
+                                        <Button
                                             type="button"
+                                            variant="ghost"
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 e.stopPropagation();
                                                 if (def.editionSchema && def.editionSchema.length > 0) {
                                                     handleSelectDef(def);
                                                 } else {
-                                                    // No config needed, add directly
                                                     onPick(def);
                                                     handleClose();
                                                 }
                                             }}
-                                            className={`flex-col !items-start btn btn-size-small btn-mode-ghost w-full text-left !gap-0.5 ${
+                                            className={`w-full justify-start ${
                                                 selectedDef?.id === def.id
-                                                    ? "!bg-blue-50 !border-blue-200 ring-1 ring-blue-200"
+                                                    ? "bg-blue-50 border border-blue-200 ring-1 ring-blue-200"
                                                     : ""
                                             }`}
                                             title={def.description}
                                         >
-                                            <div className="text-black text-sm">{def.title}</div>
-                                            <p className="text-xs text-gray-500 line-clamp-1">{def.description}</p>
-                                        </button>
+                                            {def.title}
+                                        </Button>
                                     </li>
                                 ))}
                             </ul>
@@ -232,16 +232,17 @@ export const AddMenu: React.FC<AddMenuProps> = (
 
                             {/* Footer */}
                             <div className="p-3 border-t border-gray-200 flex justify-end gap-2">
-                                <button
+                                <Button
                                     type="button"
+                                    variant="ghost"
+                                    size="sm"
                                     onClick={() => {
                                         setSelectedDef(null);
                                         setFormState({});
                                     }}
-                                    className="btn btn-size-small btn-mode-ghost"
                                 >
                                     Retour
-                                </button>
+                                </Button>
 
                                 <Button
                                     onClick={handleConfirm}

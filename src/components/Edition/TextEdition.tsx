@@ -1,4 +1,6 @@
-import React, { ChangeEvent } from "react";
+import { ChangeEvent } from "react";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
 
 type Props = {
     label: string;
@@ -21,18 +23,18 @@ export const TextEdition = ({label, value, helpText, editItem, type = 'text', ro
             </label>
 
             {type === "textarea" ? (
-                    <textarea
-                        value={value}
-                        onChange={handleChange}
-                        rows={rows}
-                    />
-                ) :
-                (
-                    <input type={type}
-                           value={value}
-                           onChange={handleChange}
-                    />
-                )}
+                <Textarea
+                    value={value}
+                    onChange={handleChange}
+                    rows={rows}
+                />
+            ) : (
+                <Input
+                    type={type}
+                    value={value}
+                    onChange={handleChange}
+                />
+            )}
 
             {helpText && (
                 <p className="help-text">{helpText}</p>
