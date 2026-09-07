@@ -145,7 +145,7 @@ export const FormBuilder = ({onChange, json = []}: Props) => {
             onDragEnd={onDragEnd}
             onDragCancel={onDragCancel}
         >
-            <div className="border border-dashed border-gray-200 rounded-lg p-4 space-y-4">
+            <div className="border border-dashed border-border rounded-lg p-4 space-y-4">
                 {blocks.length === 0 ? (
                     <Empty onPick={(def, overrides) => handleAddAt(-1, def, overrides)}/>
                 ) : (
@@ -168,11 +168,11 @@ export const FormBuilder = ({onChange, json = []}: Props) => {
                                             >
                                                 <button
                                                     type="button"
-                                                    className="rounded-full border border-gray-300 bg-primary-700 shadow-sm p-2 hover:bg-primary-500 cursor-pointer"
+                                                    className="rounded-full border border-input bg-primary shadow-sm p-2 hover:bg-primary/90 cursor-pointer"
                                                     title="Ajouter un bloc"
                                                 >
                                                     <svg width="16" height="16" viewBox="0 0 24 24"
-                                                         className="text-white">
+                                                         className="text-primary-foreground">
                                                         <path fill="currentColor"
                                                               d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/>
                                                     </svg>
@@ -194,7 +194,7 @@ export const FormBuilder = ({onChange, json = []}: Props) => {
             <DragOverlay dropAnimation={null}>
                 {activeId && activeSize ? (
                     <div
-                        className="bg-primary-50"
+                        className="bg-primary/10"
                         style={{
                             width: activeSize.width,
                             height: activeSize.height,

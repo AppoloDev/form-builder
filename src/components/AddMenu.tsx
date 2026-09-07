@@ -163,25 +163,25 @@ export const AddMenu: React.FC<AddMenuProps> = (
             />
 
             <div
-                className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4xl max-w-[90vw] rounded-lg border border-gray-200 bg-white shadow-xl flex overflow-hidden"
+                className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4xl max-w-[90vw] rounded-lg border border-border bg-popover shadow-xl flex overflow-hidden"
                 style={{maxHeight: "80vh"}}>
 
                 {/* Left panel – Block list */}
-                <div className="w-72 min-w-72 border-r border-gray-200 flex flex-col">
-                    <div className="p-2 border-b border-gray-200">
+                <div className="w-72 min-w-72 border-r border-border flex flex-col">
+                    <div className="p-2 border-b border-border">
                         <input
                             ref={inputRef}
                             type="text"
                             value={query}
                             onChange={e => setQuery(e.target.value)}
                             placeholder={placeholder}
-                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 text-sm"
+                            className="w-full px-3 py-2 border border-input rounded focus:outline-none focus:border-ring text-sm"
                         />
                     </div>
 
                     <div className="flex-1 overflow-auto">
                         {filtered.length === 0 ? (
-                            <div className="p-3 text-sm text-gray-400">Aucun résultat…</div>
+                            <div className="p-3 text-sm text-muted-foreground">Aucun résultat…</div>
                         ) : (
                             <ul className="p-2 space-y-1">
                                 {filtered.map(def => (
@@ -201,7 +201,7 @@ export const AddMenu: React.FC<AddMenuProps> = (
                                             }}
                                             className={`w-full justify-start ${
                                                 selectedDef?.id === def.id
-                                                    ? "bg-blue-50 border border-blue-200 ring-1 ring-blue-200"
+                                                    ? "bg-accent border border-accent ring-1 ring-accent"
                                                     : ""
                                             }`}
                                             title={def.description}
@@ -220,9 +220,9 @@ export const AddMenu: React.FC<AddMenuProps> = (
                     {selectedDef ? (
                         <>
                             {/* Header */}
-                            <div className="p-4 border-b border-gray-200">
-                                <h3 className="text-lg font-semibold text-gray-900">{selectedDef.title}</h3>
-                                <p className="text-sm text-gray-500 mt-1">{selectedDef.description}</p>
+                            <div className="p-4 border-b border-border">
+                                <h3 className="text-lg font-semibold text-foreground">{selectedDef.title}</h3>
+                                <p className="text-sm text-muted-foreground mt-1">{selectedDef.description}</p>
                             </div>
 
                             {/* Edition fields */}
@@ -231,7 +231,7 @@ export const AddMenu: React.FC<AddMenuProps> = (
                             </div>
 
                             {/* Footer */}
-                            <div className="p-3 border-t border-gray-200 flex justify-end gap-2">
+                            <div className="p-3 border-t border-border flex justify-end gap-2">
                                 <Button
                                     type="button"
                                     variant="ghost"
@@ -251,8 +251,8 @@ export const AddMenu: React.FC<AddMenuProps> = (
                         </>
                     ) : (
                         <div className="flex-1 flex items-center justify-center p-8">
-                            <div className="text-center text-gray-400">
-                                <svg className="mx-auto mb-3 text-gray-300" width="48" height="48" viewBox="0 0 24 24"
+                            <div className="text-center text-muted-foreground">
+                                <svg className="mx-auto mb-3 text-muted-foreground" width="48" height="48" viewBox="0 0 24 24"
                                      fill="none" stroke="currentColor" strokeWidth="1.5">
                                     <path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M2 2l1.932 1.932"/>
                                 </svg>

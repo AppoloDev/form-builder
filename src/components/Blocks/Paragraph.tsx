@@ -25,7 +25,7 @@ const Paragraph = ({id, text}: ParagraphProps) => {
                     }}
                 />,
             ]}>
-                <div className="border border-gray-200 rounded-lg p-4 flex-1">
+                <div className="border border-border rounded-lg p-4 flex-1">
                     <p>{label}</p>
                 </div>
             </EditableBlock>

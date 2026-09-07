@@ -23,7 +23,7 @@ export const OptionsEdition = ({ label, value = [], helpText, onChange }: Props)
     return (
         <div className="mb-3">
             <div className="flex items-center justify-between mb-1">
-                <label className="block text-sm font-medium text-gray-700">{label}</label>
+                <label className="block text-sm font-medium text-foreground">{label}</label>
                 <Button type="button" size="sm" variant="secondary" onClick={add}>
                     + Ajouter
                 </Button>
@@ -51,7 +51,7 @@ export const OptionsEdition = ({ label, value = [], helpText, onChange }: Props)
             </div>
 
             {helpText && (
-                <p className="mt-1 text-xs text-gray-500 italic">{helpText}</p>
+                <p className="mt-1 text-xs text-muted-foreground italic">{helpText}</p>
             )}
         </div>
     );

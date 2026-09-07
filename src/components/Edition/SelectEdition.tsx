@@ -13,7 +13,7 @@ type Props = {
 export const SelectEdition = ({label, value, options, helpText, editItem}: Props) => {
     return (
         <div className="mb-3">
-            <label className="block mb-2 text-sm font-medium text-gray-900">{label}</label>
+            <label className="block mb-2 text-sm font-medium text-foreground">{label}</label>
             <Select value={value ?? ""} onValueChange={(v) => editItem(v ?? "")}>
                 <SelectTrigger className="w-full">
                     <SelectValue/>
@@ -24,7 +24,7 @@ export const SelectEdition = ({label, value, options, helpText, editItem}: Props
                     ))}
                 </SelectContent>
             </Select>
-            {helpText && <p className="mt-1 text-xs text-gray-500 italic">{helpText}</p>}
+            {helpText && <p className="mt-1 text-xs text-muted-foreground italic">{helpText}</p>}
         </div>
     );
 };

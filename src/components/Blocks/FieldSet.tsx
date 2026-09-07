@@ -21,7 +21,7 @@ const FieldSet = ({id, children}: FieldSetProps) => {
 
     return (
         <EditableBlock id={id}>
-            <div className="space-y-3 rounded-lg border border-gray-200 p-4 flex-1">
+            <div className="space-y-3 rounded-lg border border-border p-4 flex-1">
                 {children.length === 0 ? (
                     <Empty onPick={addChild}/>
                 ) : (

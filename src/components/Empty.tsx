@@ -10,11 +10,11 @@ export const Empty = ({onPick}: Props) => {
     return (
         <div className="max-w-sm w-full flex flex-col justify-center mx-auto space-y-5 p-8">
             <div className="flex flex-col items-center gap-2">
-                <div className="font-semibold text-gray-800 text-center">
+                <div className="font-semibold text-foreground text-center">
                     Aucun bloc pour le moment !
                 </div>
 
-                <p className="text-sm text-gray-600 text-center">
+                <p className="text-sm text-muted-foreground text-center">
                     Pour ajouter un nouveau bloc, veuillez cliquer sur le bouton ci-dessous.
                 </p>
             </div>

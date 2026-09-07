@@ -12,7 +12,7 @@ export const CheckboxEdition = ({label, checked, editItem}: Props) => {
             className="flex items-center cursor-pointer justify-between"
             onClick={() => editItem(!checked)}
         >
-            <span className="text-sm font-medium text-gray-900">{label}</span>
+            <span className="text-sm font-medium text-foreground">{label}</span>
             <Switch
                 checked={checked}
                 onCheckedChange={editItem}

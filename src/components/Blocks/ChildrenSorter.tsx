@@ -121,7 +121,7 @@ export const ChildrenSorter: React.FC<{
             <DragOverlay dropAnimation={null}>
                 {activeChildId && activeSize ? (
                     <div
-                        className="bg-primary-50"
+                        className="bg-primary/10"
                         style={{
                             width: activeSize.width,
                             height: activeSize.height,

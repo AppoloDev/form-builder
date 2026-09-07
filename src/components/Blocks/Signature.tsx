@@ -43,13 +43,13 @@ const Signature = ({id, label, helpText, required, isChildBlock}: Props) => {
     return (
         <div className="flex items-center gap-4">
             <EditableBlock id={id} editionItems={editionItems}>
-                <div className="border border-gray-200 rounded-lg p-4 flex-1">
+                <div className="border border-border rounded-lg p-4 flex-1">
                     <label className={form.required ? "required" : ""}>
                         {form.label}
                     </label>
 
                     <div
-                        className="mt-2 h-24 flex items-center justify-center rounded-lg border border-dashed border-gray-300 text-sm text-gray-400">
+                        className="mt-2 h-24 flex items-center justify-center rounded-lg border border-dashed border-border text-sm text-muted-foreground">
                         Zone de signature
                     </div>
 

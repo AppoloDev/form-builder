@@ -59,7 +59,7 @@ const Title = ({id, text, heading}: TitleProps) => {
                     }}
                 />
             ]}>
-                <div className="border border-gray-200 rounded-lg p-4 flex-1">
+                <div className="border border-border rounded-lg p-4 flex-1">
                     {React.createElement(headingLevel, {className: renderClass(headingLevel)}, label)}
                 </div>
             </EditableBlock>

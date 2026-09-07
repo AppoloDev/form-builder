@@ -172,7 +172,7 @@ const ChoiceGroupInput: FC<Props> = (props) => {
         <FieldInput id={id} form={form} editionItems={editionItems}>
             <div className="space-y-3">
                 {form.options.map((opt, idx) => (
-                    <div key={opt.id} className="rounded-lg border border-gray-200 p-3 bg-white">
+                    <div key={opt.id} className="rounded-lg border border-border p-3 bg-card">
                         <div className="flex items-center gap-2">
                             <input
                                 type={form.multiple ? "checkbox" : "radio"}
@@ -211,7 +211,7 @@ const ChoiceGroupInput: FC<Props> = (props) => {
                         </div>
 
                         {propsUseContionnalField && opt.showConditionalField && (
-                            <div className="mt-3 rounded-lg border border-gray-200 bg-gray-50 p-3 space-y-3">
+                            <div className="mt-3 rounded-lg border border-border bg-muted p-3 space-y-3">
                                 {opt.children.length === 0 ? (
                                     <Empty onPick={(def, overrides) => addFollowUpFromDef(idx, def, overrides)}/>
                                 ) : (

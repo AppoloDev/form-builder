@@ -47,17 +47,17 @@ export const ContextMenu = (
                 role="dialog"
                 aria-modal="true"
                 aria-label={title}
-                className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg border border-gray-200 py-2 w-xl max-h-[80vh] overflow-y-auto"
+                className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-popover rounded-lg border border-border py-2 w-xl max-h-[80vh] overflow-y-auto"
             >
-                <div className="px-4 py-3 border-b border-gray-200">
+                <div className="px-4 py-3 border-b border-border">
                     <div className="flex items-center justify-between">
-                        <h3 className="text-sm font-semibold text-gray-700">
+                        <h3 className="text-sm font-semibold text-foreground">
                             {title}
                         </h3>
 
                         <button
                             onClick={onClose}
-                            className="text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
+                            className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
                             aria-label="Fermer"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" height={16} width={16}>
