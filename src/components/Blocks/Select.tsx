@@ -6,6 +6,7 @@ import { TextEdition } from "../Edition/TextEdition";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
 import { OptionsEdition } from "../Edition/OptionsEdition";
 import { labelToName } from "../../utilities/string.utiles";
+import { Select as SelectField, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
 type Props = Omit<SelectProps, 'id'> & { id: string; isChildBlock?: boolean; preview?: boolean };
 
@@ -81,15 +82,20 @@ const Select = (
 
     return (
         <FieldInput id={id} form={form} editionItems={editionItems} preview={preview}>
-            <select
+            <SelectField
                 disabled
-                multiple={form.multiple}
-                className="h-8 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-base disabled:opacity-50"
+                items={form.options.map((opt) => ({value: opt, label: opt}))}
+                defaultValue={form.options[0]}
             >
-                {form.options.map((opt, idx) => (
-                    <option key={`${opt}-${idx}`} value={opt}>{opt}</option>
-                ))}
-            </select>
+                <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Sélectionner…"/>
+                </SelectTrigger>
+                <SelectContent>
+                    {form.options.map((opt, idx) => (
+                        <SelectItem key={`${opt}-${idx}`} value={opt}>{opt}</SelectItem>
+                    ))}
+                </SelectContent>
+            </SelectField>
         </FieldInput>
     );
 };

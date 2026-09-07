@@ -10,6 +10,9 @@ import { useFormBuilderStore } from "../../stores/block.store";
 import { v4 as uuidv4 } from "uuid";
 import { ChildrenSorter } from "./ChildrenSorter";
 import { Button } from "@/src/components/ui/button";
+import { Input } from "../ui/input";
+import { Checkbox } from "../ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { EyeClosedIcon } from "../Icons/EyeClosedIcon";
 import { EyeIcon } from "../Icons/EyeIcon";
 import { TrashIcon } from "../Icons/TrashIcon";
@@ -170,19 +173,16 @@ const ChoiceGroupInput: FC<Props> = (props) => {
         updateBlock(id, patch);
     };
 
-    return (
-        <FieldInput id={id} form={form} editionItems={editionItems} preview={preview}>
-            <div className="space-y-3">
-                {form.options.map((opt, idx) => (
+    const renderOptionRow = (opt: OptionItem, idx: number) => (
                     <div key={opt.id} className="rounded-lg border border-border p-3 bg-card">
                         <div className="flex items-center gap-2">
-                            <input
-                                type={form.multiple ? "checkbox" : "radio"}
-                                disabled
-                            />
+                            {form.multiple ? (
+                                <Checkbox disabled/>
+                            ) : (
+                                <RadioGroupItem value={opt.id} disabled/>
+                            )}
 
-                            <input
-                                type="text"
+                            <Input
                                 value={opt.label}
                                 onChange={(e) =>
                                     updateOption(idx, {label: e.target.value, value: e.target.value})
@@ -237,7 +237,20 @@ const ChoiceGroupInput: FC<Props> = (props) => {
                             </div>
                         )}
                     </div>
-                ))}
+    );
+
+    return (
+        <FieldInput id={id} form={form} editionItems={editionItems} preview={preview}>
+            <div className="space-y-3">
+                {form.multiple ? (
+                    <div className="space-y-3">
+                        {form.options.map(renderOptionRow)}
+                    </div>
+                ) : (
+                    <RadioGroup className="space-y-3">
+                        {form.options.map(renderOptionRow)}
+                    </RadioGroup>
+                )}
 
                 <div className="flex justify-end">
                     <Button type="button" size="sm" onClick={addOption}>

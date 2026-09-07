@@ -5,6 +5,8 @@ import { CheckboxEdition } from "../Edition/CheckboxEdition";
 import { SelectEdition } from "../Edition/SelectEdition";
 import { FieldInput } from "./FieldInput";
 import { labelToName } from "../../utilities/string.utiles";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
 
 type CommonProps = {
     id: string;
@@ -155,21 +157,19 @@ export const makeInputBlock = (
                 preview={preview}
             >
                 {finalType === 'textarea' ?
-                    <textarea
+                    <Textarea
                         id={id}
                         placeholder={form.placeHolder}
                         rows={props.rows}
                         disabled
-                        className="w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-base placeholder:text-muted-foreground disabled:opacity-50"
                         {...restInputAttrs}
                     />
                     :
-                    <input
+                    <Input
                         id={id}
                         type={finalType}
                         placeholder={form.placeHolder}
                         disabled
-                        className="h-8 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-base placeholder:text-muted-foreground disabled:opacity-50"
                         {...restInputAttrs}
                     />
                 }
