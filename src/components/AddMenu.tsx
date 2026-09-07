@@ -1,5 +1,4 @@
-import React, { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import React, { PropsWithChildren, useMemo, useRef, useState } from "react";
 import { BlockDefinition, DefinitionEditionItem, getAllBlockDefinitions } from "./Blocks/Definition";
 import { TextEdition } from "./Edition/TextEdition";
 import { CheckboxEdition } from "./Edition/CheckboxEdition";
@@ -7,6 +6,7 @@ import { SelectEdition } from "./Edition/SelectEdition";
 import { labelToName } from "../utilities/string.utiles";
 import { Button } from "@/src/components/ui/button";
 import { BLOCK_COMPONENTS } from "./BlockRegistry";
+import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 
 type AddMenuProps = {
     onPick: (def: BlockDefinition, overrides?: Record<string, any>) => void;
@@ -28,7 +28,6 @@ export const AddMenu: React.FC<AddMenuProps> = (
         return ALL.filter(d => allow.has(d.type));
     }, [ALL, allowTypes]);
 
-    const [open, setOpen] = useState(false);
     const [query, setQuery] = useState("");
     const [selectedDef, setSelectedDef] = useState<BlockDefinition | null>(null);
     const [formState, setFormState] = useState<Record<string, any>>({});
@@ -44,28 +43,7 @@ export const AddMenu: React.FC<AddMenuProps> = (
         );
     }, [query, items]);
 
-    useEffect(() => {
-        if (!open) return;
-
-        setTimeout(() => inputRef.current?.focus(), 0);
-
-        const handleEscape = (e: KeyboardEvent) => {
-            if (e.key === "Escape") {
-                if (selectedDef) {
-                    setSelectedDef(null);
-                    setFormState({});
-                } else {
-                    setOpen(false);
-                }
-            }
-        };
-
-        document.addEventListener("keydown", handleEscape);
-        return () => document.removeEventListener("keydown", handleEscape);
-    }, [open, selectedDef]);
-
     const handleClose = () => {
-        setOpen(false);
         setQuery("");
         setSelectedDef(null);
         setFormState({});
@@ -87,6 +65,9 @@ export const AddMenu: React.FC<AddMenuProps> = (
     const getPreviewProps = (def: BlockDefinition, state: Record<string, any>): Record<string, any> => {
         const merged: Record<string, any> = {...def.defaultProps, ...state, id: "preview", preview: true};
 
+        // ChoiceGroup/Select auto-fill 3 default options on mount when empty, which
+        // would otherwise call updateBlock() on the real store from this read-only
+        // preview. Pre-filling here keeps the preview side-effect-free.
         if ((def.type === "ChoiceGroup" || def.type === "Select") && (!merged.options || merged.options.length === 0)) {
             merged.options = def.type === "ChoiceGroup"
                 ? [1, 2, 3].map((n) => ({
@@ -173,18 +154,22 @@ export const AddMenu: React.FC<AddMenuProps> = (
         );
     };
 
-    const menuContent = open && (
-        <>
-            <div
-                className="fixed inset-0 z-40 bg-black/30"
-                onClick={handleClose}
-                role="presentation"
-            />
+    return (
+        <Dialog onOpenChange={(next) => {
+            if (next) {
+                setTimeout(() => inputRef.current?.focus(), 0);
+            } else {
+                handleClose();
+            }
+        }}>
+            <DialogTrigger nativeButton={false} render={<div onClick={(e) => e.stopPropagation()} className="inline-block cursor-pointer"/>}>
+                {children}
+            </DialogTrigger>
 
-            <div
-                className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4xl max-w-[90vw] rounded-lg border border-border bg-popover shadow-xl flex overflow-hidden"
-                style={{maxHeight: "80vh"}}>
-
+            <DialogContent
+                className="sm:max-w-4xl gap-0 p-0 flex overflow-hidden"
+                style={{maxHeight: "80vh"}}
+            >
                 {/* Left panel – Block list */}
                 <div className="w-72 min-w-72 border-r border-border flex flex-col">
                     <div className="p-2 border-b border-border">
@@ -250,7 +235,7 @@ export const AddMenu: React.FC<AddMenuProps> = (
                                 {/* Preview */}
                                 <div className="p-4 border-t border-border bg-muted">
                                     <p className="text-sm font-medium text-muted-foreground mb-2">Aperçu</p>
-                                    <div className="pointer-events-none bg-white p-4 rounded-lg">
+                                    <div className="pointer-events-none bg-background p-4 rounded-lg">
                                         {(() => {
                                             const PreviewComponent = BLOCK_COMPONENTS[selectedDef.type];
                                             return (
@@ -272,10 +257,9 @@ export const AddMenu: React.FC<AddMenuProps> = (
                                     onClick={() => {
                                         setSelectedDef(null);
                                         setFormState({});
-                                        handleClose()
                                     }}
                                 >
-                                    Fermer
+                                    Retour
                                 </Button>
 
                                 <Button
@@ -295,25 +279,7 @@ export const AddMenu: React.FC<AddMenuProps> = (
                         </div>
                     )}
                 </div>
-            </div>
-        </>
-    );
-
-    return (
-        <>
-            <div className="relative inline-block cursor-pointer">
-                <div
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setOpen(o => !o);
-                    }}
-                >
-                    {children}
-                </div>
-            </div>
-
-            {menuContent && createPortal(menuContent, document.body)}
-        </>
+            </DialogContent>
+        </Dialog>
     );
 };

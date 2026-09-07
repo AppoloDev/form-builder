@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, ReactNode } from "react";
-import { createPortal } from "react-dom";
+import { ReactNode } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
 
 interface ContextMenuProps {
     visible: boolean;
@@ -15,70 +15,21 @@ export const ContextMenu = (
         children,
         title = "Configuration du champ"
     }: ContextMenuProps) => {
-    const menuRef = useRef<HTMLDivElement>(null);
+    return (
+        <Dialog open={visible} onOpenChange={(open) => {
+            if (!open) onClose();
+        }}>
+            <DialogContent className="sm:max-w-xl max-h-[80vh] overflow-y-auto">
+                <DialogHeader>
+                    <DialogTitle>{title}</DialogTitle>
+                </DialogHeader>
 
-    useEffect(() => {
-        if (!visible) return;
-
-        const handleEscape = (e: KeyboardEvent) => {
-            if (e.key === "Escape") {
-                onClose();
-            }
-        };
-
-        document.addEventListener("keydown", handleEscape);
-        return () => {
-            document.removeEventListener("keydown", handleEscape);
-        };
-    }, [visible, onClose]);
-
-    if (!visible) return null;
-
-    const menuContent = (
-        <>
-            <div
-                className="fixed inset-0 z-40 bg-black/30"
-                onClick={onClose}
-                role="presentation"
-            />
-
-            <div
-                ref={menuRef}
-                role="dialog"
-                aria-modal="true"
-                aria-label={title}
-                className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-popover rounded-lg border border-border py-2 w-xl max-h-[80vh] overflow-y-auto"
-            >
-                <div className="px-4 py-3 border-b border-border">
-                    <div className="flex items-center justify-between">
-                        <h3 className="text-sm font-semibold text-foreground">
-                            {title}
-                        </h3>
-
-                        <button
-                            onClick={onClose}
-                            className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-                            aria-label="Fermer"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" height={16} width={16}>
-                                <rect width="256" height="256" fill="none"/>
-                                <line x1="200" y1="56" x2="56" y2="200" stroke="currentColor" strokeLinecap="round"
-                                      strokeLinejoin="round" strokeWidth="16"/>
-                                <line x1="200" y1="200" x2="56" y2="56" stroke="currentColor" strokeLinecap="round"
-                                      strokeLinejoin="round" strokeWidth="16"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
-                <div className="px-4 py-3 space-y-4">
+                <div className="space-y-4">
                     {children}
                 </div>
-            </div>
-        </>
+            </DialogContent>
+        </Dialog>
     );
-
-    return createPortal(menuContent, document.body);
 };
 
 interface ContextMenuItemProps {

@@ -1,13 +1,11 @@
 import React, { ReactElement, ReactNode, useState, MouseEvent, useCallback, useContext } from "react";
-import { EditIcon } from "../Icons/EditIcon";
-import { TrashIcon } from "../Icons/TrashIcon";
 import { Tooltip } from "../Tooltip";
 import { UniqueIdentifier } from "@dnd-kit/core";
 import { ContextMenu, ContextMenuItem } from "../ContextMenu";
 import { useBlockOperations } from "../../hooks/useBlockOperations";
-import { BlockDefinition } from "./Definition";
 import { DragHandleContext } from "../../FormBuilder";
-import { DotsIcon } from "../Icons/DotsIcon";
+import { Button } from "@/src/components/ui/button";
+import { GripVertical, SquarePen, Trash } from "lucide-react";
 
 interface EditableBlockProps {
     id: UniqueIdentifier;
@@ -58,41 +56,42 @@ export const EditableBlock = (
 
     return (
         <>
-            <div className={`flex gap-2 ${className}`}>
+            <div className={`flex ${className}`}>
                 {items.length > 0 && (
                     <Tooltip content="Paramètres">
-                        <button
-                            type="button"
-                            className="cursor-pointer"
+                        <Button
+                            variant="ghost"
+                            size="icon-lg"
                             onClick={handleOpenContextMenu}
                             aria-label="Ouvrir les paramètres"
                         >
-                            <EditIcon size={20}/>
-                        </button>
+                            <SquarePen />
+                        </Button>
                     </Tooltip>
                 )}
 
                 <Tooltip content="Supprimer">
-                    <button
-                        type="button"
-                        className="cursor-pointer"
+                    <Button
+                        variant="ghost"
+                        size="icon-lg"
                         onClick={handleDelete}
                         aria-label="Supprimer le bloc"
                     >
-                        <TrashIcon size={20}/>
-                    </button>
+                        <Trash />
+                    </Button>
                 </Tooltip>
 
                 <Tooltip content="Déplacer le bloc">
-                    <button
-                        type="button"
+                    <Button
+                        variant="ghost"
+                        size="icon-lg"
                         ref={setActivatorNodeRef}
                         {...(attributes || {})}
                         {...(listeners || {})}
                         className={`cursor-grab active:cursor-grabbing`}
                     >
-                        <DotsIcon size={20}/>
-                    </button>
+                        <GripVertical />
+                    </Button>
                 </Tooltip>
             </div>
 

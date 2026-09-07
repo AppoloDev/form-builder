@@ -15,8 +15,8 @@ import { Checkbox } from "../ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { EyeClosedIcon } from "../Icons/EyeClosedIcon";
 import { EyeIcon } from "../Icons/EyeIcon";
-import { TrashIcon } from "../Icons/TrashIcon";
 import { labelToName } from "../../utilities/string.utiles";
+import { Trash } from "lucide-react";
 
 type Props = {
     id: string;
@@ -193,18 +193,17 @@ const ChoiceGroupInput: FC<Props> = (props) => {
                             <Button
                                 type="button"
                                 variant="ghost"
-                                size="sm"
+                                size="icon-lg"
                                 onClick={() => removeOption(idx)}
                                 className="text-destructive hover:text-destructive"
                                 aria-label="Supprimer l'option"
                             >
-                                <TrashIcon size={20} />
+                                <Trash />
                             </Button>
 
                             {propsUseContionnalField && <Button
                                 type="button"
                                 variant="ghost"
-                                size="sm"
                                 onClick={() => updateOption(idx, {showConditionalField: !opt.showConditionalField})}
                             >
                                 {opt.showConditionalField ? <EyeClosedIcon size={22}/> : <EyeIcon size={22}/>}
