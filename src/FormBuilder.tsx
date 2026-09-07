@@ -88,8 +88,8 @@ export const FormBuilder = ({onChange, json = []}: Props) => {
         })
     );
 
-    const handleAddAt = (afterIndex: number, def: BlockDefinition) => {
-        const newBlock = createBlockFromTemplate(def);
+    const handleAddAt = (afterIndex: number, def: BlockDefinition, overrides?: Record<string, any>) => {
+        const newBlock = createBlockFromTemplate(def, overrides);
         addBlock(newBlock, afterIndex + 1);
     };
 
@@ -147,7 +147,7 @@ export const FormBuilder = ({onChange, json = []}: Props) => {
         >
             <div className="border border-dashed border-gray-200 rounded-lg p-4 space-y-4">
                 {blocks.length === 0 ? (
-                    <Empty onPick={(def) => handleAddAt(-1, def)}/>
+                    <Empty onPick={(def, overrides) => handleAddAt(-1, def, overrides)}/>
                 ) : (
                     <SortableContext items={ids} strategy={verticalListSortingStrategy}>
                         {blocks.map((block, idx) => {
@@ -163,12 +163,12 @@ export const FormBuilder = ({onChange, json = []}: Props) => {
                                         <div
                                             className="absolute -right-3 -bottom-3">
                                             <AddMenu
-                                                onPick={(def) => handleAddAt(idx, def)}
+                                                onPick={(def, overrides) => handleAddAt(idx, def, overrides)}
                                                 placeholder="Rechercher un type…"
                                             >
                                                 <button
                                                     type="button"
-                                                    className="rounded-full border border-gray-300 bg-appolo-700 shadow-sm p-2 hover:bg-appolo-500 cursor-pointer"
+                                                    className="rounded-full border border-gray-300 bg-primary-700 shadow-sm p-2 hover:bg-primary-500 cursor-pointer"
                                                     title="Ajouter un bloc"
                                                 >
                                                     <svg width="16" height="16" viewBox="0 0 24 24"
@@ -194,7 +194,7 @@ export const FormBuilder = ({onChange, json = []}: Props) => {
             <DragOverlay dropAnimation={null}>
                 {activeId && activeSize ? (
                     <div
-                        className="bg-appolo-50"
+                        className="bg-primary-50"
                         style={{
                             width: activeSize.width,
                             height: activeSize.height,

@@ -147,8 +147,8 @@ const ChoiceGroupInput: FC<Props> = (props) => {
         updateBlock(id, patch);
     };
 
-    const addFollowUpFromDef = (idx: number, def: BlockDefinition) => {
-        const newBlock = createBlockFromTemplate(def);
+    const addFollowUpFromDef = (idx: number, def: BlockDefinition, overrides?: Record<string, any>) => {
+        const newBlock = createBlockFromTemplate(def, overrides);
         const nextOptions = form.options.map((opt, i) =>
             i === idx ? {...opt, children: [...opt.children, newBlock], showConditionalField: true} : opt
         );
@@ -209,7 +209,7 @@ const ChoiceGroupInput: FC<Props> = (props) => {
                         {propsUseContionnalField && opt.showConditionalField && (
                             <div className="mt-3 rounded-lg border border-gray-200 bg-gray-50 p-3 space-y-3">
                                 {opt.children.length === 0 ? (
-                                    <Empty onPick={(def) => addFollowUpFromDef(idx, def)}/>
+                                    <Empty onPick={(def, overrides) => addFollowUpFromDef(idx, def, overrides)}/>
                                 ) : (
                                     <>
                                         <ChildrenSorter
@@ -220,7 +220,7 @@ const ChoiceGroupInput: FC<Props> = (props) => {
                                         />
 
                                         <div className="pt-1">
-                                            <AddMenu onPick={(def) => addFollowUpFromDef(idx, def)}>
+                                            <AddMenu onPick={(def, overrides) => addFollowUpFromDef(idx, def, overrides)}>
                                                 <button
                                                     type="button"
                                                     className="btn btn-size-small btn-color-appolo btn-mode-solid"

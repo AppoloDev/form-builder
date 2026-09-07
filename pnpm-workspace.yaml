@@ -2,3 +2,5 @@ allowBuilds:
   '@parcel/watcher': true
   '@tailwindcss/oxide': true
   esbuild: true
+minimumReleaseAgeExclude:
+  - cn@0.2.6

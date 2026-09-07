@@ -3,7 +3,7 @@ import React from "react";
 import { BlockDefinition } from "./Blocks/Definition";
 
 type Props = {
-    onPick: (def: BlockDefinition) => void;
+    onPick: (def: BlockDefinition, overrides?: Record<string, any>) => void;
 }
 
 export const Empty = ({onPick}: Props) => {

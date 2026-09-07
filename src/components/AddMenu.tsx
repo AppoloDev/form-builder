@@ -1,9 +1,14 @@
 import React, { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { BlockDefinition, getAllBlockDefinitions } from "./Blocks/Definition";
+import { BlockDefinition, DefinitionEditionItem, getAllBlockDefinitions } from "./Blocks/Definition";
+import { TextEdition } from "./Edition/TextEdition";
+import { CheckboxEdition } from "./Edition/CheckboxEdition";
+import { SelectEdition } from "./Edition/SelectEdition";
+import { labelToName } from "../utilities/string.utiles";
+import { Button } from "@/src/components/ui/button";
 
 type AddMenuProps = {
-    onPick: (def: BlockDefinition) => void;
+    onPick: (def: BlockDefinition, overrides?: Record<string, any>) => void;
     placeholder?: string;
     allowTypes?: Array<BlockDefinition["type"]>;
 } & PropsWithChildren;
@@ -24,6 +29,8 @@ export const AddMenu: React.FC<AddMenuProps> = (
 
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState("");
+    const [selectedDef, setSelectedDef] = useState<BlockDefinition | null>(null);
+    const [formState, setFormState] = useState<Record<string, any>>({});
     const inputRef = useRef<HTMLInputElement>(null);
 
     const filtered = useMemo(() => {
@@ -43,17 +50,108 @@ export const AddMenu: React.FC<AddMenuProps> = (
 
         const handleEscape = (e: KeyboardEvent) => {
             if (e.key === "Escape") {
-                setOpen(false);
+                if (selectedDef) {
+                    setSelectedDef(null);
+                    setFormState({});
+                } else {
+                    setOpen(false);
+                }
             }
         };
 
         document.addEventListener("keydown", handleEscape);
         return () => document.removeEventListener("keydown", handleEscape);
-    }, [open]);
+    }, [open, selectedDef]);
 
     const handleClose = () => {
         setOpen(false);
         setQuery("");
+        setSelectedDef(null);
+        setFormState({});
+    };
+
+    const handleSelectDef = (def: BlockDefinition) => {
+        setSelectedDef(def);
+        // Initialize form state from default props
+        const initial: Record<string, any> = {};
+        if (def.editionSchema) {
+            for (const field of def.editionSchema) {
+                const defaultVal = (def.defaultProps as Record<string, any>)[field.key];
+                initial[field.key] = defaultVal ?? (field.type === "checkbox" ? false : "");
+            }
+        }
+        setFormState(initial);
+    };
+
+    const handleFormChange = (key: string, value: any) => {
+        setFormState(prev => {
+            const next = { ...prev, [key]: value };
+            // Auto-derive `name` from `label`
+            if (key === "label") {
+                next.name = labelToName(value);
+            }
+            return next;
+        });
+    };
+
+    const handleConfirm = () => {
+        if (!selectedDef) return;
+
+        // Build overrides: only include values that differ from defaults
+        const overrides: Record<string, any> = {};
+        const defaults = selectedDef.defaultProps as Record<string, any>;
+        for (const [key, value] of Object.entries(formState)) {
+            if (value !== defaults[key]) {
+                overrides[key] = value;
+            }
+        }
+        // If label was changed, also include the derived name
+        if (overrides.label) {
+            overrides.name = labelToName(overrides.label);
+        }
+
+        onPick(selectedDef, Object.keys(overrides).length > 0 ? overrides : undefined);
+        handleClose();
+    };
+
+    const renderEditionField = (field: DefinitionEditionItem) => {
+        const value = formState[field.key];
+
+        if (field.type === "checkbox") {
+            return (
+                <CheckboxEdition
+                    key={field.key}
+                    label={field.label}
+                    checked={Boolean(value)}
+                    editItem={(v) => handleFormChange(field.key, v)}
+                />
+            );
+        }
+
+        if (field.type === "select") {
+            return (
+                <SelectEdition
+                    key={field.key}
+                    label={field.label}
+                    value={value ?? ""}
+                    options={field.options}
+                    helpText={field.helpText}
+                    editItem={(v) => handleFormChange(field.key, v)}
+                />
+            );
+        }
+
+        return (
+            <TextEdition
+                key={field.key}
+                label={field.label}
+                value={value ?? ""}
+                type={field.type || "text"}
+                helpText={field.helpText || ""}
+                rows={field.rows}
+                editItem={(v) => handleFormChange(field.key, v)}
+            />
+        );
     };
 
     const menuContent = open && (
@@ -64,42 +162,102 @@ export const AddMenu: React.FC<AddMenuProps> = (
                 role="presentation"
             />
 
-            <div className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-xl rounded-lg border border-gray-200 bg-white">
-                <div className="p-2 border-b border-gray-200">
-                    <input
-                        ref={inputRef}
-                        type="text"
-                        value={query}
-                        onChange={e => setQuery(e.target.value)}
-                        placeholder={placeholder}
-                        className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                    />
+            <div className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4xl max-w-[90vw] rounded-lg border border-gray-200 bg-white shadow-xl flex overflow-hidden"
+                 style={{maxHeight: "80vh"}}>
+
+                {/* Left panel – Block list */}
+                <div className="w-72 min-w-72 border-r border-gray-200 flex flex-col">
+                    <div className="p-2 border-b border-gray-200">
+                        <input
+                            ref={inputRef}
+                            type="text"
+                            value={query}
+                            onChange={e => setQuery(e.target.value)}
+                            placeholder={placeholder}
+                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 text-sm"
+                        />
+                    </div>
+
+                    <div className="flex-1 overflow-auto">
+                        {filtered.length === 0 ? (
+                            <div className="p-3 text-sm text-gray-400">Aucun résultat…</div>
+                        ) : (
+                            <ul className="p-1">
+                                {filtered.map(def => (
+                                    <li key={def.id}>
+                                        <button
+                                            type="button"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                e.stopPropagation();
+                                                if (def.editionSchema && def.editionSchema.length > 0) {
+                                                    handleSelectDef(def);
+                                                } else {
+                                                    // No config needed, add directly
+                                                    onPick(def);
+                                                    handleClose();
+                                                }
+                                            }}
+                                            className={`flex-col !items-start btn btn-size-small btn-mode-ghost w-full text-left !gap-0.5 ${
+                                                selectedDef?.id === def.id
+                                                    ? "!bg-blue-50 !border-blue-200 ring-1 ring-blue-200"
+                                                    : ""
+                                            }`}
+                                            title={def.description}
+                                        >
+                                            <div className="text-black text-sm">{def.title}</div>
+                                            <p className="text-xs text-gray-500 line-clamp-1">{def.description}</p>
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
                 </div>
 
-                <div className="max-h-80 overflow-auto">
-                    {filtered.length === 0 ? (
-                        <div className="p-3 text-sm text-gray-400">Aucun résultat…</div>
+                {/* Right panel – Configuration */}
+                <div className="flex-1 flex flex-col min-w-0">
+                    {selectedDef ? (
+                        <>
+                            {/* Header */}
+                            <div className="p-4 border-b border-gray-200">
+                                <h3 className="text-lg font-semibold text-gray-900">{selectedDef.title}</h3>
+                                <p className="text-sm text-gray-500 mt-1">{selectedDef.description}</p>
+                            </div>
+
+                            {/* Edition fields */}
+                            <div className="flex-1 overflow-auto p-4 space-y-3">
+                                {selectedDef.editionSchema?.map(renderEditionField)}
+                            </div>
+
+                            {/* Footer */}
+                            <div className="p-3 border-t border-gray-200 flex justify-end gap-2">
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setSelectedDef(null);
+                                        setFormState({});
+                                    }}
+                                    className="btn btn-size-small btn-mode-ghost"
+                                >
+                                    Retour
+                                </button>
+
+                                <Button
+                                    onClick={handleConfirm}
+                                >Ajouter</Button>
+                            </div>
+                        </>
                     ) : (
-                        <ul className="p-1">
-                            {filtered.map(def => (
-                                <li key={def.id}>
-                                    <button
-                                        type="button"
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            e.stopPropagation();
-                                            onPick(def);
-                                            handleClose();
-                                        }}
-                                        className="flex-col !items-start btn btn-size-small btn-mode-ghost w-full text-left !gap-1"
-                                        title={def.description}
-                                    >
-                                        <div className="text-black">{def.title}</div>
-                                        <p className="text-xs">{def.description}</p>
-                                    </button>
-                                </li>
-                            ))}
-                        </ul>
+                        <div className="flex-1 flex items-center justify-center p-8">
+                            <div className="text-center text-gray-400">
+                                <svg className="mx-auto mb-3 text-gray-300" width="48" height="48" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" strokeWidth="1.5">
+                                    <path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M2 2l1.932 1.932"/>
+                                </svg>
+                                <p className="text-sm">Sélectionnez un bloc pour configurer ses options</p>
+                            </div>
+                        </div>
                     )}
                 </div>
             </div>

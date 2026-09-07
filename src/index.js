@@ -1,5 +1,2 @@
-import './themes/app.scss';
+import './themes/app.css';
 import './elements/formBuilder';
-
-import 'preline'
-import '@preline/tooltip';

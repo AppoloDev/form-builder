@@ -192,15 +192,37 @@ export type Block = BlockPropsByType[BlockType];
 
 type BlockOf<T extends BlockType> = BlockPropsByType[T];
 
+// Edition schema item types for block configuration
+export type DefinitionEditionItem =
+    | { key: string; label: string; type: "text" | "textarea"; helpText?: string; rows?: number }
+    | { key: string; label: string; type: "checkbox" }
+    | { key: string; label: string; type: "select"; options: { value: string; label: string }[]; helpText?: string };
+
 export interface BlockDefinition<T extends BlockType = BlockType> {
     id: string;
     type: T;
     title: string;
     description: string;
     defaultProps: Omit<BlockOf<T>, 'id'>;
+    editionSchema?: DefinitionEditionItem[];
 }
 
 type BlockDefinitions = { [T in BlockType]: BlockDefinition<T> };
+
+// Common edition fields shared by most input blocks
+const commonInputSchema: DefinitionEditionItem[] = [
+    {key: "label", label: "Titre", type: "text"},
+    {key: "placeHolder", label: "Placeholder", type: "text"},
+    {key: "helpText", label: "Message d'aide", type: "textarea", rows: 2},
+    {key: "required", label: "Requis", type: "checkbox"},
+];
+
+// Input blocks without a placeholder field
+const commonInputSchemaNoPlaceholder: DefinitionEditionItem[] = [
+    {key: "label", label: "Titre", type: "text"},
+    {key: "helpText", label: "Message d'aide", type: "textarea", rows: 2},
+    {key: "required", label: "Requis", type: "checkbox"},
+];
 
 export const blockDefinitions: BlockDefinitions = {
     Title: {
@@ -212,7 +234,20 @@ export const blockDefinitions: BlockDefinitions = {
             type: "Title",
             text: "Titre",
             heading: 'h1'
-        }
+        },
+        editionSchema: [
+            {key: "text", label: "Texte du titre", type: "text"},
+            {
+                key: "heading", label: "Niveau de titre", type: "select", options: [
+                    {value: "h1", label: "Titre de niveau 1"},
+                    {value: "h2", label: "Titre de niveau 2"},
+                    {value: "h3", label: "Titre de niveau 3"},
+                    {value: "h4", label: "Titre de niveau 4"},
+                    {value: "h5", label: "Titre de niveau 5"},
+                    {value: "h6", label: "Titre de niveau 6"},
+                ]
+            },
+        ],
     },
     Paragraph: {
         id: "drag-paragraph",
@@ -222,7 +257,10 @@ export const blockDefinitions: BlockDefinitions = {
         defaultProps: {
             type: "Paragraph",
             text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-        }
+        },
+        editionSchema: [
+            {key: "text", label: "Texte du paragraphe", type: "textarea", rows: 3},
+        ],
     },
     TextInput: {
         id: "drag-textinput",
@@ -236,7 +274,8 @@ export const blockDefinitions: BlockDefinitions = {
             placeHolder: "",
             required: false,
             helpText: ""
-        }
+        },
+        editionSchema: commonInputSchema,
     },
     TextareaInput: {
         id: "drag-textareainput",
@@ -251,7 +290,11 @@ export const blockDefinitions: BlockDefinitions = {
             required: false,
             helpText: '',
             rows: 5
-        }
+        },
+        editionSchema: [
+            ...commonInputSchema,
+            {key: "rows", label: "Nombre de lignes", type: "text"},
+        ],
     },
     ChoiceGroup: {
         id: "drag-choicegroup",
@@ -267,7 +310,14 @@ export const blockDefinitions: BlockDefinitions = {
             inline: false,
             multiple: false,
             options: [],
-        }
+        },
+        editionSchema: [
+            {key: "label", label: "Titre", type: "text"},
+            {key: "helpText", label: "Message d'aide", type: "textarea", rows: 2},
+            {key: "required", label: "Requis", type: "checkbox"},
+            {key: "multiple", label: "Sélection multiple", type: "checkbox"},
+            {key: "inline", label: "Affichage en ligne", type: "checkbox"},
+        ],
     },
     NumberInput: {
         id: "drag-numberinput",
@@ -284,7 +334,13 @@ export const blockDefinitions: BlockDefinitions = {
             min: "",
             max: "",
             step: "",
-        }
+        },
+        editionSchema: [
+            ...commonInputSchema,
+            {key: "min", label: "Valeur minimale", type: "text"},
+            {key: "max", label: "Valeur maximale", type: "text"},
+            {key: "step", label: "Pas", type: "text"},
+        ],
     },
     EmailInput: {
         id: "drag-emailinput",
@@ -298,7 +354,8 @@ export const blockDefinitions: BlockDefinitions = {
             placeHolder: "",
             required: false,
             helpText: "",
-        }
+        },
+        editionSchema: commonInputSchema,
     },
     TelInput: {
         id: "drag-telinput",
@@ -312,7 +369,8 @@ export const blockDefinitions: BlockDefinitions = {
             placeHolder: "",
             required: false,
             helpText: "",
-        }
+        },
+        editionSchema: commonInputSchema,
     },
     UrlInput: {
         id: "drag-urlinput",
@@ -326,7 +384,8 @@ export const blockDefinitions: BlockDefinitions = {
             placeHolder: "",
             required: false,
             helpText: "",
-        }
+        },
+        editionSchema: commonInputSchema,
     },
     DateTimeInput: {
         id: "drag-datetimeinput",
@@ -341,7 +400,17 @@ export const blockDefinitions: BlockDefinitions = {
             required: false,
             helpText: "",
             mode: "datetime-local",
-        }
+        },
+        editionSchema: [
+            ...commonInputSchema,
+            {
+                key: "mode", label: "Type de saisie", type: "select", options: [
+                    {value: "date", label: "Date"},
+                    {value: "datetime-local", label: "Date et heure"},
+                    {value: "time", label: "Heure"},
+                ]
+            },
+        ],
     },
     AddressInput: {
         id: "drag-addressinput",
@@ -355,7 +424,8 @@ export const blockDefinitions: BlockDefinitions = {
             placeHolder: "Indiquez un lieu…",
             required: false,
             helpText: "",
-        }
+        },
+        editionSchema: commonInputSchema,
     },
     FileInput: {
         id: "drag-fileinput",
@@ -370,7 +440,18 @@ export const blockDefinitions: BlockDefinitions = {
             helpText: "",
             acceptedFile: "image",
             allowMultiple: false,
-        }
+        },
+        editionSchema: [
+            ...commonInputSchemaNoPlaceholder,
+            {
+                key: "acceptedFile", label: "Fichiers acceptés", type: "select", options: [
+                    {value: "image", label: "Images"},
+                    {value: "file", label: "PDF"},
+                    {value: "both", label: "Images et PDF"},
+                ]
+            },
+            {key: "allowMultiple", label: "Autoriser plusieurs fichiers", type: "checkbox"},
+        ],
     },
     HourMinuteInput: {
         id: "drag-hourminuteinput",
@@ -384,7 +465,8 @@ export const blockDefinitions: BlockDefinitions = {
             placeHolder: "",
             required: false,
             helpText: "",
-        }
+        },
+        editionSchema: commonInputSchema,
     },
     Select: {
         id: "drag-select",
@@ -399,7 +481,13 @@ export const blockDefinitions: BlockDefinitions = {
             required: false,
             multiple: false,
             options: [],
-        }
+        },
+        editionSchema: [
+            {key: "label", label: "Titre", type: "text"},
+            {key: "helpText", label: "Message d'aide", type: "textarea", rows: 2},
+            {key: "required", label: "Requis", type: "checkbox"},
+            {key: "multiple", label: "Sélection multiple", type: "checkbox"},
+        ],
     },
     Signature: {
         id: "drag-signature",
@@ -412,7 +500,8 @@ export const blockDefinitions: BlockDefinitions = {
             name: labelToName("Libellé"),
             helpText: "",
             required: false,
-        }
+        },
+        editionSchema: commonInputSchemaNoPlaceholder,
     },
     FieldSet: {
         id: "drag-fieldset",
@@ -422,7 +511,7 @@ export const blockDefinitions: BlockDefinitions = {
         defaultProps: {
             type: "FieldSet",
             children: [],
-        }
+        },
     },
     Repeatable: {
         id: "drag-repeatable",
@@ -433,7 +522,7 @@ export const blockDefinitions: BlockDefinitions = {
             type: "Repeatable",
             children: [],
             maxItems: 1,
-        }
+        },
     }
 };
 

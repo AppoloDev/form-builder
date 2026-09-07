@@ -1,0 +1,57 @@
+import { RepeatableProps, Block, BlockDefinition } from "./Definition";
+import { useFormBuilderStore } from "../../stores/block.store";
+import { EditableBlock } from "./EditableBlock";
+import { Empty } from "../Empty";
+import { AddMenu } from "../AddMenu";
+import { ChildrenSorter } from "./ChildrenSorter";
+import { createBlockFromTemplate } from "../../utilities/block.utiles";
+import { TextEdition } from "../Edition/TextEdition";
+
+const Repeatable = ({id, children, maxItems}: RepeatableProps) => {
+    const {updateBlock} = useFormBuilderStore();
+
+    const addChild = (def: BlockDefinition, overrides?: Record<string, any>) => {
+        const newBlock = createBlockFromTemplate(def, overrides);
+        updateBlock(id, {children: [...children, newBlock]});
+    };
+
+    const handleReorder = (next: Block[]) => {
+        updateBlock(id, {children: next});
+    };
+
+    const handleMaxItemsChange = (v: string) => {
+        updateBlock(id, {maxItems: Number(v) || 0});
+    };
+
+    return (
+        <EditableBlock id={id} editionItems={[
+            <TextEdition
+                key="maxItems"
+                label="Nombre maximum de répétitions"
+                helpText="0 = illimité"
+                value={String(maxItems ?? 0)}
+                editItem={handleMaxItemsChange}
+            />,
+        ]}>
+            <div className="space-y-3 rounded-lg border border-gray-200 p-4 flex-1">
+                {children.length === 0 ? (
+                    <Empty onPick={addChild}/>
+                ) : (
+                    <>
+                        <ChildrenSorter childrenBlocks={children} onReorder={handleReorder}/>
+
+                        <div className="pt-1">
+                            <AddMenu onPick={addChild}>
+                                <button type="button" className="btn btn-size-small btn-color-appolo btn-mode-solid">
+                                    Ajouter un bloc
+                                </button>
+                            </AddMenu>
+                        </div>
+                    </>
+                )}
+            </div>
+        </EditableBlock>
+    );
+};
+
+export default Repeatable;

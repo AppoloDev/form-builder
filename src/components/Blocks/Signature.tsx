@@ -1,0 +1,63 @@
+import { useEffect, useState } from "react";
+import { SignatureProps } from "./Definition";
+import { useFormBuilderStore } from "../../stores/block.store";
+import { EditableBlock } from "./EditableBlock";
+import { TextEdition } from "../Edition/TextEdition";
+import { CheckboxEdition } from "../Edition/CheckboxEdition";
+
+type Props = SignatureProps & { isChildBlock?: boolean };
+
+const Signature = ({id, label, helpText, required, isChildBlock}: Props) => {
+    const {updateBlock} = useFormBuilderStore();
+
+    const [form, setForm] = useState({
+        label: label || "",
+        helpText: helpText || "",
+        required: required ?? false,
+    });
+
+    useEffect(() => {
+        setForm({
+            label: label || "",
+            helpText: helpText || "",
+            required: required ?? false,
+        });
+    }, [label, helpText, required]);
+
+    const handleChange = <K extends keyof typeof form>(field: K, value: (typeof form)[K]) => {
+        const patch = {[field]: value};
+        setForm(prev => ({...prev, ...patch}));
+        updateBlock(id, patch);
+    };
+
+    const editionItems = [
+        <TextEdition key="label" label="Libellé" value={form.label} editItem={(v) => handleChange('label', v)}/>,
+        <TextEdition key="helpText" label="Message d'aide" type="textarea" value={form.helpText}
+                     editItem={(v) => handleChange('helpText', v)}/>,
+        ...(isChildBlock ? [] : [
+            <CheckboxEdition key="required" label="Requis" checked={form.required}
+                             editItem={(v: boolean) => handleChange('required', v)}/>
+        ]),
+    ];
+
+    return (
+        <div className="flex items-center gap-4">
+            <EditableBlock id={id} editionItems={editionItems}>
+                <div className="border border-gray-200 rounded-lg p-4 flex-1">
+                    <label className={form.required ? "required" : ""}>
+                        {form.label}
+                    </label>
+
+                    <div
+                        className="mt-2 h-24 flex items-center justify-center rounded-lg border border-dashed border-gray-300 text-sm text-gray-400">
+                        Zone de signature
+                    </div>
+
+                    {form.helpText && <div className="help-text">{form.helpText}</div>}
+                </div>
+            </EditableBlock>
+        </div>
+    );
+};
+
+export default Signature;
