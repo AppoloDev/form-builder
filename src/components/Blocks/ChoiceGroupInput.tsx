@@ -25,6 +25,7 @@ type Props = {
     options?: OptionItem[];
     useContionnalField?: boolean;
     isChildBlock?: boolean;
+    preview?: boolean;
 };
 
 const ChoiceGroupInput: FC<Props> = (props) => {
@@ -38,6 +39,7 @@ const ChoiceGroupInput: FC<Props> = (props) => {
         options: propsOptions,
         useContionnalField: propsUseContionnalField = true,
         isChildBlock,
+        preview,
     } = props;
 
     const {updateBlock} = useFormBuilderStore();
@@ -169,7 +171,7 @@ const ChoiceGroupInput: FC<Props> = (props) => {
     };
 
     return (
-        <FieldInput id={id} form={form} editionItems={editionItems}>
+        <FieldInput id={id} form={form} editionItems={editionItems} preview={preview}>
             <div className="space-y-3">
                 {form.options.map((opt, idx) => (
                     <div key={opt.id} className="rounded-lg border border-border p-3 bg-card">

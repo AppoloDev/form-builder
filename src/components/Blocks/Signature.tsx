@@ -5,9 +5,9 @@ import { EditableBlock } from "./EditableBlock";
 import { TextEdition } from "../Edition/TextEdition";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
 
-type Props = SignatureProps & { isChildBlock?: boolean };
+type Props = SignatureProps & { isChildBlock?: boolean; preview?: boolean };
 
-const Signature = ({id, label, helpText, required, isChildBlock}: Props) => {
+const Signature = ({id, label, helpText, required, isChildBlock, preview}: Props) => {
     const {updateBlock} = useFormBuilderStore();
 
     const [form, setForm] = useState({
@@ -42,18 +42,19 @@ const Signature = ({id, label, helpText, required, isChildBlock}: Props) => {
 
     return (
         <div className="flex items-center gap-4">
-            <EditableBlock id={id} editionItems={editionItems}>
-                <div className="border border-border rounded-lg p-4 flex-1">
-                    <label className={form.required ? "required" : ""}>
+            <EditableBlock id={id} preview={preview} editionItems={editionItems}>
+                <div className={preview ? "flex flex-col gap-2 flex-1" : "flex flex-col gap-2 border border-border rounded-lg p-4 flex-1"}>
+                    <label className="text-sm font-medium">
                         {form.label}
+                        {form.required && <span className="text-destructive pl-0.5">*</span>}
                     </label>
 
                     <div
-                        className="mt-2 h-24 flex items-center justify-center rounded-lg border border-dashed border-border text-sm text-muted-foreground">
+                        className="flex h-24 items-center justify-center rounded-lg border border-dashed border-border text-sm text-muted-foreground">
                         Zone de signature
                     </div>
 
-                    {form.helpText && <div className="help-text">{form.helpText}</div>}
+                    {form.helpText && <div className="text-sm text-muted-foreground">{form.helpText}</div>}
                 </div>
             </EditableBlock>
         </div>

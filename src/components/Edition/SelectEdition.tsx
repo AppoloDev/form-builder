@@ -14,7 +14,7 @@ export const SelectEdition = ({label, value, options, helpText, editItem}: Props
     return (
         <div className="mb-3">
             <label className="block mb-2 text-sm font-medium text-foreground">{label}</label>
-            <Select value={value ?? ""} onValueChange={(v) => editItem(v ?? "")}>
+            <Select items={options} value={value ?? ""} onValueChange={(v) => editItem(v ?? "")}>
                 <SelectTrigger className="w-full">
                     <SelectValue/>
                 </SelectTrigger>

@@ -6,6 +6,7 @@ import { CheckboxEdition } from "./Edition/CheckboxEdition";
 import { SelectEdition } from "./Edition/SelectEdition";
 import { labelToName } from "../utilities/string.utiles";
 import { Button } from "@/src/components/ui/button";
+import { BLOCK_COMPONENTS } from "./BlockRegistry";
 
 type AddMenuProps = {
     onPick: (def: BlockDefinition, overrides?: Record<string, any>) => void;
@@ -81,6 +82,24 @@ export const AddMenu: React.FC<AddMenuProps> = (
             }
         }
         setFormState(initial);
+    };
+
+    const getPreviewProps = (def: BlockDefinition, state: Record<string, any>): Record<string, any> => {
+        const merged: Record<string, any> = {...def.defaultProps, ...state, id: "preview", preview: true};
+
+        if ((def.type === "ChoiceGroup" || def.type === "Select") && (!merged.options || merged.options.length === 0)) {
+            merged.options = def.type === "ChoiceGroup"
+                ? [1, 2, 3].map((n) => ({
+                    id: `preview-${n}`,
+                    label: `Option ${n}`,
+                    value: `Option ${n}`,
+                    showConditionalField: false,
+                    children: [],
+                }))
+                : ["Option 1", "Option 2", "Option 3"];
+        }
+
+        return merged;
     };
 
     const handleFormChange = (key: string, value: any) => {
@@ -192,12 +211,7 @@ export const AddMenu: React.FC<AddMenuProps> = (
                                             onClick={(e) => {
                                                 e.preventDefault();
                                                 e.stopPropagation();
-                                                if (def.editionSchema && def.editionSchema.length > 0) {
-                                                    handleSelectDef(def);
-                                                } else {
-                                                    onPick(def);
-                                                    handleClose();
-                                                }
+                                                handleSelectDef(def);
                                             }}
                                             className={`w-full justify-start ${
                                                 selectedDef?.id === def.id
@@ -225,9 +239,29 @@ export const AddMenu: React.FC<AddMenuProps> = (
                                 <p className="text-sm text-muted-foreground mt-1">{selectedDef.description}</p>
                             </div>
 
-                            {/* Edition fields */}
-                            <div className="flex-1 overflow-auto p-4 space-y-3">
-                                {selectedDef.editionSchema?.map(renderEditionField)}
+                            <div className="flex-1 overflow-auto">
+                                {/* Edition fields */}
+                                {selectedDef.editionSchema && selectedDef.editionSchema.length > 0 && (
+                                    <div className="p-4 space-y-3">
+                                        {selectedDef.editionSchema.map(renderEditionField)}
+                                    </div>
+                                )}
+
+                                {/* Preview */}
+                                <div className="p-4 border-t border-border bg-muted">
+                                    <p className="text-sm font-medium text-muted-foreground mb-2">Aperçu</p>
+                                    <div className="pointer-events-none bg-white p-4 rounded-lg">
+                                        {(() => {
+                                            const PreviewComponent = BLOCK_COMPONENTS[selectedDef.type];
+                                            return (
+                                                <PreviewComponent
+                                                    key={selectedDef.type}
+                                                    {...getPreviewProps(selectedDef, formState)}
+                                                />
+                                            );
+                                        })()}
+                                    </div>
+                                </div>
                             </div>
 
                             {/* Footer */}
@@ -235,13 +269,13 @@ export const AddMenu: React.FC<AddMenuProps> = (
                                 <Button
                                     type="button"
                                     variant="ghost"
-                                    size="sm"
                                     onClick={() => {
                                         setSelectedDef(null);
                                         setFormState({});
+                                        handleClose()
                                     }}
                                 >
-                                    Retour
+                                    Fermer
                                 </Button>
 
                                 <Button

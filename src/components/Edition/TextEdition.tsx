@@ -17,8 +17,8 @@ export const TextEdition = ({label, value, helpText, editItem, type = 'text', ro
     };
 
     return (
-        <div className="space-y-.5 form_row">
-            <label>
+        <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium">
                 {label}
             </label>
 
@@ -37,7 +37,7 @@ export const TextEdition = ({label, value, helpText, editItem, type = 'text', ro
             )}
 
             {helpText && (
-                <p className="help-text">{helpText}</p>
+                <p className="text-sm text-muted-foreground">{helpText}</p>
             )}
         </div>
     );

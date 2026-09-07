@@ -8,7 +8,9 @@ import { createBlockFromTemplate } from "../../utilities/block.utiles";
 import { TextEdition } from "../Edition/TextEdition";
 import { Button } from "@/src/components/ui/button";
 
-const Repeatable = ({id, children, maxItems}: RepeatableProps) => {
+type Props = RepeatableProps & { preview?: boolean };
+
+const Repeatable = ({id, children, maxItems, preview}: Props) => {
     const {updateBlock} = useFormBuilderStore();
 
     const addChild = (def: BlockDefinition, overrides?: Record<string, any>) => {
@@ -25,7 +27,7 @@ const Repeatable = ({id, children, maxItems}: RepeatableProps) => {
     };
 
     return (
-        <EditableBlock id={id} editionItems={[
+        <EditableBlock id={id} preview={preview} editionItems={[
             <TextEdition
                 key="maxItems"
                 label="Nombre maximum de répétitions"
@@ -34,7 +36,7 @@ const Repeatable = ({id, children, maxItems}: RepeatableProps) => {
                 editItem={handleMaxItemsChange}
             />,
         ]}>
-            <div className="space-y-3 rounded-lg border border-border p-4 flex-1">
+            <div className={preview ? "space-y-3 flex-1" : "space-y-3 rounded-lg border border-border p-4 flex-1"}>
                 {children.length === 0 ? (
                     <Empty onPick={addChild}/>
                 ) : (

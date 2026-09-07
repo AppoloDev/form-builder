@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TitleProps } from "./Definition";
 import { useFormBuilderStore } from "../../stores/block.store";
 import { EditableBlock } from "./EditableBlock";
 import { TextEdition } from "../Edition/TextEdition";
 import { SelectEdition } from "../Edition/SelectEdition";
 
-const Title = ({id, text, heading}: TitleProps) => {
+type Props = TitleProps & { preview?: boolean };
+
+const Title = ({id, text, heading, preview}: Props) => {
     const {updateBlock} = useFormBuilderStore();
     const [label, setLabel] = useState(text);
     const [headingLevel, setHeadingLevel] = useState(heading);
+
+    useEffect(() => {
+        setLabel(text);
+        setHeadingLevel(heading);
+    }, [text, heading]);
 
     const handleChange = <K extends keyof Omit<TitleProps, "id">>(field: K, value: TitleProps[K]) => {
         updateBlock(id, {[field]: value} as Partial<TitleProps>);
@@ -33,7 +40,7 @@ const Title = ({id, text, heading}: TitleProps) => {
 
     return (
         <div className="flex items-center gap-4 ">
-            <EditableBlock id={id} editionItems={[
+            <EditableBlock id={id} preview={preview} editionItems={[
                 <TextEdition
                     label={'Titre'}
                     value={label}
@@ -59,7 +66,7 @@ const Title = ({id, text, heading}: TitleProps) => {
                     }}
                 />
             ]}>
-                <div className="border border-border rounded-lg p-4 flex-1">
+                <div className={preview ? "flex-1" : "border border-border rounded-lg p-4 flex-1"}>
                     {React.createElement(headingLevel, {className: renderClass(headingLevel)}, label)}
                 </div>
             </EditableBlock>

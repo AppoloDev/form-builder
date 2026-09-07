@@ -7,7 +7,9 @@ import { ChildrenSorter } from "./ChildrenSorter";
 import { createBlockFromTemplate } from "../../utilities/block.utiles";
 import { Button } from "@/src/components/ui/button";
 
-const FieldSet = ({id, children}: FieldSetProps) => {
+type Props = FieldSetProps & { preview?: boolean };
+
+const FieldSet = ({id, children, preview}: Props) => {
     const {updateBlock} = useFormBuilderStore();
 
     const addChild = (def: BlockDefinition, overrides?: Record<string, any>) => {
@@ -20,8 +22,8 @@ const FieldSet = ({id, children}: FieldSetProps) => {
     };
 
     return (
-        <EditableBlock id={id}>
-            <div className="space-y-3 rounded-lg border border-border p-4 flex-1">
+        <EditableBlock id={id} preview={preview}>
+            <div className={preview ? "space-y-3 flex-1" : "space-y-3 rounded-lg border border-border p-4 flex-1"}>
                 {children.length === 0 ? (
                     <Empty onPick={addChild}/>
                 ) : (

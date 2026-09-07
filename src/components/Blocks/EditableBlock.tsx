@@ -15,6 +15,7 @@ interface EditableBlockProps {
     children: ReactNode;
     onDelete?: () => void;
     className?: string;
+    preview?: boolean;
 }
 
 export const EditableBlock = (
@@ -24,6 +25,7 @@ export const EditableBlock = (
         children,
         onDelete,
         className = "",
+        preview = false,
     }: EditableBlockProps) => {
     const [contextMenuVisible, setContextMenuVisible] = useState(false);
 
@@ -49,6 +51,10 @@ export const EditableBlock = (
     const items = Array.isArray(editionItems) ? editionItems : [editionItems];
 
     const {attributes, listeners, setActivatorNodeRef} = useContext(DragHandleContext);
+
+    if (preview) {
+        return <>{children}</>;
+    }
 
     return (
         <>

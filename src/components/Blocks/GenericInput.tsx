@@ -13,6 +13,7 @@ type CommonProps = {
     placeHolder?: string;
     required?: boolean;
     isChildBlock?: boolean;
+    preview?: boolean;
     [key: string]: any;
 };
 
@@ -51,7 +52,7 @@ export const makeInputBlock = (
     opts: MakeOpts = {}
 ) => {
     const InputBlock: FC<CommonProps> = (props) => {
-        const {id, index: _index, isChildBlock, ...restProps} = props;
+        const {id, index: _index, isChildBlock, preview, ...restProps} = props;
         const {updateBlock} = useFormBuilderStore();
 
         const [form, setForm] = useState<Record<string, any>>({
@@ -151,6 +152,7 @@ export const makeInputBlock = (
                 editionItems={editionItems}
                 form={form}
                 id={id}
+                preview={preview}
             >
                 {finalType === 'textarea' ?
                     <textarea
@@ -158,6 +160,7 @@ export const makeInputBlock = (
                         placeholder={form.placeHolder}
                         rows={props.rows}
                         disabled
+                        className="w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-base placeholder:text-muted-foreground disabled:opacity-50"
                         {...restInputAttrs}
                     />
                     :
@@ -166,6 +169,7 @@ export const makeInputBlock = (
                         type={finalType}
                         placeholder={form.placeHolder}
                         disabled
+                        className="h-8 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-base placeholder:text-muted-foreground disabled:opacity-50"
                         {...restInputAttrs}
                     />
                 }
