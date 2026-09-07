@@ -55,13 +55,16 @@ export const EditableBlock = (
     }
 
     return (
-        <>
-            <div className={`flex ${className}`}>
+        <div className={`group relative ${className}`}>
+            {/* Invisible bridge so the cursor doesn't lose hover crossing the gap to the floating toolbar */}
+            <div className="absolute top-0 right-full h-full w-24" aria-hidden="true"/>
+
+            <div className="absolute top-1/2 right-full mr-2 z-10 flex -translate-y-1/2 gap-0.5 p-0.5 opacity-0 transition-opacity pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
                 {items.length > 0 && (
                     <Tooltip content="Paramètres">
                         <Button
                             variant="ghost"
-                            size="icon-lg"
+                            size="icon-sm"
                             onClick={handleOpenContextMenu}
                             aria-label="Ouvrir les paramètres"
                         >
@@ -73,7 +76,8 @@ export const EditableBlock = (
                 <Tooltip content="Supprimer">
                     <Button
                         variant="ghost"
-                        size="icon-lg"
+                        size="icon-sm"
+                        className="text-destructive"
                         onClick={handleDelete}
                         aria-label="Supprimer le bloc"
                     >
@@ -84,11 +88,11 @@ export const EditableBlock = (
                 <Tooltip content="Déplacer le bloc">
                     <Button
                         variant="ghost"
-                        size="icon-lg"
+                        size="icon-sm"
                         ref={setActivatorNodeRef}
                         {...(attributes || {})}
                         {...(listeners || {})}
-                        className={`cursor-grab active:cursor-grabbing`}
+                        className="cursor-grab active:cursor-grabbing"
                     >
                         <GripVertical />
                     </Button>
@@ -107,6 +111,6 @@ export const EditableBlock = (
                     ))}
                 </ContextMenu>
             )}
-        </>
+        </div>
     );
 };

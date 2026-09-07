@@ -39,38 +39,36 @@ const Title = ({id, text, heading, preview}: Props) => {
     }
 
     return (
-        <div className="flex items-center gap-4 ">
-            <EditableBlock id={id} preview={preview} editionItems={[
-                <TextEdition
-                    label={'Titre'}
-                    value={label}
-                    editItem={(v) => {
-                        handleChange('text', v)
-                        setLabel(v);
-                    }}
-                />,
-                <SelectEdition
-                    label={'Niveau de titre'}
-                    value={headingLevel}
-                    options={[
-                        {value: 'h1', label: 'Titre de niveau 1'},
-                        {value: 'h2', label: 'Titre de niveau 2'},
-                        {value: 'h3', label: 'Titre de niveau 3'},
-                        {value: 'h4', label: 'Titre de niveau 4'},
-                        {value: 'h5', label: 'Titre de niveau 5'},
-                        {value: 'h6', label: 'Titre de niveau 6'},
-                    ]}
-                    editItem={(v) => {
-                        handleChange('heading', v)
-                        setHeadingLevel(v);
-                    }}
-                />
-            ]}>
-                <div className={preview ? "flex-1" : "border border-border rounded-lg p-4 flex-1"}>
-                    {React.createElement(headingLevel, {className: renderClass(headingLevel)}, label)}
-                </div>
-            </EditableBlock>
-        </div>
+        <EditableBlock id={id} preview={preview} editionItems={[
+            <TextEdition
+                label={'Titre'}
+                value={label}
+                editItem={(v) => {
+                    handleChange('text', v)
+                    setLabel(v);
+                }}
+            />,
+            <SelectEdition
+                label={'Niveau de titre'}
+                value={headingLevel}
+                options={[
+                    {value: 'h1', label: 'Titre de niveau 1'},
+                    {value: 'h2', label: 'Titre de niveau 2'},
+                    {value: 'h3', label: 'Titre de niveau 3'},
+                    {value: 'h4', label: 'Titre de niveau 4'},
+                    {value: 'h5', label: 'Titre de niveau 5'},
+                    {value: 'h6', label: 'Titre de niveau 6'},
+                ]}
+                editItem={(v) => {
+                    handleChange('heading', v)
+                    setHeadingLevel(v);
+                }}
+            />
+        ]}>
+            <div className={preview ? "" : "rounded-lg p-2 transition-colors group-hover:bg-muted/50"}>
+                {React.createElement(headingLevel, {className: renderClass(headingLevel)}, label)}
+            </div>
+        </EditableBlock>
     );
 };
 

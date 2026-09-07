@@ -41,23 +41,21 @@ const Signature = ({id, label, helpText, required, isChildBlock, preview}: Props
     ];
 
     return (
-        <div className="flex items-center gap-4">
-            <EditableBlock id={id} preview={preview} editionItems={editionItems}>
-                <div className={preview ? "flex flex-col gap-2 flex-1" : "flex flex-col gap-2 border border-border rounded-lg p-4 flex-1"}>
-                    <label className="text-sm font-medium">
-                        {form.label}
-                        {form.required && <span className="text-destructive pl-0.5">*</span>}
-                    </label>
+        <EditableBlock id={id} preview={preview} editionItems={editionItems}>
+            <div className={preview ? "flex flex-col gap-2" : "flex flex-col gap-2 rounded-lg p-2 transition-colors group-hover:bg-muted/50"}>
+                <label className="text-sm font-medium">
+                    {form.label}
+                    {form.required && <span className="text-destructive pl-0.5">*</span>}
+                </label>
 
-                    <div
-                        className="flex h-24 items-center justify-center rounded-lg border border-dashed border-border text-sm text-muted-foreground">
-                        Zone de signature
-                    </div>
-
-                    {form.helpText && <div className="text-sm text-muted-foreground">{form.helpText}</div>}
+                <div
+                    className="flex h-24 items-center justify-center rounded-lg border border-dashed border-border text-sm text-muted-foreground">
+                    Zone de signature
                 </div>
-            </EditableBlock>
-        </div>
+
+                {form.helpText && <div className="text-sm text-muted-foreground">{form.helpText}</div>}
+            </div>
+        </EditableBlock>
     );
 };
 

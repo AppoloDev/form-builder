@@ -28,6 +28,7 @@ export const AddMenu: React.FC<AddMenuProps> = (
         return ALL.filter(d => allow.has(d.type));
     }, [ALL, allowTypes]);
 
+    const [open, setOpen] = useState(false);
     const [query, setQuery] = useState("");
     const [selectedDef, setSelectedDef] = useState<BlockDefinition | null>(null);
     const [formState, setFormState] = useState<Record<string, any>>({});
@@ -44,6 +45,7 @@ export const AddMenu: React.FC<AddMenuProps> = (
     }, [query, items]);
 
     const handleClose = () => {
+        setOpen(false);
         setQuery("");
         setSelectedDef(null);
         setFormState({});
@@ -65,18 +67,13 @@ export const AddMenu: React.FC<AddMenuProps> = (
     const getPreviewProps = (def: BlockDefinition, state: Record<string, any>): Record<string, any> => {
         const merged: Record<string, any> = {...def.defaultProps, ...state, id: "preview", preview: true};
 
-        // ChoiceGroup/Select auto-fill 3 default options on mount when empty, which
+        // ChoiceGroup/Select auto-fill default options on mount when empty, which
         // would otherwise call updateBlock() on the real store from this read-only
-        // preview. Pre-filling here keeps the preview side-effect-free.
+        // preview. Pre-filling here keeps the preview side-effect-free, matching
+        // exactly what each block actually creates by default.
         if ((def.type === "ChoiceGroup" || def.type === "Select") && (!merged.options || merged.options.length === 0)) {
             merged.options = def.type === "ChoiceGroup"
-                ? [1, 2, 3].map((n) => ({
-                    id: `preview-${n}`,
-                    label: `Option ${n}`,
-                    value: `Option ${n}`,
-                    showConditionalField: false,
-                    children: [],
-                }))
+                ? [{id: "preview-1", label: "", value: "", showConditionalField: false, children: []}]
                 : ["Option 1", "Option 2", "Option 3"];
         }
 
@@ -155,8 +152,9 @@ export const AddMenu: React.FC<AddMenuProps> = (
     };
 
     return (
-        <Dialog onOpenChange={(next) => {
+        <Dialog open={open} onOpenChange={(next) => {
             if (next) {
+                setOpen(true);
                 setTimeout(() => inputRef.current?.focus(), 0);
             } else {
                 handleClose();

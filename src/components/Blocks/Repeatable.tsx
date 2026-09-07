@@ -36,7 +36,7 @@ const Repeatable = ({id, children, maxItems, preview}: Props) => {
                 editItem={handleMaxItemsChange}
             />,
         ]}>
-            <div className={preview ? "space-y-3 flex-1" : "space-y-3 rounded-lg border border-border p-4 flex-1"}>
+            <div className={preview ? "space-y-3" : "space-y-3 rounded-lg p-2 transition-colors group-hover:bg-muted/50"}>
                 {children.length === 0 ? (
                     <Empty onPick={addChild}/>
                 ) : (

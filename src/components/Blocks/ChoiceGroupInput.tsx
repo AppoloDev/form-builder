@@ -16,7 +16,7 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { EyeClosedIcon } from "../Icons/EyeClosedIcon";
 import { EyeIcon } from "../Icons/EyeIcon";
 import { labelToName } from "../../utilities/string.utiles";
-import { Trash } from "lucide-react";
+import { Plus, Trash } from "lucide-react";
 
 type Props = {
     id: string;
@@ -57,6 +57,15 @@ const ChoiceGroupInput: FC<Props> = (props) => {
         useContionnalField: propsUseContionnalField ?? true,
     });
 
+    const [pendingFocusOptionId, setPendingFocusOptionId] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (!pendingFocusOptionId) return;
+        const el = document.querySelector<HTMLInputElement>(`[data-option-id="${pendingFocusOptionId}"]`);
+        el?.focus();
+        setPendingFocusOptionId(null);
+    }, [pendingFocusOptionId, form.options]);
+
     useEffect(() => {
         setForm({
             label: propsLabel || "",
@@ -79,12 +88,11 @@ const ChoiceGroupInput: FC<Props> = (props) => {
 
     useEffect(() => {
         if (form.options.length === 0) {
-            const defaults: OptionItem[] = Array.from({length: 3}, (_, i) => {
-                const lbl = `Option ${i + 1}`;
-                return {id: uuidv4(), label: lbl, value: lbl, showConditionalField: false, children: []};
-            });
-            const patch = { options: defaults };
-            setForm(prev => ({ ...prev, ...patch }));
+            const defaults: OptionItem[] = [
+                {id: uuidv4(), label: "", value: "", showConditionalField: false, children: []},
+            ];
+            const patch = {options: defaults};
+            setForm(prev => ({...prev, ...patch}));
             updateBlock(id, patch);
         }
     }, []);
@@ -92,12 +100,12 @@ const ChoiceGroupInput: FC<Props> = (props) => {
     const handleChange = <K extends keyof typeof form>(key: K, value: (typeof form)[K]) => {
         if (key === 'label') {
             const newName = labelToName(value as string);
-            const patch = { label: value as string, name: newName };
-            setForm(prev => ({ ...prev, ...patch }));
+            const patch = {label: value as string, name: newName};
+            setForm(prev => ({...prev, ...patch}));
             updateBlock(id, patch);
         } else {
-            const patch = { [key]: value };
-            setForm(prev => ({ ...prev, ...patch as Partial<typeof form> }));
+            const patch = {[key]: value};
+            setForm(prev => ({...prev, ...patch as Partial<typeof form>}));
             updateBlock(id, patch);
         }
     };
@@ -128,28 +136,27 @@ const ChoiceGroupInput: FC<Props> = (props) => {
     );
 
     const addOption = () => {
-        const n = form.options.length + 1;
-        const lbl = `Option ${n}`;
-        const newOption = {id: uuidv4(), label: lbl, value: lbl, showConditionalField: false, children: []};
+        const newOption = {id: uuidv4(), label: "", value: "", showConditionalField: false, children: []};
 
-        const patch = { options: [...form.options, newOption] };
-        setForm(prev => ({ ...prev, ...patch }));
+        const patch = {options: [...form.options, newOption]};
+        setForm(prev => ({...prev, ...patch}));
         updateBlock(id, patch);
+        setPendingFocusOptionId(newOption.id);
     };
 
     const updateOption = (idx: number, optionPatch: Partial<OptionItem>) => {
         const nextOptions = form.options.map((o, i) => (i === idx ? {...o, ...optionPatch} : o));
 
-        const patch = { options: nextOptions };
-        setForm(prev => ({ ...prev, ...patch }));
+        const patch = {options: nextOptions};
+        setForm(prev => ({...prev, ...patch}));
         updateBlock(id, patch);
     };
 
     const removeOption = (idx: number) => {
         const nextOptions = form.options.filter((_, i) => i !== idx);
 
-        const patch = { options: nextOptions };
-        setForm(prev => ({ ...prev, ...patch }));
+        const patch = {options: nextOptions};
+        setForm(prev => ({...prev, ...patch}));
         updateBlock(id, patch);
     };
 
@@ -159,100 +166,107 @@ const ChoiceGroupInput: FC<Props> = (props) => {
             i === idx ? {...opt, children: [...opt.children, newBlock], showConditionalField: true} : opt
         );
 
-        const patch = { options: nextOptions };
-        setForm(prev => ({ ...prev, ...patch }));
+        const patch = {options: nextOptions};
+        setForm(prev => ({...prev, ...patch}));
         updateBlock(id, patch);
     };
 
     const handleReorderChildren = (optionIndex: number, reorderedChildren: Block[]) => {
         const nextOptions = [...form.options];
-        nextOptions[optionIndex] = { ...nextOptions[optionIndex], children: reorderedChildren };
+        nextOptions[optionIndex] = {...nextOptions[optionIndex], children: reorderedChildren};
 
-        const patch = { options: nextOptions };
-        setForm(prev => ({ ...prev, ...patch }));
+        const patch = {options: nextOptions};
+        setForm(prev => ({...prev, ...patch}));
         updateBlock(id, patch);
     };
 
     const renderOptionRow = (opt: OptionItem, idx: number) => (
-                    <div key={opt.id} className="rounded-lg border border-border p-3 bg-card">
-                        <div className="flex items-center gap-2">
-                            {form.multiple ? (
-                                <Checkbox disabled/>
-                            ) : (
-                                <RadioGroupItem value={opt.id} disabled/>
-                            )}
+        <div key={opt.id} className="group/option relative rounded-md">
+            <div className="flex items-center gap-2">
+                {form.multiple ? (
+                    <Checkbox disabled/>
+                ) : (
+                    <RadioGroupItem value={opt.id} disabled/>
+                )}
 
-                            <Input
-                                value={opt.label}
-                                onChange={(e) =>
-                                    updateOption(idx, {label: e.target.value, value: e.target.value})
-                                }
-                                className="min-w-0 flex-1"
+                <Input
+                    data-option-id={opt.id}
+                    value={opt.label}
+                    placeholder={`Option ${idx + 1}`}
+                    onChange={(e) =>
+                        updateOption(idx, {label: e.target.value, value: e.target.value})
+                    }
+                    className="border-transparent bg-transparent hover:border-input focus-visible:border-ring"
+                />
+
+                <div className="flex gap-0.5 opacity-0 transition-opacity group-hover/option:opacity-100">
+                    {propsUseContionnalField && <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon-sm"
+                        onClick={() => updateOption(idx, {showConditionalField: !opt.showConditionalField})}
+                        aria-label="Champs conditionnés"
+                    >
+                        {opt.showConditionalField ? <EyeClosedIcon size={18}/> : <EyeIcon size={18}/>}
+                    </Button>}
+
+                    <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon-sm"
+                        onClick={() => removeOption(idx)}
+                        className="text-destructive hover:text-destructive"
+                        aria-label="Supprimer l'option"
+                    >
+                        <Trash/>
+                    </Button>
+                </div>
+            </div>
+
+            {propsUseContionnalField && opt.showConditionalField && (
+                <div className="mt-3 space-y-3 border-l-2 border-border pl-4 ml-2">
+                    {opt.children.length === 0 ? (
+                        <Empty onPick={(def, overrides) => addFollowUpFromDef(idx, def, overrides)}/>
+                    ) : (
+                        <>
+                            <ChildrenSorter
+                                childrenBlocks={opt.children}
+                                onReorder={(next) => {
+                                    handleReorderChildren(idx, next);
+                                }}
                             />
 
-                            <Button
-                                type="button"
-                                variant="ghost"
-                                size="icon-lg"
-                                onClick={() => removeOption(idx)}
-                                className="text-destructive hover:text-destructive"
-                                aria-label="Supprimer l'option"
-                            >
-                                <Trash />
-                            </Button>
-
-                            {propsUseContionnalField && <Button
-                                type="button"
-                                variant="ghost"
-                                onClick={() => updateOption(idx, {showConditionalField: !opt.showConditionalField})}
-                            >
-                                {opt.showConditionalField ? <EyeClosedIcon size={22}/> : <EyeIcon size={22}/>}
-                                Champs conditionnés
-                            </Button>}
-                        </div>
-
-                        {propsUseContionnalField && opt.showConditionalField && (
-                            <div className="mt-3 rounded-lg border border-border bg-muted p-3 space-y-3">
-                                {opt.children.length === 0 ? (
-                                    <Empty onPick={(def, overrides) => addFollowUpFromDef(idx, def, overrides)}/>
-                                ) : (
-                                    <>
-                                        <ChildrenSorter
-                                            childrenBlocks={opt.children}
-                                            onReorder={(next) => {
-                                                handleReorderChildren(idx, next);
-                                            }}
-                                        />
-
-                                        <div className="pt-1">
-                                            <AddMenu onPick={(def, overrides) => addFollowUpFromDef(idx, def, overrides)}>
-                                                <Button type="button" size="sm">
-                                                    Ajouter un bloc
-                                                </Button>
-                                            </AddMenu>
-                                        </div>
-                                    </>
-                                )}
+                            <div className="pt-1">
+                                <AddMenu onPick={(def, overrides) => addFollowUpFromDef(idx, def, overrides)}>
+                                    <Button type="button" size="sm">
+                                        Ajouter un bloc
+                                    </Button>
+                                </AddMenu>
                             </div>
-                        )}
-                    </div>
+                        </>
+                    )}
+                </div>
+            )}
+        </div>
     );
 
     return (
         <FieldInput id={id} form={form} editionItems={editionItems} preview={preview}>
             <div className="space-y-3">
                 {form.multiple ? (
-                    <div className="space-y-3">
+                    <div className="space-y-1">
                         {form.options.map(renderOptionRow)}
                     </div>
                 ) : (
-                    <RadioGroup className="space-y-3">
+                    <RadioGroup className="space-y-1">
                         {form.options.map(renderOptionRow)}
                     </RadioGroup>
                 )}
 
-                <div className="flex justify-end">
-                    <Button type="button" size="sm" onClick={addOption}>
+                <div className="flex justify-start">
+                    <Button type="button" variant="ghost" onClick={addOption}
+                            className="text-muted-foreground">
+                        <Plus/>
                         Ajouter une option
                     </Button>
                 </div>

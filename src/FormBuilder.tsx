@@ -145,7 +145,7 @@ export const FormBuilder = ({onChange, json = []}: Props) => {
             onDragEnd={onDragEnd}
             onDragCancel={onDragCancel}
         >
-            <div className="border border-dashed border-border rounded-lg p-4 space-y-4">
+            <div className="border border-dashed border-border rounded-lg py-4 pr-4 pl-28 space-y-4">
                 {blocks.length === 0 ? (
                     <Empty onPick={(def, overrides) => handleAddAt(-1, def, overrides)}/>
                 ) : (
@@ -161,14 +161,14 @@ export const FormBuilder = ({onChange, json = []}: Props) => {
                                     <div className="group relative">
 
                                         <div
-                                            className="absolute -right-3 -bottom-3">
+                                            className="absolute -right-3 -bottom-3 z-10">
                                             <AddMenu
                                                 onPick={(def, overrides) => handleAddAt(idx, def, overrides)}
                                                 placeholder="Rechercher un type…"
                                             >
                                                 <button
                                                     type="button"
-                                                    className="rounded-full border border-input bg-primary shadow-sm p-2 hover:bg-primary/90 cursor-pointer"
+                                                    className="rounded-full border border-input bg-primary shadow-sm p-2 hover:bg-primary/80 cursor-pointer transition-colors"
                                                     title="Ajouter un bloc"
                                                 >
                                                     <svg width="16" height="16" viewBox="0 0 24 24"
