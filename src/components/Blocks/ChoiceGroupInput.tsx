@@ -251,7 +251,8 @@ const ChoiceGroupInput: FC<Props> = (props) => {
     );
 
     return (
-        <FieldInput id={id} form={form} editionItems={editionItems} preview={preview}>
+        <FieldInput id={id} form={form} editionItems={editionItems} preview={preview}
+                    onLabelChange={(v) => handleChange("label", v)}>
             <div className="space-y-3">
                 {form.multiple ? (
                     <div className="space-y-1">

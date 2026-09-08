@@ -155,6 +155,7 @@ export const makeInputBlock = (
                 form={form}
                 id={id}
                 preview={preview}
+                onLabelChange={(v) => handleChange('label', v)}
             >
                 {finalType === 'textarea' ?
                     <Textarea

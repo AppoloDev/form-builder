@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ParagraphProps } from "./Definition";
 import { useFormBuilderStore } from "../../stores/block.store";
 import { EditableBlock } from "./EditableBlock";
-import { TextEdition } from "../Edition/TextEdition";
+import { InlineEditableText } from "../InlineEditableText";
 
 type Props = ParagraphProps & { preview?: boolean };
 
@@ -19,19 +19,21 @@ const Paragraph = ({id, text, preview}: Props) => {
     };
 
     return (
-        <EditableBlock id={id} preview={preview} editionItems={[
-            <TextEdition
-                label={'Texte'}
-                type={'textarea'}
-                value={label}
-                editItem={(v) => {
-                    handleChange('text', v)
-                    setLabel(v);
-                }}
-            />,
-        ]}>
+        <EditableBlock id={id} preview={preview}>
             <div className={preview ? "" : "rounded-lg p-2 transition-colors group-hover:bg-muted/50"}>
-                <p>{label}</p>
+                {preview ? (
+                    <p>{label}</p>
+                ) : (
+                    <InlineEditableText
+                        value={label}
+                        onCommit={(v) => {
+                            setLabel(v);
+                            handleChange('text', v);
+                        }}
+                        placeholder="Texte du paragraphe"
+                        multiline
+                    />
+                )}
             </div>
         </EditableBlock>
     );

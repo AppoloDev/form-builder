@@ -81,7 +81,8 @@ const Select = (
     ];
 
     return (
-        <FieldInput id={id} form={form} editionItems={editionItems} preview={preview}>
+        <FieldInput id={id} form={form} editionItems={editionItems} preview={preview}
+                    onLabelChange={(v) => handleChange("label", v)}>
             <SelectField
                 disabled
                 items={form.options.map((opt) => ({value: opt, label: opt}))}

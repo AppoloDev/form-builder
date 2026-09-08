@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { TitleProps } from "./Definition";
 import { useFormBuilderStore } from "../../stores/block.store";
 import { EditableBlock } from "./EditableBlock";
-import { TextEdition } from "../Edition/TextEdition";
 import { SelectEdition } from "../Edition/SelectEdition";
+import { InlineEditableText } from "../InlineEditableText";
 
 type Props = TitleProps & { preview?: boolean };
 
@@ -40,14 +40,6 @@ const Title = ({id, text, heading, preview}: Props) => {
 
     return (
         <EditableBlock id={id} preview={preview} editionItems={[
-            <TextEdition
-                label={'Titre'}
-                value={label}
-                editItem={(v) => {
-                    handleChange('text', v)
-                    setLabel(v);
-                }}
-            />,
             <SelectEdition
                 label={'Niveau de titre'}
                 value={headingLevel}
@@ -66,7 +58,19 @@ const Title = ({id, text, heading, preview}: Props) => {
             />
         ]}>
             <div className={preview ? "" : "rounded-lg p-2 transition-colors group-hover:bg-muted/50"}>
-                {React.createElement(headingLevel, {className: renderClass(headingLevel)}, label)}
+                {preview ? (
+                    React.createElement(headingLevel, {className: renderClass(headingLevel)}, label)
+                ) : (
+                    <InlineEditableText
+                        value={label}
+                        onCommit={(v) => {
+                            setLabel(v);
+                            handleChange('text', v);
+                        }}
+                        placeholder="Titre sans nom"
+                        className={`h-auto py-1 font-semibold ${renderClass(headingLevel)}`}
+                    />
+                )}
             </div>
         </EditableBlock>
     );

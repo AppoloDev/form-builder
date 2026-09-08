@@ -4,6 +4,7 @@ import { useFormBuilderStore } from "../../stores/block.store";
 import { EditableBlock } from "./EditableBlock";
 import { TextEdition } from "../Edition/TextEdition";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
+import { InlineEditableText } from "../InlineEditableText";
 
 type Props = SignatureProps & { isChildBlock?: boolean; preview?: boolean };
 
@@ -44,7 +45,15 @@ const Signature = ({id, label, helpText, required, isChildBlock, preview}: Props
         <EditableBlock id={id} preview={preview} editionItems={editionItems}>
             <div className={preview ? "flex flex-col gap-2" : "flex flex-col gap-2 rounded-lg p-2 transition-colors group-hover:bg-muted/50"}>
                 <label className="text-sm font-medium">
-                    {form.label}
+                    {preview ? (
+                        form.label
+                    ) : (
+                        <InlineEditableText
+                            value={form.label}
+                            onCommit={(v) => handleChange('label', v)}
+                            placeholder="Libellé"
+                        />
+                    )}
                     {form.required && <span className="text-destructive pl-0.5">*</span>}
                 </label>
 
