@@ -28,8 +28,6 @@ export const InlineEditableText = ({value, onCommit, placeholder, className = ""
     useLayoutEffect(() => {
         if (multiline || !mirrorRef.current) return;
         const measured = mirrorRef.current.getBoundingClientRect().width;
-        // Only enforce the click-target floor when there's no text yet — a
-        // short label (and its "*") shouldn't be padded out to MIN_WIDTH.
         const floor = draft ? 0 : MIN_WIDTH;
         setWidth(Math.max(floor, Math.ceil(measured) + CARET_SPACE));
     }, [draft, placeholder, multiline, className]);

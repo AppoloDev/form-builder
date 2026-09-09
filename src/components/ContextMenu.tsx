@@ -19,7 +19,7 @@ export const ContextMenu = (
         <Dialog open={visible} onOpenChange={(open) => {
             if (!open) onClose();
         }}>
-            <DialogContent className="sm:max-w-xl max-h-[80vh] overflow-y-auto">
+            <DialogContent className="max-h-[80vh] overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle>{title}</DialogTitle>
                 </DialogHeader>

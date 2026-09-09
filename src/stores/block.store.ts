@@ -1,7 +1,8 @@
 import { create } from "zustand";
 import { arrayMove } from "@dnd-kit/sortable";
-import { Block, BlockId } from "../components/Blocks/Definition";
+import { Block, BlockId, ConditionRule, OptionItem, SelectOption } from "../components/Blocks/Definition";
 import { UniqueIdentifier } from "@dnd-kit/core";
+import { v4 as uuidv4 } from "uuid";
 
 interface FormBuilderState {
     blocks: Block[];
@@ -19,23 +20,80 @@ interface FormBuilderState {
     moveBlockToEnd: (activeId: string) => void;
 }
 
-// Applies `recurse` to every nested Block[] a container block carries,
-// whether it lives directly on the block (FieldSet/Repeatable) or per-option (ChoiceGroup).
 const recurseIntoChildren = (block: Block, recurse: (children: Block[]) => Block[]): Block => {
     if (block.type === 'FieldSet' || block.type === 'Repeatable') {
         if (block.children.length === 0) return block;
         return { ...block, children: recurse(block.children) };
     }
 
-    if (block.type === 'ChoiceGroup') {
-        const nextOptions = block.options.map((option) =>
-            option.children.length === 0 ? option : { ...option, children: recurse(option.children) }
+    if (block.type === 'ChoiceGroup' || block.type === 'Select') {
+        const conditions = block.conditions ?? [];
+        if (conditions.length === 0) return block;
+        const nextConditions = conditions.map((rule) =>
+            rule.children.length === 0 ? rule : { ...rule, children: recurse(rule.children) }
         );
-        return { ...block, options: nextOptions };
+        return { ...block, conditions: nextConditions };
     }
 
     return block;
 };
+
+// Upgrades one block from a legacy shape to the current one. Idempotent —
+// a block already in the new shape passes through unchanged, so this is
+// safe to run on every load regardless of the input's actual shape.
+const migrateBlock = (block: Block): Block => {
+    if (block.type === 'ChoiceGroup') {
+        const conditions: ConditionRule[] = [...(block.conditions ?? [])];
+
+        // Legacy JSON may still carry showConditionalField/children on an
+        // option even though OptionItem's type no longer declares them —
+        // this cast is the intentional escape hatch for reading that.
+        const legacyOptions = block.options as Array<OptionItem & { showConditionalField?: boolean; children?: Block[] }>;
+
+        const options: OptionItem[] = legacyOptions.map((option) => {
+            // eslint's no-unused-vars would flag this destructure-to-discard
+            // otherwise (ignoreRestSiblings isn't enabled repo-wide).
+            const { showConditionalField: _showConditionalField, children, ...rest } = option;
+            if (children && children.length > 0) {
+                conditions.push({ id: uuidv4(), operator: 'is', optionId: option.id, children });
+            }
+            return rest;
+        });
+
+        return {
+            ...block,
+            options,
+            conditions: conditions.map((rule) => ({
+                ...rule,
+                operator: rule.operator ?? 'is',
+                children: rule.children.map(migrateBlock),
+            })),
+        };
+    }
+
+    if (block.type === 'Select') {
+        // Legacy JSON may still have options as plain strings.
+        const legacyOptions = block.options as unknown as Array<string | SelectOption>;
+
+        const options: SelectOption[] = legacyOptions.map((option) =>
+            typeof option === 'string' ? { id: uuidv4(), label: option } : option
+        );
+
+        return {
+            ...block,
+            options,
+            conditions: (block.conditions ?? []).map((rule) => ({
+                ...rule,
+                operator: rule.operator ?? 'is',
+                children: rule.children.map(migrateBlock),
+            })),
+        };
+    }
+
+    return recurseIntoChildren(block, (children) => children.map(migrateBlock));
+};
+
+const migrateBlocks = (blocks: Block[]): Block[] => blocks.map(migrateBlock);
 
 const updateBlockRecursive = (blocks: Block[], id: BlockId, updates: any): Block[] => {
     return blocks.map((block) => {
@@ -60,7 +118,7 @@ export const useFormBuilderStore = create<FormBuilderState>((set) => ({
     activeId: null,
 
     setBlocks: (blocks) => {
-        set({ blocks });
+        set({ blocks: migrateBlocks(blocks) });
     },
 
     addBlock: (block, index) => {

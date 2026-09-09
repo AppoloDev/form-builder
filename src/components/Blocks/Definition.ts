@@ -47,9 +47,9 @@ export interface ChoiceGroupProps extends BaseBlockProps {
     name: string;
     helpText?: string;
     required?: boolean;
-    inline?: boolean;
     multiple?: boolean;
     options: OptionItem[];
+    conditions?: ConditionRule[];
 }
 
 export interface NumberInputProps extends BaseBlockProps {
@@ -136,7 +136,8 @@ export interface SelectProps extends BaseBlockProps {
     helpText?: string;
     required?: boolean;
     multiple?: boolean;
-    options: string[];
+    options: SelectOption[];
+    conditions?: ConditionRule[];
 }
 
 export interface SignatureProps extends BaseBlockProps {
@@ -162,7 +163,19 @@ export type OptionItem = {
     id: string;
     label: string;
     value: string;
-    showConditionalField: boolean;
+};
+
+export type SelectOption = {
+    id: string;
+    label: string;
+};
+
+export type ConditionOperator = 'is' | 'is_not';
+
+export type ConditionRule = {
+    id: string;
+    operator: ConditionOperator;
+    optionId: string;
     children: Block[];
 };
 
@@ -307,16 +320,15 @@ export const blockDefinitions: BlockDefinitions = {
             name: labelToName("Libellé"),
             helpText: "",
             required: false,
-            inline: false,
             multiple: false,
             options: [],
+            conditions: [],
         },
         editionSchema: [
             {key: "label", label: "Titre", type: "text"},
             {key: "helpText", label: "Message d'aide", type: "textarea", rows: 2},
             {key: "required", label: "Requis", type: "checkbox"},
             {key: "multiple", label: "Sélection multiple", type: "checkbox"},
-            {key: "inline", label: "Affichage en ligne", type: "checkbox"},
         ],
     },
     NumberInput: {
@@ -481,6 +493,7 @@ export const blockDefinitions: BlockDefinitions = {
             required: false,
             multiple: false,
             options: [],
+            conditions: [],
         },
         editionSchema: [
             {key: "label", label: "Titre", type: "text"},

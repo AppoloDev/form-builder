@@ -43,7 +43,7 @@ const Signature = ({id, label, helpText, required, isChildBlock, preview}: Props
 
     return (
         <EditableBlock id={id} preview={preview} editionItems={editionItems}>
-            <div className={preview ? "flex flex-col gap-2" : "flex flex-col gap-2 rounded-lg p-2 transition-colors group-hover:bg-muted/50"}>
+            <div className={preview ? "flex flex-col gap-2" : "flex flex-col gap-2 rounded-lg transition-colors"}>
                 <label className="text-sm font-medium">
                     {preview ? (
                         form.label

@@ -20,7 +20,7 @@ const Paragraph = ({id, text, preview}: Props) => {
 
     return (
         <EditableBlock id={id} preview={preview}>
-            <div className={preview ? "" : "rounded-lg p-2 transition-colors group-hover:bg-muted/50"}>
+            <div className={preview ? "" : "rounded-lg p-2 transition-colors"}>
                 {preview ? (
                     <p>{label}</p>
                 ) : (

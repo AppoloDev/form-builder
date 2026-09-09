@@ -7,6 +7,7 @@ import { labelToName } from "../utilities/string.utiles";
 import { Button } from "@/src/components/ui/button";
 import { BLOCK_COMPONENTS } from "./BlockRegistry";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
+import { Input } from "@/src/components/ui/input";
 
 type AddMenuProps = {
     onPick: (def: BlockDefinition, overrides?: Record<string, any>) => void;
@@ -67,14 +68,17 @@ export const AddMenu: React.FC<AddMenuProps> = (
     const getPreviewProps = (def: BlockDefinition, state: Record<string, any>): Record<string, any> => {
         const merged: Record<string, any> = {...def.defaultProps, ...state, id: "preview", preview: true};
 
-        // ChoiceGroup/Select auto-fill default options on mount when empty, which
-        // would otherwise call updateBlock() on the real store from this read-only
-        // preview. Pre-filling here keeps the preview side-effect-free, matching
-        // exactly what each block actually creates by default.
         if ((def.type === "ChoiceGroup" || def.type === "Select") && (!merged.options || merged.options.length === 0)) {
             merged.options = def.type === "ChoiceGroup"
-                ? [{id: "preview-1", label: "", value: "", showConditionalField: false, children: []}]
-                : ["Option 1", "Option 2", "Option 3"];
+                ? [
+                    {id: "preview-1", label: "", value: ""},
+                    {id: "preview-2", label: "", value: ""}
+                ]
+                : [
+                    {id: "preview-1", label: "Option 1"},
+                    {id: "preview-2", label: "Option 2"},
+                    {id: "preview-3", label: "Option 3"},
+                ];
         }
 
         return merged;
@@ -171,13 +175,12 @@ export const AddMenu: React.FC<AddMenuProps> = (
                 {/* Left panel – Block list */}
                 <div className="w-72 min-w-72 border-r border-border flex flex-col">
                     <div className="p-2 border-b border-border">
-                        <input
+                        <Input
                             ref={inputRef}
                             type="text"
                             value={query}
                             onChange={e => setQuery(e.target.value)}
                             placeholder={placeholder}
-                            className="w-full px-3 py-2 border border-input rounded focus:outline-none focus:border-ring text-sm"
                         />
                     </div>
 

@@ -11,7 +11,7 @@ type Props = { id: string;
 export const FieldInput = ({id, editionItems, form, children, preview, onLabelChange}: Props) => {
     return (
         <EditableBlock id={id} editionItems={editionItems} preview={preview}>
-            <div className={preview ? "flex flex-col gap-2" : "flex flex-col gap-2 rounded-lg p-2 transition-colors group-hover:bg-muted/50"}>
+            <div className={preview ? "flex flex-col gap-2" : "flex flex-col gap-2 rounded-lg transition-colors"}>
                 {(form.label || !preview) && (
                     <label className="text-sm font-medium self-start" htmlFor={id}>
                         {preview ? (

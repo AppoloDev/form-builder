@@ -1,18 +1,20 @@
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { v4 as uuidv4 } from "uuid";
+import { SelectOption } from "../Blocks/Definition";
 
 type Props = {
     label: string;
-    value: string[];
+    value: SelectOption[];
     helpText?: string;
-    onChange: (next: string[]) => void;
+    onChange: (next: SelectOption[]) => void;
 };
 
 export const OptionsEdition = ({ label, value = [], helpText, onChange }: Props) => {
-    const add = () => onChange([...value, "Nouvelle option"]);
-    const update = (idx: number, v: string) => {
+    const add = () => onChange([...value, { id: uuidv4(), label: "Nouvelle option" }]);
+    const update = (idx: number, label: string) => {
         const next = [...value];
-        next[idx] = v;
+        next[idx] = { ...next[idx], label };
         onChange(next);
     };
     const remove = (idx: number) => {
@@ -31,9 +33,9 @@ export const OptionsEdition = ({ label, value = [], helpText, onChange }: Props)
 
             <div className="space-y-2">
                 {value.map((opt, idx) => (
-                    <div key={idx} className="flex items-center gap-2">
+                    <div key={opt.id} className="flex items-center gap-2">
                         <Input
-                            value={opt}
+                            value={opt.label}
                             onChange={(e) => update(idx, e.target.value)}
                             className="flex-1"
                         />

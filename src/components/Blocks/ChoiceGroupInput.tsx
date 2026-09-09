@@ -2,21 +2,17 @@ import { FC, useEffect, useMemo, useState } from "react";
 import { FieldInput } from "./FieldInput";
 import { TextEdition } from "../Edition/TextEdition";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
-import { Empty } from "../Empty";
-import { AddMenu } from "../AddMenu";
-import { Block, BlockDefinition, OptionItem } from "./Definition";
+import { ConditionRules } from "./ConditionRules";
+import { Block, BlockDefinition, ConditionOperator, ConditionRule, OptionItem } from "./Definition";
 import { createBlockFromTemplate } from "../../utilities/block.utiles";
 import { useFormBuilderStore } from "../../stores/block.store";
 import { v4 as uuidv4 } from "uuid";
-import { ChildrenSorter } from "./ChildrenSorter";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "../ui/input";
 import { Checkbox } from "../ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { EyeClosedIcon } from "../Icons/EyeClosedIcon";
-import { EyeIcon } from "../Icons/EyeIcon";
 import { labelToName } from "../../utilities/string.utiles";
-import { Plus, Trash } from "lucide-react";
+import { GitPullRequest, Plus, Trash } from "lucide-react";
 
 type Props = {
     id: string;
@@ -26,6 +22,7 @@ type Props = {
     required?: boolean;
     multiple?: boolean;
     options?: OptionItem[];
+    conditions?: ConditionRule[];
     useContionnalField?: boolean;
     isChildBlock?: boolean;
     preview?: boolean;
@@ -40,6 +37,7 @@ const ChoiceGroupInput: FC<Props> = (props) => {
         required: propsRequired,
         multiple: propsMultiple,
         options: propsOptions,
+        conditions: propsConditions,
         useContionnalField: propsUseContionnalField = true,
         isChildBlock,
         preview,
@@ -54,7 +52,7 @@ const ChoiceGroupInput: FC<Props> = (props) => {
         required: propsRequired ?? false,
         multiple: propsMultiple ?? false,
         options: (propsOptions || []) as OptionItem[],
-        useContionnalField: propsUseContionnalField ?? true,
+        conditions: (propsConditions || []) as ConditionRule[],
     });
 
     const [pendingFocusOptionId, setPendingFocusOptionId] = useState<string | null>(null);
@@ -74,7 +72,7 @@ const ChoiceGroupInput: FC<Props> = (props) => {
             required: propsRequired ?? false,
             multiple: propsMultiple ?? false,
             options: (propsOptions || []) as OptionItem[],
-            useContionnalField: propsUseContionnalField ?? true,
+            conditions: (propsConditions || []) as ConditionRule[],
         });
     }, [
         propsLabel,
@@ -83,13 +81,13 @@ const ChoiceGroupInput: FC<Props> = (props) => {
         propsRequired,
         propsMultiple,
         JSON.stringify(propsOptions),
-        propsUseContionnalField,
+        JSON.stringify(propsConditions),
     ]);
 
     useEffect(() => {
         if (form.options.length === 0) {
             const defaults: OptionItem[] = [
-                {id: uuidv4(), label: "", value: "", showConditionalField: false, children: []},
+                {id: uuidv4(), label: "", value: ""},
             ];
             const patch = {options: defaults};
             setForm(prev => ({...prev, ...patch}));
@@ -110,6 +108,58 @@ const ChoiceGroupInput: FC<Props> = (props) => {
         }
     };
 
+    const addCondition = () => {
+        const newRule: ConditionRule = {
+            id: uuidv4(),
+            operator: 'is',
+            optionId: form.options[0]?.id ?? "",
+            children: []
+        };
+        const patch = {conditions: [...form.conditions, newRule]};
+        setForm(prev => ({...prev, ...patch}));
+        updateBlock(id, patch);
+    };
+
+    const updateRuleOption = (ruleId: string, optionId: string) => {
+        const nextConditions = form.conditions.map((r) => (r.id === ruleId ? {...r, optionId} : r));
+        const patch = {conditions: nextConditions};
+        setForm(prev => ({...prev, ...patch}));
+        updateBlock(id, patch);
+    };
+
+    const updateRuleOperator = (ruleId: string, operator: ConditionOperator) => {
+        const nextConditions = form.conditions.map((r) => (r.id === ruleId ? {...r, operator} : r));
+        const patch = {conditions: nextConditions};
+        setForm(prev => ({...prev, ...patch}));
+        updateBlock(id, patch);
+    };
+
+    const removeRule = (ruleId: string) => {
+        const nextConditions = form.conditions.filter((r) => r.id !== ruleId);
+        const patch = {conditions: nextConditions};
+        setForm(prev => ({...prev, ...patch}));
+        updateBlock(id, patch);
+    };
+
+    const addBlockToRule = (ruleId: string, def: BlockDefinition, overrides?: Record<string, any>) => {
+        const newBlock = createBlockFromTemplate(def, overrides);
+        const nextConditions = form.conditions.map((r) =>
+            r.id === ruleId ? {...r, children: [...r.children, newBlock]} : r
+        );
+        const patch = {conditions: nextConditions};
+        setForm(prev => ({...prev, ...patch}));
+        updateBlock(id, patch);
+    };
+
+    const reorderRuleChildren = (ruleId: string, nextChildren: Block[]) => {
+        const nextConditions = form.conditions.map((r) =>
+            r.id === ruleId ? {...r, children: nextChildren} : r
+        );
+        const patch = {conditions: nextConditions};
+        setForm(prev => ({...prev, ...patch}));
+        updateBlock(id, patch);
+    };
+
     const editionItems = useMemo(
         () => {
             const items = [
@@ -126,17 +176,33 @@ const ChoiceGroupInput: FC<Props> = (props) => {
                 />,
             ];
 
-            if (isChildBlock) {
-                return items.filter(item => item.key !== 'required');
+            const filtered = isChildBlock ? items.filter(item => item.key !== 'required') : [...items];
+
+            if (propsUseContionnalField) {
+                filtered.push(
+                    <div className="border-t pt-4">
+                        <Button
+                            key="addCondition"
+                            type="button"
+                            variant="ghost"
+                            onClick={addCondition}
+                            className="w-full justify-start"
+                            disabled={form.options.length === 0}
+                        >
+                            <GitPullRequest/>
+                            Ajouter une logique conditionnelle
+                        </Button>
+                    </div>
+                );
             }
 
-            return items;
+            return filtered;
         },
-        [form.label, form.helpText, form.required, form.multiple, isChildBlock]
+        [form.label, form.helpText, form.required, form.multiple, form.options, form.conditions, isChildBlock, propsUseContionnalField]
     );
 
     const addOption = () => {
-        const newOption = {id: uuidv4(), label: "", value: "", showConditionalField: false, children: []};
+        const newOption = {id: uuidv4(), label: "", value: ""};
 
         const patch = {options: [...form.options, newOption]};
         setForm(prev => ({...prev, ...patch}));
@@ -153,29 +219,11 @@ const ChoiceGroupInput: FC<Props> = (props) => {
     };
 
     const removeOption = (idx: number) => {
+        const removedId = form.options[idx].id;
         const nextOptions = form.options.filter((_, i) => i !== idx);
+        const nextConditions = form.conditions.filter((r) => r.optionId !== removedId);
 
-        const patch = {options: nextOptions};
-        setForm(prev => ({...prev, ...patch}));
-        updateBlock(id, patch);
-    };
-
-    const addFollowUpFromDef = (idx: number, def: BlockDefinition, overrides?: Record<string, any>) => {
-        const newBlock = createBlockFromTemplate(def, overrides);
-        const nextOptions = form.options.map((opt, i) =>
-            i === idx ? {...opt, children: [...opt.children, newBlock], showConditionalField: true} : opt
-        );
-
-        const patch = {options: nextOptions};
-        setForm(prev => ({...prev, ...patch}));
-        updateBlock(id, patch);
-    };
-
-    const handleReorderChildren = (optionIndex: number, reorderedChildren: Block[]) => {
-        const nextOptions = [...form.options];
-        nextOptions[optionIndex] = {...nextOptions[optionIndex], children: reorderedChildren};
-
-        const patch = {options: nextOptions};
+        const patch = {options: nextOptions, conditions: nextConditions};
         setForm(prev => ({...prev, ...patch}));
         updateBlock(id, patch);
     };
@@ -200,16 +248,6 @@ const ChoiceGroupInput: FC<Props> = (props) => {
                 />
 
                 <div className="flex gap-0.5 opacity-0 transition-opacity group-hover/option:opacity-100">
-                    {propsUseContionnalField && <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon-sm"
-                        onClick={() => updateOption(idx, {showConditionalField: !opt.showConditionalField})}
-                        aria-label="Champs conditionnés"
-                    >
-                        {opt.showConditionalField ? <EyeClosedIcon size={18}/> : <EyeIcon size={18}/>}
-                    </Button>}
-
                     <Button
                         type="button"
                         variant="ghost"
@@ -222,31 +260,6 @@ const ChoiceGroupInput: FC<Props> = (props) => {
                     </Button>
                 </div>
             </div>
-
-            {propsUseContionnalField && opt.showConditionalField && (
-                <div className="mt-3 space-y-3 border-l-2 border-border pl-4 ml-2">
-                    {opt.children.length === 0 ? (
-                        <Empty onPick={(def, overrides) => addFollowUpFromDef(idx, def, overrides)}/>
-                    ) : (
-                        <>
-                            <ChildrenSorter
-                                childrenBlocks={opt.children}
-                                onReorder={(next) => {
-                                    handleReorderChildren(idx, next);
-                                }}
-                            />
-
-                            <div className="pt-1">
-                                <AddMenu onPick={(def, overrides) => addFollowUpFromDef(idx, def, overrides)}>
-                                    <Button type="button" size="sm">
-                                        Ajouter un bloc
-                                    </Button>
-                                </AddMenu>
-                            </div>
-                        </>
-                    )}
-                </div>
-            )}
         </div>
     );
 
@@ -264,13 +277,25 @@ const ChoiceGroupInput: FC<Props> = (props) => {
                     </RadioGroup>
                 )}
 
-                <div className="flex justify-start">
+                {!preview && <div className="flex justify-start">
                     <Button type="button" variant="ghost" onClick={addOption}
                             className="text-muted-foreground">
                         <Plus/>
                         Ajouter une option
                     </Button>
-                </div>
+                </div>}
+
+                {propsUseContionnalField && (
+                    <ConditionRules
+                        conditions={form.conditions}
+                        options={form.options.map((o) => ({id: o.id, label: o.label}))}
+                        onChangeRuleOption={updateRuleOption}
+                        onChangeRuleOperator={updateRuleOperator}
+                        onRemoveRule={removeRule}
+                        onAddBlockToRule={addBlockToRule}
+                        onReorderRuleChildren={reorderRuleChildren}
+                    />
+                )}
             </div>
         </FieldInput>
     );

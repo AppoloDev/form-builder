@@ -57,7 +57,7 @@ const Title = ({id, text, heading, preview}: Props) => {
                 }}
             />
         ]}>
-            <div className={preview ? "" : "rounded-lg p-2 transition-colors group-hover:bg-muted/50"}>
+            <div className={preview ? "" : "rounded-lg p-2 transition-colors"}>
                 {preview ? (
                     React.createElement(headingLevel, {className: renderClass(headingLevel)}, label)
                 ) : (
@@ -68,7 +68,10 @@ const Title = ({id, text, heading, preview}: Props) => {
                             handleChange('text', v);
                         }}
                         placeholder="Titre sans nom"
-                        className={`h-auto py-1 font-semibold ${renderClass(headingLevel)}`}
+                        // shadcn's Input hardcodes `md:text-sm`, which otherwise silently
+                        // shrinks the title back down on desktop widths — repeat the size
+                        // under `md:` too so it actually wins over Input's own default.
+                        className={`h-auto py-1 ${renderClass(headingLevel)} md:${renderClass(headingLevel)}`}
                     />
                 )}
             </div>
