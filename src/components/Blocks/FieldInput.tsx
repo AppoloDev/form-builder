@@ -23,7 +23,7 @@ export const FieldInput = ({id, editionItems, form, children, preview, onLabelCh
                                 placeholder="Label"
                             />
                         )}
-                        {form.required && <span className="text-destructive pl-0.5">*</span>}
+                        {form.required && <span className="text-destructive">*</span>}
                     </label>
                 )}
 

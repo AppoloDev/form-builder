@@ -13,10 +13,8 @@ type Props = {
 const baseClassName = "border-transparent bg-transparent px-1 -mx-1 hover:border-input focus-visible:border-ring";
 const inputOnlyClassName = "h-6 max-w-full";
 
-// The mirror reproduces the input's own padding/border (border + px-1) so its
-// offsetWidth already includes that chrome — only a small caret allowance is added.
-const MIN_WIDTH = 96; // keeps an empty label clickable
-const CARET_SPACE = 8; // room for the blinking caret past the last character
+const MIN_WIDTH = 96;
+const CARET_SPACE = 8;
 
 export const InlineEditableText = ({value, onCommit, placeholder, className = "", multiline = false}: Props) => {
     const [draft, setDraft] = useState(value);
@@ -27,12 +25,13 @@ export const InlineEditableText = ({value, onCommit, placeholder, className = ""
         setDraft(value);
     }, [value]);
 
-    // Measures synchronously before paint so the input is already the right
-    // size on the first frame it's visible — no native field-sizing lag.
     useLayoutEffect(() => {
         if (multiline || !mirrorRef.current) return;
         const measured = mirrorRef.current.getBoundingClientRect().width;
-        setWidth(Math.max(MIN_WIDTH, Math.ceil(measured) + CARET_SPACE));
+        // Only enforce the click-target floor when there's no text yet — a
+        // short label (and its "*") shouldn't be padded out to MIN_WIDTH.
+        const floor = draft ? 0 : MIN_WIDTH;
+        setWidth(Math.max(floor, Math.ceil(measured) + CARET_SPACE));
     }, [draft, placeholder, multiline, className]);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

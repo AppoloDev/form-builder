@@ -54,7 +54,7 @@ const Signature = ({id, label, helpText, required, isChildBlock, preview}: Props
                             placeholder="Libellé"
                         />
                     )}
-                    {form.required && <span className="text-destructive pl-0.5">*</span>}
+                    {form.required && <span className="text-destructive">*</span>}
                 </label>
 
                 <div
