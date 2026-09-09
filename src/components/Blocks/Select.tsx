@@ -23,6 +23,7 @@ type Props = Omit<SelectProps, 'id'> & {
 const Select = (
     {
         id,
+        type: blockType,
         label: propsLabel,
         name: propsName,
         helpText: propsHelpText,
@@ -169,7 +170,7 @@ const Select = (
     ];
 
     return (
-        <FieldInput id={id} form={form} editionItems={editionItems} preview={preview}
+        <FieldInput id={id} type={blockType} form={form} editionItems={editionItems} preview={preview}
                     onLabelChange={(v) => handleChange("label", v)}>
             <SelectField
                 disabled

@@ -7,7 +7,7 @@ import { InlineEditableText } from "../InlineEditableText";
 
 type Props = TitleProps & { preview?: boolean };
 
-const Title = ({id, text, heading, preview}: Props) => {
+const Title = ({id, type, text, heading, preview}: Props) => {
     const {updateBlock} = useFormBuilderStore();
     const [label, setLabel] = useState(text);
     const [headingLevel, setHeadingLevel] = useState(heading);
@@ -39,7 +39,7 @@ const Title = ({id, text, heading, preview}: Props) => {
     }
 
     return (
-        <EditableBlock id={id} preview={preview} editionItems={[
+        <EditableBlock id={id} type={type} preview={preview} editionItems={[
             <SelectEdition
                 label={'Niveau de titre'}
                 value={headingLevel}

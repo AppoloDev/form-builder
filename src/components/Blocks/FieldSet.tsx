@@ -9,7 +9,7 @@ import { Button } from "@/src/components/ui/button";
 
 type Props = FieldSetProps & { preview?: boolean };
 
-const FieldSet = ({id, children, preview}: Props) => {
+const FieldSet = ({id, type, children, preview}: Props) => {
     const {updateBlock} = useFormBuilderStore();
 
     const addChild = (def: BlockDefinition, overrides?: Record<string, any>) => {
@@ -22,7 +22,7 @@ const FieldSet = ({id, children, preview}: Props) => {
     };
 
     return (
-        <EditableBlock id={id} preview={preview}>
+        <EditableBlock id={id} type={type} preview={preview}>
             <div className={preview ? "space-y-3" : "space-y-3 rounded-lg p-2 transition-colors"}>
                 {children.length === 0 ? (
                     <Empty onPick={addChild}/>

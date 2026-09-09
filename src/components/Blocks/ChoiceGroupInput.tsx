@@ -3,7 +3,7 @@ import { FieldInput } from "./FieldInput";
 import { TextEdition } from "../Edition/TextEdition";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
 import { ConditionRules } from "./ConditionRules";
-import { Block, BlockDefinition, ConditionOperator, ConditionRule, OptionItem } from "./Definition";
+import { Block, BlockDefinition, BlockType, ConditionOperator, ConditionRule, OptionItem } from "./Definition";
 import { createBlockFromTemplate } from "../../utilities/block.utiles";
 import { useFormBuilderStore } from "../../stores/block.store";
 import { v4 as uuidv4 } from "uuid";
@@ -16,6 +16,7 @@ import { GitPullRequest, Plus, Trash } from "lucide-react";
 
 type Props = {
     id: string;
+    type?: BlockType;
     helpText?: string;
     label?: string;
     name?: string;
@@ -31,6 +32,7 @@ type Props = {
 const ChoiceGroupInput: FC<Props> = (props) => {
     const {
         id,
+        type: blockType,
         helpText: propsHelpText,
         label: propsLabel,
         name: propsName,
@@ -264,7 +266,7 @@ const ChoiceGroupInput: FC<Props> = (props) => {
     );
 
     return (
-        <FieldInput id={id} form={form} editionItems={editionItems} preview={preview}
+        <FieldInput id={id} type={blockType} form={form} editionItems={editionItems} preview={preview}
                     onLabelChange={(v) => handleChange("label", v)}>
             <div className="space-y-3">
                 {form.multiple ? (

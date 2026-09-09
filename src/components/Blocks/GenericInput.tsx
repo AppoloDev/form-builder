@@ -4,9 +4,12 @@ import { TextEdition } from "../Edition/TextEdition";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
 import { SelectEdition } from "../Edition/SelectEdition";
 import { FieldInput } from "./FieldInput";
+import { blockDefinitions } from "./Definition";
 import { labelToName } from "../../utilities/string.utiles";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
+import { InputGroup, InputGroupAddon } from "../ui/input-group";
+import { Tooltip } from "../Tooltip";
 
 type CommonProps = {
     id: string;
@@ -54,7 +57,7 @@ export const makeInputBlock = (
     opts: MakeOpts = {}
 ) => {
     const InputBlock: FC<CommonProps> = (props) => {
-        const {id, index: _index, isChildBlock, preview, ...restProps} = props;
+        const {id, type: blockType, index: _index, isChildBlock, preview, ...restProps} = props;
         const {updateBlock} = useFormBuilderStore();
 
         const [form, setForm] = useState<Record<string, any>>({
@@ -148,32 +151,48 @@ export const makeInputBlock = (
         const rawInputAttrs = opts.toInputAttrs?.(form) ?? {};
         const {type: overrideType, ...restInputAttrs} = rawInputAttrs;
         const finalType = (overrideType as HTMLInputTypeAttribute) ?? inputType;
+        const Icon = blockDefinitions[blockType as keyof typeof blockDefinitions]?.icon;
 
         return (
             <FieldInput
                 editionItems={editionItems}
                 form={form}
                 id={id}
+                type={blockType}
                 preview={preview}
                 onLabelChange={(v) => handleChange('label', v)}
             >
-                {finalType === 'textarea' ?
-                    <Textarea
-                        id={id}
-                        placeholder={form.placeHolder}
-                        rows={props.rows}
-                        disabled
-                        {...restInputAttrs}
-                    />
-                    :
-                    <Input
-                        id={id}
-                        type={finalType}
-                        placeholder={form.placeHolder}
-                        disabled
-                        {...restInputAttrs}
-                    />
-                }
+                <InputGroup>
+                    {finalType === 'textarea' ?
+                        <Textarea
+                            id={id}
+                            data-slot="input-group-control"
+                            placeholder={form.placeHolder}
+                            rows={props.rows}
+                            disabled
+                            className="border-0 shadow-none focus-visible:ring-0"
+                            {...restInputAttrs}
+                        />
+                        :
+                        <Input
+                            id={id}
+                            data-slot="input-group-control"
+                            type={finalType}
+                            placeholder={form.placeHolder}
+                            disabled
+                            className="border-0 shadow-none focus-visible:ring-0"
+                            {...restInputAttrs}
+                        />
+                    }
+
+                    {Icon && (
+                        <InputGroupAddon align="inline-end">
+                            <Tooltip content={blockDefinitions[blockType as keyof typeof blockDefinitions]?.title ?? ""}>
+                                <Icon className="size-3.5 text-muted-foreground"/>
+                            </Tooltip>
+                        </InputGroupAddon>
+                    )}
+                </InputGroup>
             </FieldInput>
         );
     };

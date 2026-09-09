@@ -6,7 +6,7 @@ import { InlineEditableText } from "../InlineEditableText";
 
 type Props = ParagraphProps & { preview?: boolean };
 
-const Paragraph = ({id, text, preview}: Props) => {
+const Paragraph = ({id, type, text, preview}: Props) => {
     const {updateBlock} = useFormBuilderStore();
     const [label, setLabel] = useState(text);
 
@@ -19,7 +19,7 @@ const Paragraph = ({id, text, preview}: Props) => {
     };
 
     return (
-        <EditableBlock id={id} preview={preview}>
+        <EditableBlock id={id} type={type} preview={preview}>
             <div className={preview ? "" : "rounded-lg p-2 transition-colors"}>
                 {preview ? (
                     <p>{label}</p>

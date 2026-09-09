@@ -1,4 +1,17 @@
 import { UniqueIdentifier } from "@dnd-kit/core";
+import {
+    type LucideIcon,
+    Type as TypeIcon,
+    AlignLeft,
+    Hash,
+    Mail,
+    Phone,
+    Link,
+    Calendar,
+    MapPin,
+    Paperclip,
+    Clock,
+} from "lucide-react";
 import { labelToName } from "../../utilities/string.utiles";
 
 export type BlockId = UniqueIdentifier;
@@ -218,6 +231,9 @@ export interface BlockDefinition<T extends BlockType = BlockType> {
     description: string;
     defaultProps: Omit<BlockOf<T>, 'id'>;
     editionSchema?: DefinitionEditionItem[];
+    // Shown on the actual field preview (not the label) so visually similar
+    // input types — Text/Email/Tel/Url, etc. — stay distinguishable at a glance.
+    icon?: LucideIcon;
 }
 
 type BlockDefinitions = { [T in BlockType]: BlockDefinition<T> };
@@ -279,6 +295,7 @@ export const blockDefinitions: BlockDefinitions = {
         id: "drag-textinput",
         type: "TextInput",
         title: "Texte court",
+        icon: TypeIcon,
         description: 'Permet la saisie d\'un texte court.',
         defaultProps: {
             type: "TextInput",
@@ -294,6 +311,7 @@ export const blockDefinitions: BlockDefinitions = {
         id: "drag-textareainput",
         type: "TextareaInput",
         title: "Zone de texte",
+        icon: AlignLeft,
         description: 'Saisie d\'une grande quantité de texte par l\'utilisateur.',
         defaultProps: {
             type: "TextareaInput",
@@ -335,6 +353,7 @@ export const blockDefinitions: BlockDefinitions = {
         id: "drag-numberinput",
         type: "NumberInput",
         title: "Nombre",
+        icon: Hash,
         description: 'Permet la saisie d\'une valeur numérique, avec bornes min/max optionnelles.',
         defaultProps: {
             type: "NumberInput",
@@ -358,6 +377,7 @@ export const blockDefinitions: BlockDefinitions = {
         id: "drag-emailinput",
         type: "EmailInput",
         title: "Email",
+        icon: Mail,
         description: 'Permet la saisie d\'une adresse email.',
         defaultProps: {
             type: "EmailInput",
@@ -373,6 +393,7 @@ export const blockDefinitions: BlockDefinitions = {
         id: "drag-telinput",
         type: "TelInput",
         title: "Téléphone",
+        icon: Phone,
         description: 'Permet la saisie d\'un numéro de téléphone.',
         defaultProps: {
             type: "TelInput",
@@ -388,6 +409,7 @@ export const blockDefinitions: BlockDefinitions = {
         id: "drag-urlinput",
         type: "UrlInput",
         title: "URL",
+        icon: Link,
         description: 'Permet la saisie d\'une adresse web.',
         defaultProps: {
             type: "UrlInput",
@@ -403,6 +425,7 @@ export const blockDefinitions: BlockDefinitions = {
         id: "drag-datetimeinput",
         type: "DateTimeInput",
         title: "Date / Heure",
+        icon: Calendar,
         description: 'Permet la saisie d\'une date, d\'une heure, ou des deux.',
         defaultProps: {
             type: "DateTimeInput",
@@ -428,6 +451,7 @@ export const blockDefinitions: BlockDefinitions = {
         id: "drag-addressinput",
         type: "AddressInput",
         title: "Adresse",
+        icon: MapPin,
         description: 'Permet la saisie d\'une adresse postale.',
         defaultProps: {
             type: "AddressInput",
@@ -443,6 +467,7 @@ export const blockDefinitions: BlockDefinitions = {
         id: "drag-fileinput",
         type: "FileInput",
         title: "Fichier",
+        icon: Paperclip,
         description: 'Permet le dépôt d\'un ou plusieurs fichiers.',
         defaultProps: {
             type: "FileInput",
@@ -469,6 +494,7 @@ export const blockDefinitions: BlockDefinitions = {
         id: "drag-hourminuteinput",
         type: "HourMinuteInput",
         title: "Heure",
+        icon: Clock,
         description: 'Permet la saisie d\'une heure (HH:MM).',
         defaultProps: {
             type: "HourMinuteInput",

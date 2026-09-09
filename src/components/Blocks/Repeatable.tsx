@@ -10,7 +10,7 @@ import { Button } from "@/src/components/ui/button";
 
 type Props = RepeatableProps & { preview?: boolean };
 
-const Repeatable = ({id, children, maxItems, preview}: Props) => {
+const Repeatable = ({id, type, children, maxItems, preview}: Props) => {
     const {updateBlock} = useFormBuilderStore();
 
     const addChild = (def: BlockDefinition, overrides?: Record<string, any>) => {
@@ -27,7 +27,7 @@ const Repeatable = ({id, children, maxItems, preview}: Props) => {
     };
 
     return (
-        <EditableBlock id={id} preview={preview} editionItems={[
+        <EditableBlock id={id} type={type} preview={preview} editionItems={[
             <TextEdition
                 key="maxItems"
                 label="Nombre maximum de répétitions"

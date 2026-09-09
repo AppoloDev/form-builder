@@ -6,9 +6,11 @@ import { useBlockOperations } from "../../hooks/useBlockOperations";
 import { DragHandleContext } from "../../FormBuilder";
 import { Button } from "@/src/components/ui/button";
 import { GripVertical, SquarePen, Trash } from "lucide-react";
+import { BlockType, blockDefinitions } from "./Definition";
 
 interface EditableBlockProps {
     id: UniqueIdentifier;
+    type?: BlockType;
     editionItems?: ReactElement | ReactElement[];
     children: ReactNode;
     onDelete?: () => void;
@@ -19,12 +21,14 @@ interface EditableBlockProps {
 export const EditableBlock = (
     {
         id,
+        type,
         editionItems = [],
         children,
         onDelete,
         className = "",
         preview = false,
     }: EditableBlockProps) => {
+    const typeLabel = type ? blockDefinitions[type]?.title : undefined;
     const [contextMenuVisible, setContextMenuVisible] = useState(false);
 
     const {handleRemove} = useBlockOperations(id);
@@ -59,7 +63,7 @@ export const EditableBlock = (
             {/* Invisible bridge so the cursor doesn't lose hover crossing the gap to the floating toolbar */}
             <div className="absolute top-0 right-full h-full w-24" aria-hidden="true"/>
 
-            <div className="absolute right-full mr-2 z-10 flex gap-0.5 p-0.5 opacity-0 transition-opacity pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
+            <div className="absolute right-full mr-2 z-10 flex items-center gap-0.5 p-0.5 opacity-0 transition-opacity pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
                 {items.length > 0 && (
                     <Tooltip content="Paramètres">
                         <Button
@@ -105,6 +109,7 @@ export const EditableBlock = (
                 <ContextMenu
                     visible={contextMenuVisible}
                     onClose={handleCloseContextMenu}
+                    title={typeLabel ? `Configuration du champ — ${typeLabel}` : undefined}
                 >
                     {items.map((item, index) => (
                         <ContextMenuItem key={item.key || index}>{item}</ContextMenuItem>
