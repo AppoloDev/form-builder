@@ -220,7 +220,7 @@ type BlockOf<T extends BlockType> = BlockPropsByType[T];
 
 // Edition schema item types for block configuration
 export type DefinitionEditionItem =
-    | { key: string; label: string; type: "text" | "textarea"; helpText?: string; rows?: number }
+    | { key: string; label: string; type: "text" | "textarea" | "number"; helpText?: string; rows?: number }
     | { key: string; label: string; type: "checkbox" }
     | { key: string; label: string; type: "select"; options: { value: string; label: string }[]; helpText?: string };
 
@@ -324,7 +324,7 @@ export const blockDefinitions: BlockDefinitions = {
         },
         editionSchema: [
             ...commonInputSchema,
-            {key: "rows", label: "Nombre de lignes", type: "text"},
+            {key: "rows", label: "Nombre de lignes", type: "number"},
         ],
     },
     ChoiceGroup: {
@@ -368,9 +368,9 @@ export const blockDefinitions: BlockDefinitions = {
         },
         editionSchema: [
             ...commonInputSchema,
-            {key: "min", label: "Valeur minimale", type: "text"},
-            {key: "max", label: "Valeur maximale", type: "text"},
-            {key: "step", label: "Pas", type: "text"},
+            {key: "min", label: "Valeur minimale", type: "number"},
+            {key: "max", label: "Valeur maximale", type: "number"},
+            {key: "step", label: "Pas", type: "number"},
         ],
     },
     EmailInput: {

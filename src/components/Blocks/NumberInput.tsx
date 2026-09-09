@@ -1,9 +1,9 @@
 import { EditionItem, makeInputBlock } from "./GenericInput";
 
 const numberExtras: EditionItem[] = [
-    {key: "min", label: "Valeur minimale", type: "text"},
-    {key: "max", label: "Valeur maximale", type: "text"},
-    {key: "step", label: "Pas", type: "text"},
+    {key: "min", label: "Valeur minimale", type: "number"},
+    {key: "max", label: "Valeur maximale", type: "number"},
+    {key: "step", label: "Pas", type: "number"},
 ];
 
 const NumberInput = makeInputBlock("number", {

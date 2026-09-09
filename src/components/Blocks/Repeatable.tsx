@@ -31,6 +31,7 @@ const Repeatable = ({id, type, children, maxItems, preview}: Props) => {
             <TextEdition
                 key="maxItems"
                 label="Nombre maximum de répétitions"
+                type="number"
                 helpText="0 = illimité"
                 value={String(maxItems ?? 0)}
                 editItem={handleMaxItemsChange}

@@ -30,7 +30,7 @@ type FormStateBase = {
 };
 
 export type EditionItem =
-    | { key: keyof FormStateBase | string; label: string; type: "text" | "textarea"; helpText?: string; rows?: number }
+    | { key: keyof FormStateBase | string; label: string; type: "text" | "textarea" | "number"; helpText?: string; rows?: number }
     | { key: keyof FormStateBase | string; label: string; type: "checkbox" }
     | {
     key: keyof FormStateBase | string;

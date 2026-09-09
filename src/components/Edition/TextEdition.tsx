@@ -5,7 +5,7 @@ import { Textarea } from "../ui/textarea";
 type Props = {
     label: string;
     value: string;
-    type?: "text" | "textarea";
+    type?: "text" | "textarea" | "number";
     helpText?: string;
     rows?: number;
     editItem: (text: string) => void
