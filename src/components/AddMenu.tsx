@@ -228,7 +228,7 @@ export const AddMenu: React.FC<AddMenuProps> = (
                             <div className="flex-1 overflow-auto">
                                 {/* Edition fields */}
                                 {selectedDef.editionSchema && selectedDef.editionSchema.length > 0 && (
-                                    <div className="p-4 space-y-3">
+                                    <div className="p-4 space-y-4">
                                         {selectedDef.editionSchema.map(renderEditionField)}
                                     </div>
                                 )}

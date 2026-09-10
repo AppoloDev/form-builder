@@ -267,8 +267,8 @@ const ChoiceGroupInput: FC<Props> = (props) => {
 
     return (
         <FieldInput id={id} type={blockType} form={form} editionItems={editionItems} preview={preview}
-                    onLabelChange={(v) => handleChange("label", v)}>
-            <div className="space-y-3">
+                    isChildBlock={isChildBlock} onLabelChange={(v) => handleChange("label", v)}>
+            <div className="space-y-4">
                 {form.multiple ? (
                     <div className="space-y-1">
                         {form.options.map(renderOptionRow)}

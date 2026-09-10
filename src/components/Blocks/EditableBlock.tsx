@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useState, MouseEvent, useCallback, useContext } from "react";
+import React, { ReactElement, ReactNode, useState, MouseEvent, useCallback, useContext, useEffect, createContext } from "react";
 import { Tooltip } from "../Tooltip";
 import { UniqueIdentifier } from "@dnd-kit/core";
 import { ContextMenu, ContextMenuItem } from "../ContextMenu";
@@ -16,7 +16,11 @@ interface EditableBlockProps {
     onDelete?: () => void;
     className?: string;
     preview?: boolean;
+    isChildBlock?: boolean;
 }
+
+const DescendantHoverContext = createContext<(delta: 1 | -1) => void>(() => {
+});
 
 export const EditableBlock = (
     {
@@ -27,9 +31,26 @@ export const EditableBlock = (
         onDelete,
         className = "",
         preview = false,
+        isChildBlock = false,
     }: EditableBlockProps) => {
     const typeLabel = type ? blockDefinitions[type]?.title : undefined;
     const [contextMenuVisible, setContextMenuVisible] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+    const [isContentHovered, setIsContentHovered] = useState(false);
+    const [activeDescendants, setActiveDescendants] = useState(0);
+
+    const notifyParent = useContext(DescendantHoverContext);
+    const isActive = isContentHovered || activeDescendants > 0;
+
+    useEffect(() => {
+        if (!isActive) return;
+        notifyParent(1);
+        return () => notifyParent(-1);
+    }, [isActive, notifyParent]);
+
+    const reportDescendantHover = useCallback((delta: 1 | -1) => {
+        setActiveDescendants((count) => count + delta);
+    }, []);
 
     const {handleRemove} = useBlockOperations(id);
 
@@ -58,12 +79,23 @@ export const EditableBlock = (
         return <>{children}</>;
     }
 
+    const showControls = isHovered && activeDescendants === 0;
+
     return (
-        <div className={`group relative ${className}`}>
-            {/* Invisible bridge so the cursor doesn't lose hover crossing the gap to the floating toolbar */}
+        <div
+            className={`relative ${className}`}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
             <div className="absolute top-0 right-full h-full w-24" aria-hidden="true"/>
 
-            <div className="absolute right-full mr-2 z-10 flex items-center gap-0.5 p-0.5 opacity-0 transition-opacity pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
+            <div
+                className={`absolute right-full z-10 flex items-center gap-0.5 p-0.5 transition-opacity ${
+                    isChildBlock ? "top-8 mr-7" : "top-0 mr-2"
+                } ${
+                    showControls ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+                }`}
+            >
                 {items.length > 0 && (
                     <Tooltip content="Paramètres">
                         <Button
@@ -103,7 +135,14 @@ export const EditableBlock = (
                 </Tooltip>
             </div>
 
-            {children}
+            <div
+                onMouseEnter={() => setIsContentHovered(true)}
+                onMouseLeave={() => setIsContentHovered(false)}
+            >
+                <DescendantHoverContext.Provider value={reportDescendantHover}>
+                    {children}
+                </DescendantHoverContext.Provider>
+            </div>
 
             {items.length > 0 && (
                 <ContextMenu

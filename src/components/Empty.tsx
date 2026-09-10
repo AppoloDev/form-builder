@@ -5,9 +5,10 @@ import { Plus } from "lucide-react";
 
 type Props = {
     onPick: (def: BlockDefinition, overrides?: Record<string, any>) => void;
+    allowTypes?: Array<BlockDefinition["type"]>;
 }
 
-export const Empty = ({onPick}: Props) => {
+export const Empty = ({onPick, allowTypes}: Props) => {
     return (
         <div className="max-w-sm w-full flex flex-col justify-center mx-auto space-y-5 p-8">
             <div className="flex flex-col items-center gap-2">
@@ -23,6 +24,7 @@ export const Empty = ({onPick}: Props) => {
             <div className="flex justify-center mt-5">
                 <AddMenu
                     onPick={onPick}
+                    allowTypes={allowTypes}
                 >
                     <Button type="button">
                         <Plus />

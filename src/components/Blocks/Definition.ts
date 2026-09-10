@@ -566,3 +566,9 @@ export const blockDefinitions: BlockDefinitions = {
 };
 
 export const getAllBlockDefinitions = () => Object.values(blockDefinitions);
+
+// FieldSet/Repeatable can only be nested one level deep — once you're already
+// inside one (or inside a ChoiceGroup/Select condition), the block picker
+// shouldn't offer another one to nest further.
+export const NESTABLE_BLOCK_TYPES: BlockType[] = (Object.keys(blockDefinitions) as BlockType[])
+    .filter((type) => type !== 'FieldSet' && type !== 'Repeatable');

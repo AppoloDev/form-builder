@@ -8,11 +8,12 @@ type Props = { id: string;
     form: Record<string, any>;
     editionItems: ReactElement | ReactElement[];
     preview?: boolean;
+    isChildBlock?: boolean;
     onLabelChange?: (value: string) => void; } & PropsWithChildren;
 
-export const FieldInput = ({id, type, editionItems, form, children, preview, onLabelChange}: Props) => {
+export const FieldInput = ({id, type, editionItems, form, children, preview, isChildBlock, onLabelChange}: Props) => {
     return (
-        <EditableBlock id={id} type={type} editionItems={editionItems} preview={preview}>
+        <EditableBlock id={id} type={type} editionItems={editionItems} preview={preview} isChildBlock={isChildBlock}>
             <div className={preview ? "flex flex-col gap-2" : "flex flex-col gap-2 rounded-lg transition-colors"}>
                 {(form.label || !preview) && (
                     <label className="text-sm font-medium self-start" htmlFor={id}>

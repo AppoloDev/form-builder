@@ -4,7 +4,7 @@ import { Select as SelectField, SelectContent, SelectItem, SelectTrigger, Select
 import { AddMenu } from "../AddMenu";
 import { Empty } from "../Empty";
 import { ChildrenSorter } from "./ChildrenSorter";
-import { Block, BlockDefinition, ConditionOperator, ConditionRule } from "./Definition";
+import { Block, BlockDefinition, ConditionOperator, ConditionRule, NESTABLE_BLOCK_TYPES } from "./Definition";
 
 type OptionChoice = { id: string; label: string };
 
@@ -39,7 +39,7 @@ export const ConditionRules = (
         <div className="space-y-4">
             {conditions.map((rule) => {
                 return (
-                    <div key={rule.id} className="space-y-3 border-l-4 border-border pl-4">
+                    <div key={rule.id} className="space-y-4 border-l-4 border-border pl-4">
                         <div className="flex items-center gap-2">
                             <span className="text-sm">Si</span>
 
@@ -90,7 +90,10 @@ export const ConditionRules = (
                         </div>
 
                         {rule.children.length === 0 ? (
-                            <Empty onPick={(def, overrides) => onAddBlockToRule(rule.id, def, overrides)}/>
+                            <Empty
+                                onPick={(def, overrides) => onAddBlockToRule(rule.id, def, overrides)}
+                                allowTypes={NESTABLE_BLOCK_TYPES}
+                            />
                         ) : (
                             <>
                                 <ChildrenSorter
@@ -99,7 +102,10 @@ export const ConditionRules = (
                                 />
 
                                 <div className="pt-1">
-                                    <AddMenu onPick={(def, overrides) => onAddBlockToRule(rule.id, def, overrides)}>
+                                    <AddMenu
+                                        onPick={(def, overrides) => onAddBlockToRule(rule.id, def, overrides)}
+                                        allowTypes={NESTABLE_BLOCK_TYPES}
+                                    >
                                         <Button type="button" size="sm">
                                             <Plus />
 

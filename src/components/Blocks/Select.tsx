@@ -31,6 +31,7 @@ const Select = (
         multiple: propsMultiple,
         options: propsOptions,
         conditions: propsConditions,
+        isChildBlock,
         preview,
         useContionnalField: propsUseContionnalField = true,
     }: Props) => {
@@ -168,7 +169,7 @@ const Select = (
 
     return (
         <FieldInput id={id} type={blockType} form={form} editionItems={editionItems} preview={preview}
-                    onLabelChange={(v) => handleChange("label", v)}>
+                    isChildBlock={isChildBlock} onLabelChange={(v) => handleChange("label", v)}>
             <SelectField
                 disabled
                 items={form.options.map((opt) => ({value: opt.label, label: opt.label}))}

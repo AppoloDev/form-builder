@@ -5,9 +5,9 @@ import { EditableBlock } from "./EditableBlock";
 import { SelectEdition } from "../Edition/SelectEdition";
 import { InlineEditableText } from "../InlineEditableText";
 
-type Props = TitleProps & { preview?: boolean };
+type Props = TitleProps & { preview?: boolean; isChildBlock?: boolean };
 
-const Title = ({id, type, text, heading, preview}: Props) => {
+const Title = ({id, type, text, heading, preview, isChildBlock}: Props) => {
     const {updateBlock} = useFormBuilderStore();
     const [label, setLabel] = useState(text);
     const [headingLevel, setHeadingLevel] = useState(heading);
@@ -39,7 +39,7 @@ const Title = ({id, type, text, heading, preview}: Props) => {
     }
 
     return (
-        <EditableBlock id={id} type={type} preview={preview} editionItems={[
+        <EditableBlock id={id} type={type} preview={preview} isChildBlock={isChildBlock} editionItems={[
             <SelectEdition
                 label={'Niveau de titre'}
                 value={headingLevel}
@@ -57,24 +57,19 @@ const Title = ({id, type, text, heading, preview}: Props) => {
                 }}
             />
         ]}>
-            <div className={preview ? "" : "rounded-lg p-2 transition-colors"}>
-                {preview ? (
-                    React.createElement(headingLevel, {className: renderClass(headingLevel)}, label)
-                ) : (
-                    <InlineEditableText
-                        value={label}
-                        onCommit={(v) => {
-                            setLabel(v);
-                            handleChange('text', v);
-                        }}
-                        placeholder="Titre sans nom"
-                        // shadcn's Input hardcodes `md:text-sm`, which otherwise silently
-                        // shrinks the title back down on desktop widths — repeat the size
-                        // under `md:` too so it actually wins over Input's own default.
-                        className={`h-auto py-1 ${renderClass(headingLevel)} md:${renderClass(headingLevel)}`}
-                    />
-                )}
-            </div>
+            {preview ? (
+                React.createElement(headingLevel, {className: renderClass(headingLevel)}, label)
+            ) : (
+                <InlineEditableText
+                    value={label}
+                    onCommit={(v) => {
+                        setLabel(v);
+                        handleChange('text', v);
+                    }}
+                    placeholder="Titre sans nom"
+                    className={`h-auto py-1 ${renderClass(headingLevel)} md:${renderClass(headingLevel)}`}
+                />
+            )}
         </EditableBlock>
     );
 };
