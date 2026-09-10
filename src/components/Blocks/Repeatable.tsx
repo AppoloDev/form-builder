@@ -7,6 +7,7 @@ import { ChildrenSorter } from "./ChildrenSorter";
 import { createBlockFromTemplate } from "../../utilities/block.utiles";
 import { TextEdition } from "../Edition/TextEdition";
 import { Button } from "@/src/components/ui/button";
+import { Plus } from "lucide-react";
 
 type Props = RepeatableProps & { preview?: boolean };
 
@@ -37,7 +38,7 @@ const Repeatable = ({id, type, children, maxItems, preview}: Props) => {
                 editItem={handleMaxItemsChange}
             />,
         ]}>
-            <div className={preview ? "space-y-3" : "space-y-3 rounded-lg p-2 transition-colors"}>
+            <div className={preview ? "space-y-3" : "space-y-3 p-2 border-l-4 border-border pl-4 transition-colors"}>
                 {children.length === 0 ? (
                     <Empty onPick={addChild}/>
                 ) : (
@@ -47,6 +48,8 @@ const Repeatable = ({id, type, children, maxItems, preview}: Props) => {
                         <div className="pt-1">
                             <AddMenu onPick={addChild}>
                                 <Button type="button" size="sm">
+                                    <Plus />
+
                                     Ajouter un bloc
                                 </Button>
                             </AddMenu>

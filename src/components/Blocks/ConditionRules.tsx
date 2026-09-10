@@ -1,4 +1,4 @@
-import { Trash } from "lucide-react";
+import { Plus, Trash } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { Select as SelectField, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { AddMenu } from "../AddMenu";
@@ -101,6 +101,8 @@ export const ConditionRules = (
                                 <div className="pt-1">
                                     <AddMenu onPick={(def, overrides) => onAddBlockToRule(rule.id, def, overrides)}>
                                         <Button type="button" size="sm">
+                                            <Plus />
+
                                             Ajouter un bloc
                                         </Button>
                                     </AddMenu>

@@ -31,7 +31,6 @@ const Select = (
         multiple: propsMultiple,
         options: propsOptions,
         conditions: propsConditions,
-        isChildBlock,
         preview,
         useContionnalField: propsUseContionnalField = true,
     }: Props) => {
@@ -142,10 +141,8 @@ const Select = (
         <TextEdition key="label" label="Titre" value={form.label} editItem={(v) => handleChange("label", v)}/>,
         <TextEdition key="helpText" label="Message d'aide" type="textarea" value={form.helpText}
                      editItem={(v) => handleChange("helpText", v)}/>,
-        ...(isChildBlock ? [] : [
-            <CheckboxEdition key="required" label="Requis" checked={form.required}
-                             editItem={(v: boolean) => handleChange("required", v)}/>
-        ]),
+        <CheckboxEdition key="required" label="Requis" checked={form.required}
+                         editItem={(v: boolean) => handleChange("required", v)}/>,
         <CheckboxEdition key="multiple" label="Sélection multiple" checked={form.multiple}
                          editItem={(v) => handleChange("multiple", v)}/>,
         <OptionsEdition key="options" label="Options" value={form.options}

@@ -1,6 +1,7 @@
 import { AddMenu } from "./AddMenu";
 import { BlockDefinition } from "./Blocks/Definition";
 import { Button } from "@/src/components/ui/button";
+import { Plus } from "lucide-react";
 
 type Props = {
     onPick: (def: BlockDefinition, overrides?: Record<string, any>) => void;
@@ -24,6 +25,8 @@ export const Empty = ({onPick}: Props) => {
                     onPick={onPick}
                 >
                     <Button type="button">
+                        <Plus />
+
                         Ajouter un bloc
                     </Button>
                 </AddMenu>

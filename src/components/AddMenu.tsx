@@ -255,10 +255,7 @@ export const AddMenu: React.FC<AddMenuProps> = (
                                 <Button
                                     type="button"
                                     variant="ghost"
-                                    onClick={() => {
-                                        setSelectedDef(null);
-                                        setFormState({});
-                                    }}
+                                    onClick={handleClose}
                                 >
                                     Retour
                                 </Button>

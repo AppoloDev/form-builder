@@ -8,7 +8,7 @@ import { InlineEditableText } from "../InlineEditableText";
 
 type Props = SignatureProps & { isChildBlock?: boolean; preview?: boolean };
 
-const Signature = ({id, type, label, helpText, required, isChildBlock, preview}: Props) => {
+const Signature = ({id, type, label, helpText, required, preview}: Props) => {
     const {updateBlock} = useFormBuilderStore();
 
     const [form, setForm] = useState({
@@ -35,10 +35,8 @@ const Signature = ({id, type, label, helpText, required, isChildBlock, preview}:
         <TextEdition key="label" label="Libellé" value={form.label} editItem={(v) => handleChange('label', v)}/>,
         <TextEdition key="helpText" label="Message d'aide" type="textarea" value={form.helpText}
                      editItem={(v) => handleChange('helpText', v)}/>,
-        ...(isChildBlock ? [] : [
-            <CheckboxEdition key="required" label="Requis" checked={form.required}
-                             editItem={(v: boolean) => handleChange('required', v)}/>
-        ]),
+        <CheckboxEdition key="required" label="Requis" checked={form.required}
+                         editItem={(v: boolean) => handleChange('required', v)}/>,
     ];
 
     return (

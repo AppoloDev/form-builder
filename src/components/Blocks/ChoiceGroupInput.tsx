@@ -178,7 +178,7 @@ const ChoiceGroupInput: FC<Props> = (props) => {
                 />,
             ];
 
-            const filtered = isChildBlock ? items.filter(item => item.key !== 'required') : [...items];
+            const filtered = [...items];
 
             if (propsUseContionnalField) {
                 filtered.push(

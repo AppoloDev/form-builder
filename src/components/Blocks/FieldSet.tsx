@@ -6,6 +6,7 @@ import { AddMenu } from "../AddMenu";
 import { ChildrenSorter } from "./ChildrenSorter";
 import { createBlockFromTemplate } from "../../utilities/block.utiles";
 import { Button } from "@/src/components/ui/button";
+import { Plus } from "lucide-react";
 
 type Props = FieldSetProps & { preview?: boolean };
 
@@ -23,7 +24,7 @@ const FieldSet = ({id, type, children, preview}: Props) => {
 
     return (
         <EditableBlock id={id} type={type} preview={preview}>
-            <div className={preview ? "space-y-3" : "space-y-3 rounded-lg p-2 transition-colors"}>
+            <div className={preview ? "space-y-3" : "space-y-3 p-2 border-l-4 border-border pl-4 transition-colors"}>
                 {children.length === 0 ? (
                     <Empty onPick={addChild}/>
                 ) : (
@@ -33,6 +34,7 @@ const FieldSet = ({id, type, children, preview}: Props) => {
                         <div className="pt-1">
                             <AddMenu onPick={addChild}>
                                 <Button type="button" size="sm">
+                                    <Plus />
                                     Ajouter un bloc
                                 </Button>
                             </AddMenu>
