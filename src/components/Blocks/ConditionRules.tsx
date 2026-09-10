@@ -1,7 +1,6 @@
-import { Plus, Trash } from "lucide-react";
+import { Trash } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { Select as SelectField, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-import { AddMenu } from "../AddMenu";
 import { Empty } from "../Empty";
 import { ChildrenSorter } from "./ChildrenSorter";
 import { Block, BlockDefinition, ConditionOperator, ConditionRule, NESTABLE_BLOCK_TYPES } from "./Definition";
@@ -14,7 +13,7 @@ type Props = {
     onChangeRuleOption: (ruleId: string, optionId: string) => void;
     onChangeRuleOperator: (ruleId: string, operator: ConditionOperator) => void;
     onRemoveRule: (ruleId: string) => void;
-    onAddBlockToRule: (ruleId: string, def: BlockDefinition, overrides?: Record<string, any>) => void;
+    onAddBlockToRule: (ruleId: string, index: number, def: BlockDefinition, overrides?: Record<string, any>) => void;
     onReorderRuleChildren: (ruleId: string, next: Block[]) => void;
 };
 
@@ -39,8 +38,8 @@ export const ConditionRules = (
         <div className="space-y-4">
             {conditions.map((rule) => {
                 return (
-                    <div key={rule.id} className="space-y-4 border-l-4 border-border pl-4">
-                        <div className="flex items-center gap-2">
+                    <div key={rule.id} className="space-y-4 border-l-4 border-border">
+                        <div className="flex items-center gap-2 pl-4">
                             <span className="text-sm">Si</span>
 
                             <SelectField
@@ -91,29 +90,18 @@ export const ConditionRules = (
 
                         {rule.children.length === 0 ? (
                             <Empty
-                                onPick={(def, overrides) => onAddBlockToRule(rule.id, def, overrides)}
+                                onPick={(def, overrides) => onAddBlockToRule(rule.id, -1, def, overrides)}
                                 allowTypes={NESTABLE_BLOCK_TYPES}
                             />
                         ) : (
-                            <>
+                            <div className="pl-28">
                                 <ChildrenSorter
                                     childrenBlocks={rule.children}
                                     onReorder={(next) => onReorderRuleChildren(rule.id, next)}
+                                    onAddAfter={(index, def, overrides) => onAddBlockToRule(rule.id, index, def, overrides)}
+                                    allowTypes={NESTABLE_BLOCK_TYPES}
                                 />
-
-                                <div className="pt-1">
-                                    <AddMenu
-                                        onPick={(def, overrides) => onAddBlockToRule(rule.id, def, overrides)}
-                                        allowTypes={NESTABLE_BLOCK_TYPES}
-                                    >
-                                        <Button type="button" size="sm">
-                                            <Plus />
-
-                                            Ajouter un bloc
-                                        </Button>
-                                    </AddMenu>
-                                </div>
-                            </>
+                            </div>
                         )}
                     </div>
                 );

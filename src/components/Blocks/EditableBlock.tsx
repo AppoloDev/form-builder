@@ -16,7 +16,6 @@ interface EditableBlockProps {
     onDelete?: () => void;
     className?: string;
     preview?: boolean;
-    isChildBlock?: boolean;
 }
 
 const DescendantHoverContext = createContext<(delta: 1 | -1) => void>(() => {
@@ -31,7 +30,6 @@ export const EditableBlock = (
         onDelete,
         className = "",
         preview = false,
-        isChildBlock = false,
     }: EditableBlockProps) => {
     const typeLabel = type ? blockDefinitions[type]?.title : undefined;
     const [contextMenuVisible, setContextMenuVisible] = useState(false);
@@ -87,12 +85,12 @@ export const EditableBlock = (
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
+            {/* Invisible bridge so the cursor doesn't lose hover crossing the gap
+                to the floating toolbar. */}
             <div className="absolute top-0 right-full h-full w-24" aria-hidden="true"/>
 
             <div
-                className={`absolute right-full z-10 flex items-center gap-0.5 p-0.5 transition-opacity ${
-                    isChildBlock ? "top-8 mr-7" : "top-0 mr-2"
-                } ${
+                className={`absolute top-0 right-full z-10 mr-2 flex items-center gap-0.5 p-0.5 transition-opacity ${
                     showControls ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
                 }`}
             >

@@ -4,9 +4,9 @@ import { useFormBuilderStore } from "../../stores/block.store";
 import { EditableBlock } from "./EditableBlock";
 import { InlineEditableText } from "../InlineEditableText";
 
-type Props = ParagraphProps & { preview?: boolean; isChildBlock?: boolean };
+type Props = ParagraphProps & { preview?: boolean };
 
-const Paragraph = ({id, type, text, preview, isChildBlock}: Props) => {
+const Paragraph = ({id, type, text, preview}: Props) => {
     const {updateBlock} = useFormBuilderStore();
     const [label, setLabel] = useState(text);
 
@@ -19,7 +19,7 @@ const Paragraph = ({id, type, text, preview, isChildBlock}: Props) => {
     };
 
     return (
-        <EditableBlock id={id} type={type} preview={preview} isChildBlock={isChildBlock}>
+        <EditableBlock id={id} type={type} preview={preview}>
             {preview ? (
                 <p>{label}</p>
             ) : (

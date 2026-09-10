@@ -145,11 +145,12 @@ export const FormBuilder = ({onChange, json = []}: Props) => {
             onDragEnd={onDragEnd}
             onDragCancel={onDragCancel}
         >
-            <div className="border border-dashed border-border rounded-lg py-4 pr-4 pl-28 space-y-4">
+            <div className="border border-dashed border-border rounded-lg p-4">
                 {blocks.length === 0 ? (
                     <Empty onPick={(def, overrides) => handleAddAt(-1, def, overrides)}/>
                 ) : (
                     <SortableContext items={ids} strategy={verticalListSortingStrategy}>
+                        <div className="pl-24 space-y-4">
                         {blocks.map((block, idx) => {
                             const Component = BLOCK_COMPONENTS[block.type];
                             if (!Component) {
@@ -187,6 +188,7 @@ export const FormBuilder = ({onChange, json = []}: Props) => {
                             )
                                 ;
                         })}
+                        </div>
                     </SortableContext>
                 )}
             </div>

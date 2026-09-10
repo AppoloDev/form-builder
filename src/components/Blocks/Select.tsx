@@ -15,7 +15,6 @@ import { GitPullRequest, Plus } from "lucide-react";
 
 type Props = Omit<SelectProps, 'id'> & {
     id: string;
-    isChildBlock?: boolean;
     preview?: boolean;
     useContionnalField?: boolean
 };
@@ -31,7 +30,6 @@ const Select = (
         multiple: propsMultiple,
         options: propsOptions,
         conditions: propsConditions,
-        isChildBlock,
         preview,
         useContionnalField: propsUseContionnalField = true,
     }: Props) => {
@@ -119,11 +117,14 @@ const Select = (
         updateBlock(id, patch);
     };
 
-    const addBlockToRule = (ruleId: string, def: BlockDefinition, overrides?: Record<string, any>) => {
+    const addBlockToRule = (ruleId: string, index: number, def: BlockDefinition, overrides?: Record<string, any>) => {
         const newBlock = createBlockFromTemplate(def, overrides);
-        const nextConditions = form.conditions.map((r) =>
-            r.id === ruleId ? {...r, children: [...r.children, newBlock]} : r
-        );
+        const nextConditions = form.conditions.map((r) => {
+            if (r.id !== ruleId) return r;
+            const nextChildren = [...r.children];
+            nextChildren.splice(index + 1, 0, newBlock);
+            return {...r, children: nextChildren};
+        });
         const patch = {conditions: nextConditions};
         setForm(prev => ({...prev, ...patch}));
         updateBlock(id, patch);
@@ -169,7 +170,7 @@ const Select = (
 
     return (
         <FieldInput id={id} type={blockType} form={form} editionItems={editionItems} preview={preview}
-                    isChildBlock={isChildBlock} onLabelChange={(v) => handleChange("label", v)}>
+                    onLabelChange={(v) => handleChange("label", v)}>
             <SelectField
                 disabled
                 items={form.options.map((opt) => ({value: opt.label, label: opt.label}))}

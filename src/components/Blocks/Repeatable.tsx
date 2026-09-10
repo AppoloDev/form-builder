@@ -2,19 +2,20 @@ import { RepeatableProps, Block, BlockDefinition, NESTABLE_BLOCK_TYPES } from ".
 import { useFormBuilderStore } from "../../stores/block.store";
 import { EditableBlock } from "./EditableBlock";
 import { Empty } from "../Empty";
-import { AddMenu } from "../AddMenu";
 import { ChildrenSorter } from "./ChildrenSorter";
 import { createBlockFromTemplate } from "../../utilities/block.utiles";
 import { TextEdition } from "../Edition/TextEdition";
 
-type Props = RepeatableProps & { preview?: boolean; isChildBlock?: boolean };
+type Props = RepeatableProps & { preview?: boolean };
 
-const Repeatable = ({id, type, children, maxItems, preview, isChildBlock}: Props) => {
+const Repeatable = ({id, type, children, maxItems, preview}: Props) => {
     const {updateBlock} = useFormBuilderStore();
 
-    const addChild = (def: BlockDefinition, overrides?: Record<string, any>) => {
+    const addChildAt = (index: number, def: BlockDefinition, overrides?: Record<string, any>) => {
         const newBlock = createBlockFromTemplate(def, overrides);
-        updateBlock(id, {children: [...children, newBlock]});
+        const nextChildren = [...children];
+        nextChildren.splice(index + 1, 0, newBlock);
+        updateBlock(id, {children: nextChildren});
     };
 
     const handleReorder = (next: Block[]) => {
@@ -26,7 +27,7 @@ const Repeatable = ({id, type, children, maxItems, preview, isChildBlock}: Props
     };
 
     return (
-        <EditableBlock id={id} type={type} preview={preview} isChildBlock={isChildBlock} editionItems={[
+        <EditableBlock id={id} type={type} preview={preview} editionItems={[
             <TextEdition
                 key="maxItems"
                 label="Nombre maximum de répétitions"
@@ -36,28 +37,17 @@ const Repeatable = ({id, type, children, maxItems, preview, isChildBlock}: Props
                 editItem={handleMaxItemsChange}
             />,
         ]}>
-            <div className={preview ? "space-y-4" : "space-y-4 p-4 border-l-4 border-border pl-4 transition-colors"}>
+            <div className={preview ? "space-y-4" : "space-y-4 rounded-lg border border-border bg-muted/30 py-8 px-8 transition-colors"}>
                 {children.length === 0 ? (
-                    <Empty onPick={addChild} allowTypes={NESTABLE_BLOCK_TYPES}/>
+                    <Empty onPick={(def, overrides) => addChildAt(-1, def, overrides)} allowTypes={NESTABLE_BLOCK_TYPES}/>
                 ) : (
-                    <div className="relative pb-3">
-                        <ChildrenSorter childrenBlocks={children} onReorder={handleReorder}/>
-
-                        <div className="absolute -right-3 -bottom-3 z-10">
-                            <AddMenu onPick={addChild} placeholder="Rechercher un type…" allowTypes={NESTABLE_BLOCK_TYPES}>
-                                <button
-                                    type="button"
-                                    className="rounded-full border border-input bg-primary shadow-sm p-2 hover:bg-primary/80 cursor-pointer transition-colors"
-                                    title="Ajouter un bloc"
-                                >
-                                    <svg width="16" height="16" viewBox="0 0 24 24"
-                                         className="text-primary-foreground">
-                                        <path fill="currentColor"
-                                              d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/>
-                                    </svg>
-                                </button>
-                            </AddMenu>
-                        </div>
+                    <div className="pl-20">
+                        <ChildrenSorter
+                            childrenBlocks={children}
+                            onReorder={handleReorder}
+                            onAddAfter={addChildAt}
+                            allowTypes={NESTABLE_BLOCK_TYPES}
+                        />
                     </div>
                 )}
             </div>

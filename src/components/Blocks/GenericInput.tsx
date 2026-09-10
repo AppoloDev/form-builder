@@ -17,7 +17,6 @@ type CommonProps = {
     label?: string;
     placeHolder?: string;
     required?: boolean;
-    isChildBlock?: boolean;
     preview?: boolean;
     [key: string]: any;
 };
@@ -57,7 +56,7 @@ export const makeInputBlock = (
     opts: MakeOpts = {}
 ) => {
     const InputBlock: FC<CommonProps> = (props) => {
-        const {id, type: blockType, index: _index, isChildBlock, preview, ...restProps} = props;
+        const {id, type: blockType, index: _index, preview, ...restProps} = props;
         const {updateBlock} = useFormBuilderStore();
 
         const [form, setForm] = useState<Record<string, any>>({
@@ -154,7 +153,6 @@ export const makeInputBlock = (
                 id={id}
                 type={blockType}
                 preview={preview}
-                isChildBlock={isChildBlock}
                 onLabelChange={(v) => handleChange('label', v)}
             >
                 <InputGroup>

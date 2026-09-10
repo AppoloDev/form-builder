@@ -6,9 +6,9 @@ import { TextEdition } from "../Edition/TextEdition";
 import { CheckboxEdition } from "../Edition/CheckboxEdition";
 import { InlineEditableText } from "../InlineEditableText";
 
-type Props = SignatureProps & { isChildBlock?: boolean; preview?: boolean };
+type Props = SignatureProps & { preview?: boolean };
 
-const Signature = ({id, type, label, helpText, required, isChildBlock, preview}: Props) => {
+const Signature = ({id, type, label, helpText, required, preview}: Props) => {
     const {updateBlock} = useFormBuilderStore();
 
     const [form, setForm] = useState({
@@ -40,7 +40,7 @@ const Signature = ({id, type, label, helpText, required, isChildBlock, preview}:
     ];
 
     return (
-        <EditableBlock id={id} type={type} preview={preview} isChildBlock={isChildBlock} editionItems={editionItems}>
+        <EditableBlock id={id} type={type} preview={preview} editionItems={editionItems}>
             <div className={preview ? "flex flex-col gap-2" : "flex flex-col gap-2 rounded-lg transition-colors"}>
                 <label className="text-sm font-medium">
                     {preview ? (

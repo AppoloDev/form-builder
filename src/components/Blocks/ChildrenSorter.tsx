@@ -17,14 +17,15 @@ import {
     arrayMove
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Block } from "./Definition";
+import { Block, BlockDefinition } from "./Definition";
 import { BLOCK_COMPONENTS } from "../BlockRegistry";
 import { DragHandleContext } from "../../FormBuilder";
+import { AddMenu } from "../AddMenu";
 
 const FollowUpRenderer: React.FC<{ child: Block }> = ({child}) => {
     const Comp = BLOCK_COMPONENTS[child.type];
     if (!Comp) return null;
-    return <Comp {...child} useContionnalField={false} isChildBlock={true} />;
+    return <Comp {...child} useContionnalField={false} />;
 };
 
 const SortableChildBlock: React.FC<{
@@ -61,7 +62,9 @@ const SortableChildBlock: React.FC<{
 export const ChildrenSorter: React.FC<{
     childrenBlocks: Block[];
     onReorder: (next: Block[]) => void;
-}> = ({childrenBlocks, onReorder}) => {
+    onAddAfter: (index: number, def: BlockDefinition, overrides?: Record<string, any>) => void;
+    allowTypes?: Array<BlockDefinition["type"]>;
+}> = ({childrenBlocks, onReorder, onAddAfter, allowTypes}) => {
     const sensors = useSensors(
         useSensor(PointerSensor, {activationConstraint: {distance: 2}})
     );
@@ -110,9 +113,34 @@ export const ChildrenSorter: React.FC<{
         >
             <SortableContext items={childIds} strategy={verticalListSortingStrategy}>
                 <div className="flex flex-col gap-3">
-                    {childrenBlocks.map((child) => (
+                    {childrenBlocks.map((child, idx) => (
                         <SortableChildBlock key={child.id} id={child.id}>
-                            <FollowUpRenderer child={child}/>
+                            <div className="relative">
+                                <FollowUpRenderer child={child}/>
+
+                                {/* Same floating "+" as any top-level block — insert
+                                    a new block right after this one, not just at
+                                    the end of the list. */}
+                                <div className="absolute -right-3 -bottom-3 z-10">
+                                    <AddMenu
+                                        onPick={(def, overrides) => onAddAfter(idx, def, overrides)}
+                                        placeholder="Rechercher un type…"
+                                        allowTypes={allowTypes}
+                                    >
+                                        <button
+                                            type="button"
+                                            className="rounded-full border border-input bg-primary shadow-sm p-2 hover:bg-primary/80 cursor-pointer transition-colors"
+                                            title="Ajouter un bloc"
+                                        >
+                                            <svg width="16" height="16" viewBox="0 0 24 24"
+                                                 className="text-primary-foreground">
+                                                <path fill="currentColor"
+                                                      d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"/>
+                                            </svg>
+                                        </button>
+                                    </AddMenu>
+                                </div>
+                            </div>
                         </SortableChildBlock>
                     ))}
                 </div>

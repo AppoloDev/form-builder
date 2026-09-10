@@ -5,9 +5,9 @@ import { EditableBlock } from "./EditableBlock";
 import { SelectEdition } from "../Edition/SelectEdition";
 import { InlineEditableText } from "../InlineEditableText";
 
-type Props = TitleProps & { preview?: boolean; isChildBlock?: boolean };
+type Props = TitleProps & { preview?: boolean };
 
-const Title = ({id, type, text, heading, preview, isChildBlock}: Props) => {
+const Title = ({id, type, text, heading, preview}: Props) => {
     const {updateBlock} = useFormBuilderStore();
     const [label, setLabel] = useState(text);
     const [headingLevel, setHeadingLevel] = useState(heading);
@@ -39,7 +39,7 @@ const Title = ({id, type, text, heading, preview, isChildBlock}: Props) => {
     }
 
     return (
-        <EditableBlock id={id} type={type} preview={preview} isChildBlock={isChildBlock} editionItems={[
+        <EditableBlock id={id} type={type} preview={preview} editionItems={[
             <SelectEdition
                 label={'Niveau de titre'}
                 value={headingLevel}

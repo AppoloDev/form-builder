@@ -25,7 +25,6 @@ type Props = {
     options?: OptionItem[];
     conditions?: ConditionRule[];
     useContionnalField?: boolean;
-    isChildBlock?: boolean;
     preview?: boolean;
 };
 
@@ -41,7 +40,6 @@ const ChoiceGroupInput: FC<Props> = (props) => {
         options: propsOptions,
         conditions: propsConditions,
         useContionnalField: propsUseContionnalField = true,
-        isChildBlock,
         preview,
     } = props;
 
@@ -143,11 +141,14 @@ const ChoiceGroupInput: FC<Props> = (props) => {
         updateBlock(id, patch);
     };
 
-    const addBlockToRule = (ruleId: string, def: BlockDefinition, overrides?: Record<string, any>) => {
+    const addBlockToRule = (ruleId: string, index: number, def: BlockDefinition, overrides?: Record<string, any>) => {
         const newBlock = createBlockFromTemplate(def, overrides);
-        const nextConditions = form.conditions.map((r) =>
-            r.id === ruleId ? {...r, children: [...r.children, newBlock]} : r
-        );
+        const nextConditions = form.conditions.map((r) => {
+            if (r.id !== ruleId) return r;
+            const nextChildren = [...r.children];
+            nextChildren.splice(index + 1, 0, newBlock);
+            return {...r, children: nextChildren};
+        });
         const patch = {conditions: nextConditions};
         setForm(prev => ({...prev, ...patch}));
         updateBlock(id, patch);
@@ -200,7 +201,7 @@ const ChoiceGroupInput: FC<Props> = (props) => {
 
             return filtered;
         },
-        [form.label, form.helpText, form.required, form.multiple, form.options, form.conditions, isChildBlock, propsUseContionnalField]
+        [form.label, form.helpText, form.required, form.multiple, form.options, form.conditions, propsUseContionnalField]
     );
 
     const addOption = () => {
@@ -267,7 +268,7 @@ const ChoiceGroupInput: FC<Props> = (props) => {
 
     return (
         <FieldInput id={id} type={blockType} form={form} editionItems={editionItems} preview={preview}
-                    isChildBlock={isChildBlock} onLabelChange={(v) => handleChange("label", v)}>
+                    onLabelChange={(v) => handleChange("label", v)}>
             <div className="space-y-4">
                 {form.multiple ? (
                     <div className="space-y-1">
